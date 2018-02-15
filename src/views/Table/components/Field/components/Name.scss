@@ -1,0 +1,51 @@
+.Root {
+  align-items: center;
+  display: flex;
+  height: 60px;
+}
+
+.Icon {
+  align-items: center;
+  background-color: #4Da1ff;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  height: 40px;
+  font-size: 22px;
+  justify-content: center;
+  text-transform: uppercase;
+  width: 40px;
+
+  &External {
+    background-color: #ff6d4a;
+  }
+
+  &Integer,
+  &Internal {
+    background-color: #4da1ff;
+  }
+
+  &Primary {
+    background-color: #fdcf2f;
+  }
+
+  &String {
+    background-color: #9dde24;
+  }
+}
+
+.Info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+}
+
+.Name {
+  font-size: 16px;
+}
+
+.Type {
+  color: #989898;
+  font-size: 14px;
+  text-transform: lowercase;
+}

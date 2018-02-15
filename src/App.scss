@@ -1,0 +1,74 @@
+:global html {
+  display: flex;
+  flex-direction: column;
+  font-smoothing: antialiased;
+  min-height: 100%;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+:global body {
+  color: #313c47;
+  display: flex;
+  flex: 1 1 auto;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+:global #root {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+:global h3 {
+  font-size: 22px;
+  font-weight: normal;
+  line-height: 30px;
+  margin: 0;
+}
+
+.Root {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.Container {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.Header {
+  align-items: center;
+  border-bottom: 1px solid #e9eef4;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.Logo {
+  align-items: center;
+  display: flex;
+  font-size: 22px;
+}
+
+.Link {
+  color: #4da1ff;
+}
+
+.Title {
+  font-size: 28px;
+}
+
+.SubTitle {
+  border-left: 2px solid #ff6d4a;
+  color: #989898;
+  font-size: 22px;
+  margin-left: 12px;
+  padding-left: 12px;
+}
+

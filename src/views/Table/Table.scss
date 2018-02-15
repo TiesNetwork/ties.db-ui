@@ -1,0 +1,32 @@
+.Root {
+}
+
+.Container {
+  padding: 20px 24px 24px;
+}
+
+.Header {
+  border-bottom: 1px solid #e9eef4;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+.Table {
+  &:not(:first-child) {
+    border-top: 1px solid #e9eef4;
+    margin-top: 28px;
+    padding-top: 20px;
+  }
+}
+
+.Records {
+  color: #989898;
+  font-size: 14px;
+}
+
+.Title {
+  font-size: 28px;
+}

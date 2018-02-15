@@ -1,0 +1,22 @@
+.Root {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.Content {
+  flex: 1 1 auto;
+}
+
+.Tables {
+  background-color: #f4f7f9;
+  box-sizing: border-box;
+  flex: 0 0 260px;
+  padding: 16px;
+  width: 260px;
+}
+
+.Tablespaces {
+  background-color: #313c47;
+  flex: 0 0 80px;
+  width: 80px;
+}

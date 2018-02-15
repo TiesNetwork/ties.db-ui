@@ -1,0 +1,34 @@
+.Root {
+  :global .ReactTable {
+    border: 1px solid #f4f7f9;
+    border-radius: 4px;
+
+    .rt-thead {
+      height: 60px;
+
+      &.-header {
+        border-bottom: 1px solid #f4f7f9;
+        box-shadow: none;
+      }
+
+      .rt-th {
+        align-items: center;
+        border: 0;
+        color: #989898;
+        display: flex;
+        padding: 0 16px;
+        text-align: left;
+      }
+    }
+
+    .rt-tbody {
+      .rt-td {
+        align-items: center;
+        border: 0;
+        display: flex;
+        min-height: 60px;
+        padding: 0 16px;
+      }
+    }
+  }
+}

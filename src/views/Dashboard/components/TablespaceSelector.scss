@@ -1,0 +1,63 @@
+.Root {
+  align-items: center;
+  display: flex;
+  height: 80px;
+  justify-content: center;
+  width: 80px;
+}
+
+.Link {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0;
+  color: inherit;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  transition: all .2s ease;
+  width: 48px;
+
+  &:hover {
+    box-shadow: 0 0 0 2px #ff6d4a;
+    cursor: pointer;
+
+    .Tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.Name {
+  font-size: 28px;
+}
+
+.Tooltip {
+  background-color: #ff6d4a;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  left: 60px;
+  opacity: 0;
+  padding: 4px 8px;
+  position: absolute;
+  transition: all .2s ease;
+  visibility: hidden;
+
+  &:before {
+    border-color: transparent #ff6d4a transparent transparent;
+    border-style: solid;
+    border-width: 5.5px 7px 5.5px 0;
+    content: '';
+    display: block;
+    height: 0;
+    left: -7px;
+    margin-top: -5px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+  }
+}
