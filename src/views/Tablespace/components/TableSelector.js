@@ -12,20 +12,15 @@ const TablespacesTableSelector = ({ id, name, selected, to }) => {
   });
 
   return (
-    <div className={className}>
-      <Link
-        className={styles.Link}
-        to={to}
-      >
-        <div className={styles.Name}>
-          {name}
-        </div>
+    <Link className={className} to={to}>
+      <div className={styles.Name}>
+        {name}
+      </div>
 
-        <div className={styles.Hash}>
-          {id}
-        </div>
-      </Link>
-    </div>
+      <div className={styles.Hash}>
+        {id}
+      </div>
+    </Link>
   );
 };
 
@@ -33,10 +28,13 @@ const mapStateToProps = ({ entities, router }, { id }) => {
   const pathname = get(router, 'location.pathname', '');
   const table = get(entities, `tables.${id}`, {});
 
-  const match = matchPath(pathname, '/:tablespaceId/:tableId');
-  const { params: { tableId, tablespaceId }} = match;
+  const match = matchPath(pathname, '/:tablespaceId/:tableId?');
 
-  return { ...table,
+  const tableId = get(match, 'params.tableId', '');
+  const tablespaceId = get(match, 'params.tablespaceId', '');
+
+  return {
+    ...table,
     selected: tableId === id,
     to: `/${tablespaceId}/${id}`,
   };

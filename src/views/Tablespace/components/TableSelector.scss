@@ -2,8 +2,11 @@
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 0 0;
+  color: inherit;
+  display: block;
   padding: 16px;
   transition: all .2s ease;
+  text-decoration: none;
 
   &:hover {
     box-shadow: 0 0 0 2px #4da1ff;
@@ -26,8 +29,6 @@
 }
 
 .Link {
-  color: inherit;
-  text-decoration: none;
 }
 
 .Name {

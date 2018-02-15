@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 /** Components **/
 import TablespaceSelector from './components/TablespaceSelector';
+import TablespaceTrigger from './components/TablespaceTrigger';
 
 /** Views **/
 import Tablespace from '../Tablespace';
@@ -15,6 +16,8 @@ const Dashboard = ({ match, tablespaces }) => (
   <div className={styles.Root}>
     <div className={styles.Tablespaces}>
       {tablespaces.map(id => <TablespaceSelector id={id} key={id} />)}
+
+      <TablespaceTrigger />
     </div>
 
     <div className={styles.Container}>

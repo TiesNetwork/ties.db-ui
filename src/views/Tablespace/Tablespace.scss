@@ -1,10 +1,37 @@
 .Root {
   display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.Container {
+  display: flex;
+  flex: 1 1 auto;
 }
 
 .Content {
   flex: 1 1 auto;
+}
+
+.Header {
+  align-items: center;
+  background-color: #f4f7f9;
+  border-bottom: 1px solid #e9eef4;
+  display: flex;
+  height: 56px;
+}
+
+.Name {
+  box-sizing: border-box;
+  flex: 0 0 260px;
+  font-size: 28px;
+  padding: 0 16px;
+}
+
+.Nav {
+  background-color: #fff;
+  flex: 1 1 auto;
+  height: 100%;
 }
 
 .Tables {

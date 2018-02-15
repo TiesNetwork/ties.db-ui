@@ -1,0 +1,36 @@
+.Root {
+  align-items: center;
+  background-color: transparent;
+  border: 1px dashed #989898;
+  border-radius: 50%;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  margin: 16px 0 0;
+  padding: 0;
+  width: 48px;
+
+  &:before {
+    content: '+';
+    color: #989898;
+    display: block;
+    font-size: 28px;
+    font-weight: 300;
+    position: relative;
+    top: -3px;
+  }
+
+  &:hover {
+    border-color: #fff;
+    color: #fff;
+    cursor: pointer;
+
+    &:before {
+      color: #fff;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

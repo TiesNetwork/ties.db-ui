@@ -1,13 +1,5 @@
 .Root {
   align-items: center;
-  display: flex;
-  height: 80px;
-  justify-content: center;
-  width: 80px;
-}
-
-.Link {
-  align-items: center;
   background-color: #fff;
   border-radius: 50%;
   box-shadow: 0 0 0;
@@ -29,6 +21,15 @@
       visibility: visible;
     }
   }
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
+
+  &Selected {
+    box-shadow: 0 0 0 2px #ff6d4a;
+    pointer-events: none;
+  }
 }
 
 .Name {
@@ -44,6 +45,7 @@
   opacity: 0;
   padding: 4px 8px;
   position: absolute;
+  top: 10px;
   transition: all .2s ease;
   visibility: hidden;
 
