@@ -1,0 +1,27 @@
+.Root {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 0;
+  transition: all .2s ease;
+
+  &:hover {
+    box-shadow: inset 0 -3px 0 #4da1ff;
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:not(:first-child) {
+    margin-left: 36px;
+  }
+
+  &Selected {
+    box-shadow: inset 0 -3px 0 #4da1ff;
+    pointer-events: none;
+  }
+}

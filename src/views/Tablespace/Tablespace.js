@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 /** Components **/
 import TableSelector from './components/TableSelector';
+import Tabs, { Tab } from './../../components/Tabs';
 
 /** Views **/
 import Table from '../Table';
@@ -19,7 +20,10 @@ const Tablespace = ({ match, name, tables }) => (
       </div>
 
       <div className={styles.Nav}>
-
+        <Tabs value="Tables">
+          <Tab label="Tables"  />
+          <Tab label="Settings"  />
+        </Tabs>
       </div>
     </div>
 
