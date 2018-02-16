@@ -1,11 +1,50 @@
 .Root {
-  background-color: #4Da1ff;
-  border: 0;
-  border-radius: 4px;
-  color: #fff;
-  height: 40px;
-  font-size: 12px;
+  border: 1px solid;
+  border-radius: 5px;
   min-width: 160px;
   padding: 0 8px;
   text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &Size {
+    &Large {
+      font-size: 14px;
+      height: 48px;
+    }
+
+    &Normal {
+      font-size: 12px;
+      height: 38px;
+    }
+  }
+
+  &Variant {
+    &Primary {
+      background-color: #4da1ff;
+      border-color: #4da1ff;
+      color: #fff;
+    }
+
+    &Secondary {
+      background-color: transparent;
+      border-color: #d0d7dd;
+
+      &:hover {
+        color: #4da1ff;
+      }
+    }
+
+    &Success {
+      background-color: #9dde24;
+      border-color: #9dde24;
+      color: #fff;
+    }
+  }
 }

@@ -1,33 +1,31 @@
+import { get } from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
 
-import Fields from './containers/Fields';
-import Indexes from './containers/Indexes';
-import Triggers from './containers/Triggers';
+/** Components **/
+import Fields from './components/Fields';
+import Indexes from './components/Indexes';
+import Triggers from './components/Triggers';
 
 import styles from './Table.scss';
 
-const Table = () => (
+const Table = ({ fields, name }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
-        Messages
+        {name}
       </div>
     </div>
 
     <div className={styles.Container}>
-      <div className={styles.Table}>
-        <Fields />
-      </div>
-
-      <div className={styles.Table}>
-        <Indexes />
-      </div>
-
-      <div className={styles.Table}>
-        <Triggers />
-      </div>
+      <Fields fields={fields} />
     </div>
   </div>
 );
 
-export default Table;
+const mapStateToProps = ({ entities }, { match }) => {
+  const id = get(match, 'params.tableId');
+  return get(entities, `tables.${id}`);
+};
+
+export default connect(mapStateToProps)(Table);

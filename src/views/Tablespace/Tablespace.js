@@ -48,7 +48,6 @@ const Tablespace = ({ match, name, tables }) => (
 );
 
 const mapStateToProps = (state, { match }) => {
-  console.log(match);
   const id = get(match, 'params.tablespaceId', 0);
   return get(state, `entities.tablespaces.${id}`, {});
 };

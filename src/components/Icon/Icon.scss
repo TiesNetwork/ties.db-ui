@@ -1,0 +1,12 @@
+.Root {
+  background: no-repeat center center;
+  background-size: contain;
+  height: 18px;
+  width: 18px;
+
+  &Type {
+    &Close {
+      background-image: url(./assets/close.svg);
+    }
+  }
+}

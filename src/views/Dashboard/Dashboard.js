@@ -4,8 +4,13 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /** Components **/
+import Modal from '../../components/Modal';
+import TablespaceForm from './components/TablespaceForm';
 import TablespaceSelector from './components/TablespaceSelector';
 import TablespaceTrigger from './components/TablespaceTrigger';
+
+/** Types **/
+import { TABLESPACE_FORM_ID } from './ducks/types';
 
 /** Views **/
 import Tablespace from '../Tablespace';
@@ -25,6 +30,14 @@ const Dashboard = ({ match, tablespaces }) => (
         <Route path={`${match.url}:tablespaceId`} component={Tablespace}/>
       </Switch>
     </div>
+
+    <Modal
+      description="Tablespace where you create the tables"
+      id={TABLESPACE_FORM_ID}
+      title="Create a tablespace"
+    >
+      <TablespaceForm />
+    </Modal>
   </div>
 );
 
