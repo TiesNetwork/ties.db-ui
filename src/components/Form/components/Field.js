@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { uniqueId } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { cloneElement, Component } from 'react';
@@ -10,11 +11,15 @@ class FormField extends Component {
   state = { id: uniqueId('field_') };
 
   render() {
-    const { children } = this.props;
+    const { children, type } = this.props;
     const { id } = this.state;
 
+    const className = classNames(styles.Root, {
+      [styles.RootHidden]: type === 'hidden',
+    });
+
     return (
-      <div className={styles.Root}>
+      <div className={className}>
         <Field {...this.props} component={reduxFieldAdapter}>
           {props => cloneElement(children, { ...props, id })}
         </Field>

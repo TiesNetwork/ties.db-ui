@@ -40,9 +40,20 @@
   background-color: #f4f7f9;
   border-right: 1px solid #e9eef4;
   box-sizing: border-box;
+  display: flex;
   flex: 0 0 260px;
-  padding: 16px;
+  flex-direction: column;
+  justify-content: flex-end;
   width: 260px;
+}
+
+.TablesContainer {
+  flex: 1 1 auto;
+  padding: 16px;
+}
+
+.TablesTrigger {
+  flex: 0 0 56px;
 }
 
 .Tablespaces {

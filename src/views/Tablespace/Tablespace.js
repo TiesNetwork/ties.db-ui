@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 /** Components **/
 import TableSelector from './components/TableSelector';
+import TableTrigger from './components/TableTrigger';
 import Tabs, { Tab } from './../../components/Tabs';
 
 /** Views **/
@@ -22,7 +23,6 @@ const Tablespace = ({ match, name, tables }) => (
       <div className={styles.Nav}>
         <Tabs value="Tables">
           <Tab label="Tables"  />
-          <Tab label="Settings"  />
         </Tabs>
       </div>
     </div>
@@ -36,6 +36,9 @@ const Tablespace = ({ match, name, tables }) => (
             ))}
           </div>
         )}
+
+        <div className={styles.TablesTrigger}>
+        </div>
       </div>
 
       <div className={styles.Content}>

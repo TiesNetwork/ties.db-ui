@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 /** Actions **/
-import { sendFieldForm } from '../../../ducks/actions';
+import { sendIndexForm } from '../../../ducks/actions';
 import { closeModal } from '../../../../../services/modals';
 
 /** Components **/
@@ -11,14 +11,14 @@ import Button from '../../../../../components/Button';
 import Form, { Actions, Input } from '../../../../../components/Form';
 
 /** Types **/
-import { FIELD_FORM_ID } from '../../../ducks/types';
+import { INDEX_FORM_ID } from '../../../ducks/types';
 
 /** Utils **/
 import validate, { required } from '../../../../../utils/validate';
 
 import styles from './Form.scss';
 
-const FieldsForm = ({ handleCancelClick, handleSubmit }) => (
+const IndexesForm = ({ handleCancelClick, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <Input
       label="Name"
@@ -31,8 +31,8 @@ const FieldsForm = ({ handleCancelClick, handleSubmit }) => (
     />
 
     <Input
-      label="Default"
-      name="defaultValue"
+      label="Fields"
+      name="fields"
     />
 
     <Input
@@ -55,21 +55,22 @@ const FieldsForm = ({ handleCancelClick, handleSubmit }) => (
         type="submit"
         variant={Button.VARIANT.SUCCESS}
       >
-        Create Field
+        Create Index
       </Button>
     </Actions>
   </Form>
 );
 
 const mapDispatchToProps = dispatch => ({
-  handleCancelClick: () => dispatch(closeModal(FIELD_FORM_ID)),
+  handleCancelClick: () => dispatch(closeModal(INDEX_FORM_ID)),
 });
 
 export default connect(null, mapDispatchToProps)(reduxForm({
-  form: FIELD_FORM_ID,
-  onSubmit: (values, dispatch) => dispatch(sendFieldForm(values)),
+  form: INDEX_FORM_ID,
+  onSubmit: (values, dispatch) => dispatch(sendIndexForm(values)),
   validate: validate({
-    name: [required('Don\' forget to name your field')],
-    type: [required('Don\' forget to choose your field type')],
+    fields: [required('Don\' forget to choose your index fields')],
+    name: [required('Don\' forget to name your index')],
+    type: [required('Don\' forget to choose your index type')],
   }),
-})(FieldsForm));
+})(IndexesForm));

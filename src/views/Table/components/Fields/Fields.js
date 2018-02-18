@@ -21,6 +21,7 @@ import tableAdapter from './utils/tableAdapter';
 import columns from './columns'
 
 import styles from './Fields.scss';
+import {matchPath} from "react-router-dom";
 
 const settings = {
   columns,
@@ -30,7 +31,7 @@ const settings = {
   showPageSizeOptions: false,
 };
 
-const TableFields = ({ fields, handleTriggerClick }) => (
+const TableFields = ({ fields, handleTriggerClick, tableId }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -52,14 +53,21 @@ const TableFields = ({ fields, handleTriggerClick }) => (
       id={FIELD_FORM_ID}
       title="Create a field"
     >
-      <Form />
+      <Form initialValues={{ defaultValue: 0, tableId: tableId }}/>
     </Modal>
   </div>
 );
 
-const mapStateToProps = ({ entities }, { fields }) => ({
-  fields: fields && fields.map(id => tableAdapter(get(entities, `fields.${id}`))),
-});
+const mapStateToProps = ({ entities, router  }, { fields }) => {
+  const pathname = get(router, 'location.pathname');
+  const match = matchPath(pathname, '/:tablespaceId/:tableId');
+  const tableId = get(match, 'params.tableId');
+
+  return {
+    tableId,
+    fields: fields && fields.map(id => tableAdapter(get(entities, `fields.${id}`))),
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   handleTriggerClick: () => dispatch(openModal(FIELD_FORM_ID)),

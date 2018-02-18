@@ -14,17 +14,17 @@
   padding: 0 24px;
 }
 
-.Table {
+.Records {
+  color: #989898;
+  font-size: 14px;
+}
+
+.Section {
   &:not(:first-child) {
     border-top: 1px solid #e9eef4;
     margin-top: 28px;
     padding-top: 20px;
   }
-}
-
-.Records {
-  color: #989898;
-  font-size: 14px;
 }
 
 .Title {

@@ -9,7 +9,7 @@ import Triggers from './components/Triggers';
 
 import styles from './Table.scss';
 
-const Table = ({ fields, name }) => (
+const Table = ({ fields, indexes, name, triggers }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -18,7 +18,17 @@ const Table = ({ fields, name }) => (
     </div>
 
     <div className={styles.Container}>
-      <Fields fields={fields} />
+      <div className={styles.Section}>
+        <Fields fields={fields} />
+      </div>
+
+      <div className={styles.Section}>
+        <Indexes indexes={indexes} />
+      </div>
+
+      <div className={styles.Section}>
+        <Triggers triggers={triggers} />
+      </div>
     </div>
   </div>
 );
