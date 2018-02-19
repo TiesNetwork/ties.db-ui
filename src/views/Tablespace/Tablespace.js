@@ -38,15 +38,13 @@ const Tablespace = ({ id, match, name, tables }) => (
 
     <div className={styles.Container}>
       <div className={styles.Tables}>
-        {tables && tables.length > 0 && (
-          <div className={styles.TablesContainer}>
-            {tables.map(id => (
-              <TableSelector id={id} key={id} />
-            ))}
+        <div className={styles.TablesContainer}>
+          {tables && tables.length > 0 && tables.map(id => (
+            <TableSelector id={id} key={id} />
+          ))}
 
-            <TableTrigger />
-          </div>
-        )}
+          <TableTrigger />
+        </div>
       </div>
 
       <div className={styles.Content}>
