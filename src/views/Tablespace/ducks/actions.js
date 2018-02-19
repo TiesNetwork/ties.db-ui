@@ -1,4 +1,4 @@
-import { random, times } from 'lodash';
+import hash from 'hash.js';
 
 /** Entities **/
 import { createTable } from 'entities/models/tables';
@@ -10,7 +10,6 @@ import { closeModal } from 'services/modals';
 import {
   TABLE_FORM_ID,
 } from './types';
-import hash from "hash.js";
 
 export const sendTableForm = ({ tablespaceId, ...payload }) => dispatch => {
   const id = hash.sha256().update(`${payload.name}${new Date().toString()}`).digest('hex');

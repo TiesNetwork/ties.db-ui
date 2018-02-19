@@ -1,7 +1,3 @@
-import React from 'react'
-
-import { Name } from '../../../../components/Table';
-
 export default [
   {
     accessor: 'name',

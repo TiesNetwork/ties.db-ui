@@ -1,4 +1,4 @@
-import { random, times } from 'lodash';
+import hash from 'hash.js';
 
 /** Actions **/
 import { createField } from '../../../entities/models/fields';
@@ -14,7 +14,6 @@ import {
   INDEX_FORM_ID,
   TRIGGER_FORM_ID,
 } from './types';
-import hash from "hash.js";
 
 export const sendFieldForm = ({ tableId, ...payload }) => dispatch => {
   const id = hash.sha256().update(`${payload.name}${new Date().toString()}`).digest('hex');
