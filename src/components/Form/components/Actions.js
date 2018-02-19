@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 
 import styles from './Actions.scss';
 
@@ -9,7 +9,9 @@ const FormActions = ({ children, className: classNameProp }) => {
 
   return (
     <div className={className}>
-      {children}
+      {Children.map(children, child => cloneElement(child, {
+        className: classNames(styles.Action, child.props.className)
+      }))}
     </div>
   );
 };

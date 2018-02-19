@@ -14,9 +14,10 @@ import {
   INDEX_FORM_ID,
   TRIGGER_FORM_ID,
 } from './types';
+import hash from "hash.js";
 
 export const sendFieldForm = ({ tableId, ...payload }) => dispatch => {
-  const id = times(20, () => random(35).toString(36)).join('');
+  const id = hash.sha256().update(`${payload.name}${new Date().toString()}`).digest('hex');
 
   dispatch(createField(id, { ...payload, id }));
   dispatch(addField(tableId, id));
@@ -24,7 +25,7 @@ export const sendFieldForm = ({ tableId, ...payload }) => dispatch => {
 };
 
 export const sendIndexForm = ({ tableId, ...payload }) => dispatch => {
-  const id = times(20, () => random(35).toString(36)).join('');
+  const id = hash.sha256().update(`${payload.name}${new Date().toString()}`).digest('hex');
 
   dispatch(createIndex(id, { ...payload, id }));
   dispatch(addIndex(tableId, id));
@@ -32,7 +33,7 @@ export const sendIndexForm = ({ tableId, ...payload }) => dispatch => {
 };
 
 export const sendTriggerForm = ({ tableId, ...payload }) => dispatch => {
-  const id = times(20, () => random(35).toString(36)).join('');
+  const id = hash.sha256().update(`${payload.name}${new Date().toString()}`).digest('hex');
 
   dispatch(createTrigger(id, { ...payload, id }));
   dispatch(addTrigger(tableId, id));

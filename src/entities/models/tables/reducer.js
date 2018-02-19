@@ -2,6 +2,8 @@ import {
   ADD_FIELD,
   ADD_INDEX,
   ADD_TRIGGER,
+
+  CREATE_TABLE,
 } from './types';
 
 const initialState = {};
@@ -33,6 +35,11 @@ export default (state = initialState, action) => {
           ...table,
           triggers: [...table.triggers, action.payload],
         }
+      };
+    case CREATE_TABLE:
+      return {
+        ...state,
+        [action.id]: action.payload,
       };
     default:
       return state;

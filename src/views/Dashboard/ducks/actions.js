@@ -1,4 +1,5 @@
 import { random, times } from 'lodash';
+import hash from 'hash.js';
 
 /** Actions **/
 import { createTablespace } from '../../../entities/models/tablespaces';
@@ -11,7 +12,7 @@ import {
 } from './types';
 
 export const sendTablespaceForm = ({ name }) => dispatch => {
-  const id = times(20, () => random(35).toString(36)).join('');
+  const id = hash.sha256().update(`${name}${new Date().toString()}`).digest('hex');
 
   dispatch(createTablespace(id, { id, name }));
   dispatch(closeModal(TABLESPACE_FORM_ID));

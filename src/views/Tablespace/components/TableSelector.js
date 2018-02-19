@@ -18,7 +18,7 @@ const TablespacesTableSelector = ({ id, name, selected, to }) => {
       </div>
 
       <div className={styles.Hash}>
-        {id}
+        0X{id}
       </div>
     </Link>
   );

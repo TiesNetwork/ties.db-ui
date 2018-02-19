@@ -26,6 +26,10 @@
 .Hash {
   color: #989898;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .Link {

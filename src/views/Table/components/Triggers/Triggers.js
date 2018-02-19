@@ -53,7 +53,7 @@ const mapStateToProps = ({ entities, router  }, { triggers }) => {
   const pathname = get(router, 'location.pathname');
   const match = matchPath(pathname, '/:tablespaceId/:tableId');
   const tableId = get(match, 'params.tableId');
-console.log(triggers);
+
   return {
     tableId,
     triggers: triggers && triggers.map(id => get(entities, `triggers.${id}`)),
