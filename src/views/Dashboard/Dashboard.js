@@ -6,14 +6,12 @@ import { connect } from 'react-redux';
 /** Components **/
 import Modal from 'components/Modal';
 
-import ConfirmForm from './components/ConfirmForm';
 import TablespaceForm from './components/TablespaceForm';
 import TablespaceSelector from './components/TablespaceSelector';
 import TablespaceTrigger from './components/TablespaceTrigger';
 
 /** Types **/
 import {
-  CONFIRM_FORM_ID,
   TABLESPACE_FORM_ID
 } from './ducks/types';
 
@@ -42,13 +40,6 @@ const Dashboard = ({ match, tablespaces }) => (
       title="Create a tablespace"
     >
       <TablespaceForm />
-    </Modal>
-
-    <Modal
-      id={CONFIRM_FORM_ID}
-      title="Confirm action"
-    >
-      <ConfirmForm />
     </Modal>
   </div>
 );

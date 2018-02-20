@@ -7,14 +7,20 @@ import { uploadTable } from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
+import Modal from 'components/Modal';
 
+import ConfirmForm from './components/ConfirmForm';
 import Fields from './components/Fields';
 import Indexes from './components/Indexes';
 import Triggers from './components/Triggers';
 
-import styles from './Table.scss';
+/** Types **/
+import { CONFIRM_FORM_ID } from './ducks/types';
 
-const Table = ({ fields, handleUploadClick, indexes, name, triggers }) => (
+import styles from './Table.scss';
+import {openModal} from "services/modals";
+
+const Table = ({ fields, handleUploadClick, id, indexes, name, triggers }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -49,6 +55,10 @@ const Table = ({ fields, handleUploadClick, indexes, name, triggers }) => (
         <Triggers triggers={triggers} />
       </div>
     </div>
+
+    <Modal id={CONFIRM_FORM_ID} title="Confirm action">
+      <ConfirmForm initialValues={{ tableId: id }}/>
+    </Modal>
   </div>
 );
 
@@ -57,12 +67,8 @@ const mapStateToProps = ({ entities }, { match }) => {
   return get(entities, `tables.${id}`);
 };
 
-const mapDispatchToProps = (dispatch, { match }) => {
-  const id = get(match, 'params.tableId');
-
-  return {
-    handleUploadClick: () => dispatch(uploadTable(id))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  handleUploadClick: () => dispatch(openModal(CONFIRM_FORM_ID))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

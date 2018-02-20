@@ -10,7 +10,6 @@ import {
   TABLESPACE_FORM_ID,
 } from './types';
 
-
 export const sendTablespaceForm = ({ name }) => dispatch => {
   const id = hash.sha256().update(`${name}${new Date().toString()}`).digest('hex');
 

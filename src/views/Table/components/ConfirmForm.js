@@ -4,7 +4,6 @@ import { reduxForm } from 'redux-form';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
-
 import { sendConfirmForm } from '../ducks/actions';
 
 /** Components **/
@@ -17,17 +16,12 @@ import { CONFIRM_FORM_ID } from '../ducks/types';
 /** Utils **/
 import validate, { required } from 'utils/validate';
 
-import styles from './TablespaceForm.scss';
-
-const DashboardConfirmForm = ({ handleCancelClick, handleSubmit }) => (
+const TableConfirmForm = ({ handleCancelClick, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
-    <Input
-      label="Password"
-      name="password"
-      type="password"
-    />
+    <Input label="Password" name="password" type="password" />
+    <Input name="tableId" type="hidden" />
 
-    <Actions className={styles.Actions}>
+    <Actions>
       <Button
         onClick={handleCancelClick}
         size={Button.SIZE.LARGE}
@@ -37,7 +31,6 @@ const DashboardConfirmForm = ({ handleCancelClick, handleSubmit }) => (
       </Button>
 
       <Button
-        className={styles.Action}
         size={Button.SIZE.LARGE}
         type="submit"
         variant={Button.VARIANT.SUCCESS}
@@ -54,8 +47,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(null, mapDispatchToProps)(reduxForm({
   form: CONFIRM_FORM_ID,
-  onSubmit: (values, dispatch) => console.log(values),
+  onSubmit: (values, dispatch) => dispatch(sendConfirmForm(values)),
   validate: validate({
     password: [required()],
   }),
-})(DashboardConfirmForm));
+})(TableConfirmForm));
