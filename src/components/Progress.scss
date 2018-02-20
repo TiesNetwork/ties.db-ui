@@ -1,0 +1,24 @@
+.Root {
+  background-color: #f4f7f9;
+  border: 1px solid #e9eff4;
+  border-radius: 5px;
+  height: 4px;
+  position: relative;
+}
+
+.Bar {
+  animation: example 2s;
+  background-color: #9dde24;
+  border-radius: 5px;
+  height: 6px;
+  left: 0;
+  position: absolute;
+  top: -1px;
+  transition: all 2s ease;
+  width: 0;
+}
+
+@keyframes example {
+  from { width: 0 }
+  to { width: 100% }
+}

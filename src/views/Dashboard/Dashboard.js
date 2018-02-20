@@ -4,13 +4,18 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /** Components **/
-import Modal from '../../components/Modal';
+import Modal from 'components/Modal';
+
+import ConfirmForm from './components/ConfirmForm';
 import TablespaceForm from './components/TablespaceForm';
 import TablespaceSelector from './components/TablespaceSelector';
 import TablespaceTrigger from './components/TablespaceTrigger';
 
 /** Types **/
-import { TABLESPACE_FORM_ID } from './ducks/types';
+import {
+  CONFIRM_FORM_ID,
+  TABLESPACE_FORM_ID
+} from './ducks/types';
 
 /** Views **/
 import Tablespace from '../Tablespace';
@@ -37,6 +42,13 @@ const Dashboard = ({ match, tablespaces }) => (
       title="Create a tablespace"
     >
       <TablespaceForm />
+    </Modal>
+
+    <Modal
+      id={CONFIRM_FORM_ID}
+      title="Confirm action"
+    >
+      <ConfirmForm />
     </Modal>
   </div>
 );

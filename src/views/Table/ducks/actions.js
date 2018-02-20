@@ -1,12 +1,13 @@
 import hash from 'hash.js';
 
 /** Actions **/
-import { createField } from '../../../entities/models/fields';
-import { createIndex } from '../../../entities/models/indexes';
-import { createTrigger } from '../../../entities/models/triggers';
+import { createField } from 'entities/models/fields';
+import { createIndex } from 'entities/models/indexes';
+import { createTrigger } from 'entities/models/triggers';
+import { addField, addIndex, addTrigger } from 'entities/models/tables';
 
-import { addField, addIndex, addTrigger } from '../../../entities/models/tables';
-import { closeModal } from '../../../services/modals';
+import {createDownload, deleteDownload} from 'services/background';
+import { closeModal } from 'services/modals';
 
 /** Types **/
 import {
@@ -37,4 +38,12 @@ export const sendTriggerForm = ({ tableId, ...payload }) => dispatch => {
   dispatch(createTrigger(id, { ...payload, id }));
   dispatch(addTrigger(tableId, id));
   dispatch(closeModal(TRIGGER_FORM_ID));
+};
+
+export const uploadTable = id => dispatch => {
+  dispatch(createDownload(id));
+
+  setTimeout(() => {
+    dispatch(deleteDownload(id));
+  }, 2000);
 };
