@@ -18,7 +18,9 @@ const Table = ({ fields, indexes, name, triggers }) => (
     </div>
 
     <div className={styles.Container}>
-
+      <div className={styles.Section}>
+        <Fields fields={fields} />
+      </div>
     </div>
   </div>
 );
@@ -29,15 +31,3 @@ const mapStateToProps = ({ entities }, { match }) => {
 };
 
 export default connect(mapStateToProps)(Table);
-
-{/*<div className={styles.Section}>*/}
-  {/*<Fields fields={fields} />*/}
-{/*</div>*/}
-
-{/*<div className={styles.Section}>*/}
-{/*<Indexes indexes={indexes} />*/}
-{/*</div>*/}
-
-{/*<div className={styles.Section}>*/}
-  {/*<Triggers triggers={triggers} />*/}
-  {/*</div>*/}

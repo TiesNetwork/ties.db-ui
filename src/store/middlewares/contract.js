@@ -6,7 +6,6 @@ const contractMiddleware = store => next => action => {
 
     return action.contract
       .then(res => {
-        console.log(res);
         next({ ...action, type: RESOLVED });
       })
       .catch(err => {

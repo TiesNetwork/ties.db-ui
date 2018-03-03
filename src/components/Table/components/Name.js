@@ -41,4 +41,9 @@ const TableName = ({ name, type }) => {
 
 TableName.TYPE = TYPE;
 
+TableName.defaultProps = {
+  name: 'Loading...',
+  type: 'Loading...',
+}
+
 export default TableName;

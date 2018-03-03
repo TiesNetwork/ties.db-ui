@@ -1,6 +1,7 @@
 import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
+import { matchPath } from 'react-router-dom';
 
 /** Actions **/
 import { openModal } from '../../../../services/modals';
@@ -17,21 +18,13 @@ import { FIELD_FORM_ID } from '../../ducks/types';
 
 /** Utils **/
 import tableAdapter from './utils/tableAdapter';
+import tableSettings from '../../utils/tableSettings';
 
 import columns from './columns'
 
 import styles from './Fields.scss';
-import {matchPath} from "react-router-dom";
 
-const settings = {
-  columns,
-  minRows: 1,
-  resizable: false,
-  showPagination: false,
-  showPageSizeOptions: false,
-};
-
-const TableFields = ({ fields, handleTriggerClick, tableId }) => (
+const TableFields = ({ fields, handleTriggerClick, tableHash }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -46,26 +39,32 @@ const TableFields = ({ fields, handleTriggerClick, tableId }) => (
     </div>
 
     <div className={styles.Container}>
-      <Table {...settings} data={fields} />
+      <Table {...tableSettings}
+        columns={columns}
+        data={fields}
+      />
     </div>
 
     <Modal
       id={FIELD_FORM_ID}
       title="Create a field"
     >
-      <Form initialValues={{ defaultValue: 0, tableId: tableId }}/>
+      <Form initialValues={{ defaultValue: 0, tableId: tableHash }}/>
     </Modal>
   </div>
 );
 
 const mapStateToProps = ({ entities, router  }, { fields }) => {
   const pathname = get(router, 'location.pathname');
-  const match = matchPath(pathname, '/:tablespaceId/:tableId');
-  const tableId = get(match, 'params.tableId');
+  const match = matchPath(pathname, '/:tablespaceHash/:tableHash');
+  const tableHash = get(match, 'params.tableHash');
 
   return {
-    tableId,
-    fields: fields && fields.map(id => tableAdapter(get(entities, `fields.${id}`))),
+    tableHash,
+    fields: fields && fields.map(hash => tableAdapter({
+      tableHash, hash,
+      ...get(entities, `fields.${hash}`, {}),
+    })),
   };
 };
 
