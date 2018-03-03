@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 
 class TableDataFetcher extends Component {
   componentDidMount() {
     const { fetchData, isEmpty } = this.props;
+    console.log(123, isEmpty);
     isEmpty && fetchData();
   }
 

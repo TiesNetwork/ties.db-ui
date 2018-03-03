@@ -2,8 +2,8 @@ import hash from 'hash.js';
 
 /** Actions **/
 import { createField, updateField } from 'entities/models/fields';
-import { createIndex } from 'entities/models/indexes';
-import { createTrigger } from 'entities/models/triggers';
+import { createIndex, updateIndex } from 'entities/models/indexes';
+import { createTrigger, updateTrigger } from 'entities/models/triggers';
 import { addField, addIndex, addTrigger } from 'entities/models/tables';
 
 import { closeModal } from 'services/modals';
@@ -17,6 +17,14 @@ import {
   FETCH_FIELD_REQUEST,
   FETCH_FIELD_SUCCESS,
   FETCH_FIELD_FAILURE,
+
+  FETCH_INDEX_REQUEST,
+  FETCH_INDEX_SUCCESS,
+  FETCH_INDEX_FAILURE,
+
+  FETCH_TRIGGER_REQUEST,
+  FETCH_TRIGGER_SUCCESS,
+  FETCH_TRIGGER_FAILURE,
 } from './types';
 
 /**
@@ -28,6 +36,30 @@ export const fetchField = (tableHash, hash) => (dispatch, getState, { contract }
   contract: contract.callMethod('getField', tableHash, hash)
     .then(({ def: defaultValue, fType: type, name }) =>
       dispatch(updateField(hash, { defaultValue, type, name }))
+    )
+});
+
+/**
+ * @param {string} tableHash
+ * @param {string} hash
+ */
+export const fetchIndex = (tableHash, hash) => (dispatch, getState, { contract }) => ({
+  types: [FETCH_INDEX_REQUEST, FETCH_INDEX_SUCCESS, FETCH_INDEX_FAILURE],
+  contract: contract.callMethod('getIndex', tableHash, hash)
+    .then(({ fields, iType: type, name }) =>
+      dispatch(updateIndex(hash, { fields, type, name }))
+    )
+});
+
+/**
+ * @param {string} tableHash
+ * @param {string} hash
+ */
+export const fetchTrigger = (tableHash, hash) => (dispatch, getState, { contract }) => ({
+  types: [FETCH_TRIGGER_REQUEST, FETCH_TRIGGER_SUCCESS, FETCH_TRIGGER_FAILURE],
+  contract: contract.callMethod('getTrigger', tableHash, hash)
+    .then(({ name, payload }) =>
+      dispatch(updateTrigger(hash, { name, payload }))
     )
 });
 

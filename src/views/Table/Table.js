@@ -9,7 +9,7 @@ import Triggers from './components/Triggers';
 
 import styles from './Table.scss';
 
-const Table = ({ fields, indexes, name, triggers }) => (
+const Table = ({ fields, hash, indexes, name, triggers }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -19,7 +19,24 @@ const Table = ({ fields, indexes, name, triggers }) => (
 
     <div className={styles.Container}>
       <div className={styles.Section}>
-        <Fields fields={fields} />
+        <Fields
+          fields={fields}
+          key={`${hash}-fields`}
+        />
+      </div>
+
+      <div className={styles.Section}>
+        <Indexes
+          indexes={indexes}
+          key={`${hash}-indexes`}
+        />
+      </div>
+
+      <div className={styles.Section}>
+        <Triggers
+          key={`${hash}-triggers`}
+          triggers={triggers}
+        />
       </div>
     </div>
   </div>
@@ -27,7 +44,7 @@ const Table = ({ fields, indexes, name, triggers }) => (
 
 const mapStateToProps = ({ entities }, { match }) => {
   const hash = get(match, 'params.tableHash');
-  return get(entities, `tables.${hash}`);
+  return { hash, ...get(entities, `tables.${hash}`)};
 };
 
 export default connect(mapStateToProps)(Table);

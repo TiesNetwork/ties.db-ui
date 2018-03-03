@@ -1,4 +1,19 @@
+import React from 'react';
+
+/** Actions **/
+import { fetchTrigger } from '../../ducks/actions';
+
+/** Components **/
+import { DataFetcher, Name } from 'components/Table';
+
 export default [
+  {
+    accessor: 'data',
+    Cell: ({ value }) => <DataFetcher {...value} onFetch={fetchTrigger} />,
+    id: 'data',
+    Header: '',
+    maxWidth: 0,
+  },
   {
     accessor: 'name',
     id: 'name',

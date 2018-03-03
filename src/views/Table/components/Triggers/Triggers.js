@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { matchPath } from 'react-router-dom';
@@ -22,7 +22,7 @@ import tableSettings from '../../utils/tableSettings';
 import columns from './columns';
 import styles from './Triggers.scss';
 
-const TableIndexes = ({ handleTriggerClick, tableId, triggers }) => (
+const TableIndexes = ({ handleTriggerClick, tableHash, triggers }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -44,19 +44,29 @@ const TableIndexes = ({ handleTriggerClick, tableId, triggers }) => (
     </div>
 
     <Modal id={TRIGGER_FORM_ID} title="Create a trigger">
-      <Form initialValues={{ tableId: tableId }} />
+      <Form initialValues={{ tableHash }} />
     </Modal>
   </div>
 );
 
 const mapStateToProps = ({ entities, router  }, { triggers }) => {
   const pathname = get(router, 'location.pathname');
-  const match = matchPath(pathname, '/:tablespaceId/:tableId');
-  const tableId = get(match, 'params.tableId');
+  const match = matchPath(pathname, '/:tablespaceHash/:tableHash');
+  const tableHash = get(match, 'params.tableHash');
 
   return {
-    tableId,
-    triggers: triggers && triggers.map(id => get(entities, `triggers.${id}`)),
+    tableHash,
+    triggers: triggers && triggers.map(hash => {
+      const trigger = get(entities, `triggers.${hash}`, {});
+
+      return {
+        data: {
+          tableHash, hash,
+          isEmpty: isEmpty(trigger),
+        },
+        ...trigger,
+      }
+    })
   };
 };
 

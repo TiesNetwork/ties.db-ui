@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { matchPath } from 'react-router-dom';
@@ -23,7 +23,7 @@ import tableSettings from '../../utils/tableSettings';
 import columns from './columns';
 import styles from './Indexes.scss';
 
-const TableIndexes = ({ indexes, handleTriggerClick, tableId }) => (
+const TableIndexes = ({ indexes, handleTriggerClick, tableHash }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -45,19 +45,34 @@ const TableIndexes = ({ indexes, handleTriggerClick, tableId }) => (
     </div>
 
     <Modal id={INDEX_FORM_ID} title="Create a index">
-      <Form initialValues={{ tableId: tableId }} />
+      <Form initialValues={{ tableHash }} />
     </Modal>
   </div>
 );
 
 const mapStateToProps = ({ entities, router  }, { indexes }) => {
   const pathname = get(router, 'location.pathname');
-  const match = matchPath(pathname, '/:tablespaceId/:tableId');
-  const tableId = get(match, 'params.tableId');
+  const match = matchPath(pathname, '/:tablespaceHash/:tableHash');
+  const tableHash = get(match, 'params.tableHash');
 
   return {
-    tableId,
-    indexes: indexes && indexes.map(id => tableAdapter(get(entities, `indexes.${id}`))),
+    tableHash,
+    indexes: indexes && indexes.map(hash => {
+      const index = get(entities, `indexes.${hash}`, {});
+      const fields = [];
+
+      if (!isEmpty(index)) {
+        (index.fields || []).forEach(hash => {
+          fields.push(get(entities, `fields.${hash}`, {}).name);
+        });
+      }
+
+      return tableAdapter({
+        ...index,
+        tableHash, hash,
+        fields: fields.join(', '),
+      });
+    }),
   };
 };
 
