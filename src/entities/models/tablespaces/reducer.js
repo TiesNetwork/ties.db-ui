@@ -1,26 +1,18 @@
 import {
-  ADD_TABLE,
-  CREATE_TABLESPACE,
+  UPDATE_TABLESPACE,
 } from './types';
 
-const initialState = {};
-
-export default (state = initialState, action) => {
-  const tablespace = state[action.id];
+export default (state = {}, action) => {
+  const tablespace = state[action.hash];
 
   switch (action.type) {
-    case ADD_TABLE:
+    case UPDATE_TABLESPACE:
       return {
         ...state,
-        [action.id]: {
+        [action.hash]: {
           ...tablespace,
-          tables: [...tablespace.tables, action.payload],
+          ...action.payload,
         },
-      };
-    case CREATE_TABLESPACE:
-      return {
-        ...state,
-        [action.id]: action.payload,
       };
     default:
       return state;

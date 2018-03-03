@@ -2,7 +2,7 @@ import hash from 'hash.js';
 
 /** Entities **/
 import { createTable } from 'entities/models/tables';
-import { addTable } from 'entities/models/tablespaces';
+// import { addTable } from 'entities/models/tablespaces';
 
 import { closeModal } from 'services/modals';
 
@@ -21,6 +21,6 @@ export const sendTableForm = ({ tablespaceId, ...payload }) => dispatch => {
   };
 
   dispatch(createTable(id, { ...tableData, ...payload }));
-  dispatch(addTable(tablespaceId, id));
+  // dispatch(addTable(tablespaceId, id));
   dispatch(closeModal(TABLE_FORM_ID));
 };

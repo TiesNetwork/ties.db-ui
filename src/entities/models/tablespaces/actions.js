@@ -1,7 +1,5 @@
 import {
-  ADD_TABLE,
-  CREATE_TABLESPACE,
+  UPDATE_TABLESPACE,
 } from './types';
 
-export const addTable = (id, payload) => ({ type: ADD_TABLE, id, payload });
-export const createTablespace = (id, payload) => ({ type: CREATE_TABLESPACE, id, payload });
+export const updateTablespace = (hash, payload) => ({ type: UPDATE_TABLESPACE, hash, payload });

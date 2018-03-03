@@ -1,0 +1,862 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTablespace",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "rs",
+        "type": "address"
+      },
+      {
+        "name": "tables",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "deleteTablespace",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "trKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTrigger",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "payload",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "tableToTablespace",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "iKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "deleteIndex",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "fKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getField",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "fType",
+        "type": "string"
+      },
+      {
+        "name": "def",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getStorage",
+    "outputs": [
+      {
+        "name": "tablespaces",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "nodes",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_node",
+        "type": "address"
+      }
+    ],
+    "name": "queueNode",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tsName",
+        "type": "string"
+      },
+      {
+        "name": "rs",
+        "type": "address"
+      }
+    ],
+    "name": "createTablespace",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "fKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getFieldName",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_node",
+        "type": "address"
+      }
+    ],
+    "name": "unqueueNode",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_node",
+        "type": "address"
+      }
+    ],
+    "name": "createNode",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "iName",
+        "type": "string"
+      },
+      {
+        "name": "iType",
+        "type": "uint8"
+      },
+      {
+        "name": "fields",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "createIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "iKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getIndex",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "iType",
+        "type": "uint8"
+      },
+      {
+        "name": "fields",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTable",
+    "outputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "tsName",
+        "type": "string"
+      },
+      {
+        "name": "fields",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "triggers",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "indexes",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "replicas",
+        "type": "uint32"
+      },
+      {
+        "name": "ranges",
+        "type": "uint32"
+      },
+      {
+        "name": "nodes",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTableNodes",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "fName",
+        "type": "string"
+      },
+      {
+        "name": "fType",
+        "type": "string"
+      },
+      {
+        "name": "fDefault",
+        "type": "bytes"
+      }
+    ],
+    "name": "createField",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "address"
+      }
+    ],
+    "name": "getNode",
+    "outputs": [
+      {
+        "name": "inQueue",
+        "type": "bool"
+      },
+      {
+        "name": "tables",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "trKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTriggerName",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "trKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "deleteTrigger",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "iKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "hasIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "hasTablespace",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_registry",
+        "type": "address"
+      }
+    ],
+    "name": "setRegistry",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "hasTable",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "trKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "hasTrigger",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "trName",
+        "type": "string"
+      },
+      {
+        "name": "payload",
+        "type": "bytes"
+      }
+    ],
+    "name": "createTrigger",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "fKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "deleteField",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "iKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getIndexName",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTableName",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "hasTable",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "tName",
+        "type": "string"
+      }
+    ],
+    "name": "createTable",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getNodes",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "deleteTable",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "ranges",
+        "type": "uint32"
+      },
+      {
+        "name": "replicas",
+        "type": "uint32"
+      }
+    ],
+    "name": "distribute",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tsKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getTablespaceName",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      },
+      {
+        "name": "fKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "hasField",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "address"
+      },
+      {
+        "name": "tKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getNodeTableRanges",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint64[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  }
+]
