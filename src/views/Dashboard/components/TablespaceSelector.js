@@ -14,7 +14,6 @@ class DashboardTablespaceSelector extends Component {
   componentDidMount() {
     const { fetchTablespace, name } = this.props;
     name === undefined && fetchTablespace();
-    console.log(123);
   }
 
   render() {
@@ -58,7 +57,7 @@ const mapStateToProps = ({ entities, router }, { hash }) => {
 };
 
 const dispatchToProps = (dispatch, { hash }) => ({
-  fetchTablespace: () => { console.log(hash); dispatch(fetchTablespace(hash))},
+  fetchTablespace: () => dispatch(fetchTablespace(hash)),
 });
 
 export default connect(mapStateToProps, dispatchToProps)(DashboardTablespaceSelector);

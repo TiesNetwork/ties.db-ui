@@ -4,11 +4,13 @@ import {
   ADD_TRIGGER,
 
   CREATE_TABLE,
+  UPDATE_TABLE,
 } from './types';
 
-export const addField = (id, payload) => ({ type: ADD_FIELD, id, payload });
-export const addIndex = (id, payload) => ({ type: ADD_INDEX, id, payload });
-export const addTrigger = (id, payload) => ({ type: ADD_TRIGGER, id, payload });
+export const addField = (hash, payload) => ({ type: ADD_FIELD, hash, payload });
+export const addIndex = (hash, payload) => ({ type: ADD_INDEX, hash, payload });
+export const addTrigger = (hash, payload) => ({ type: ADD_TRIGGER, hash, payload });
 
-export const createTable = (id, payload) => ({ type: CREATE_TABLE, id, payload });
+export const createTable = (hash, payload) => ({ type: CREATE_TABLE, hash, payload });
+export const updateTable = (hash, payload) => ({ type: UPDATE_TABLE, hash, payload });
 

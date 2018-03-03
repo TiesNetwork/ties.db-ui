@@ -4,28 +4,28 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 /** Components **/
-import TableForm from './components/TableForm';
+// import TableForm from './components/TableForm';
 import TableSelector from './components/TableSelector';
 import TableTrigger from './components/TableTrigger';
-import Modal from 'components/Modal';
+// import Modal from 'components/Modal';
 import Tabs, { Tab } from 'components/Tabs';
 
 /** Types **/
-import { TABLE_FORM_ID } from './ducks/types';
+// import { TABLE_FORM_ID } from './ducks/types';
 
 /** Views **/
 import Table from '../Table';
 
 import styles from './Tablespace.scss';
 
-const Tablespace = ({ id, match, name, tables }) => (
+const Tablespace = ({ hash, match, name, tables }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Name}>
           {name}
 
-        <span className={styles.Id}>
-          0X{id}
+        <span className={styles.Hash}>
+          {hash}
         </span>
       </div>
 
@@ -39,8 +39,8 @@ const Tablespace = ({ id, match, name, tables }) => (
     <div className={styles.Container}>
       <div className={styles.Tables}>
         <div className={styles.TablesContainer}>
-          {tables && tables.length > 0 && tables.map(id => (
-            <TableSelector id={id} key={id} />
+          {tables && tables.length > 0 && tables.map(hash => (
+            <TableSelector hash={hash} key={hash} />
           ))}
 
           <TableTrigger />
@@ -49,20 +49,20 @@ const Tablespace = ({ id, match, name, tables }) => (
 
       <div className={styles.Content}>
         <Switch>
-          <Route path={`${match.url}/:tableId`} component={Table} />
+          <Route path={`${match.url}/:tableHash`} component={Table} />
         </Switch>
       </div>
     </div>
-
-    <Modal id={TABLE_FORM_ID} title="Create a table">
-      <TableForm initialValues={{ tablespaceId: id }}/>
-    </Modal>
   </div>
 );
 
 const mapStateToProps = (state, { match }) => {
-  const id = get(match, 'params.tablespaceId', 0);
-  return get(state, `entities.tablespaces.${id}`, {});
+  const hash = get(match, 'params.tablespaceHash', 0);
+  return get(state, `entities.tablespaces.${hash}`, {});
 };
 
 export default connect(mapStateToProps)(Tablespace);
+//
+// <Modal id={TABLE_FORM_ID} title="Create a table">
+//   <TableForm initialValues={{ tablespaceHash: hash }}/>
+// </Modal>

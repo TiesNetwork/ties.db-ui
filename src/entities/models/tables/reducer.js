@@ -4,18 +4,19 @@ import {
   ADD_TRIGGER,
 
   CREATE_TABLE,
+  UPDATE_TABLE,
 } from './types';
 
 const initialState = {};
 
 export default (state = initialState, action) => {
-  const table = state[action.id];
+  const table = state[action.hash];
 
   switch (action.type) {
     case ADD_FIELD:
       return {
         ...state,
-        [action.id]: {
+        [action.hash]: {
           ...table,
           fields: [...table.fields, action.payload],
         }
@@ -23,7 +24,7 @@ export default (state = initialState, action) => {
     case ADD_INDEX:
       return {
         ...state,
-        [action.id]: {
+        [action.hash]: {
           ...table,
           indexes: [...table.indexes, action.payload],
         }
@@ -31,7 +32,7 @@ export default (state = initialState, action) => {
     case ADD_TRIGGER:
       return {
         ...state,
-        [action.id]: {
+        [action.hash]: {
           ...table,
           triggers: [...table.triggers, action.payload],
         }
@@ -39,7 +40,15 @@ export default (state = initialState, action) => {
     case CREATE_TABLE:
       return {
         ...state,
-        [action.id]: action.payload,
+        [action.hash]: action.payload,
+      };
+    case UPDATE_TABLE:
+      return {
+        ...state,
+        [action.hash]: {
+          ...table,
+          ...action.payload,
+        },
       };
     default:
       return state;

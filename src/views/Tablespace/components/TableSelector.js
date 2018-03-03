@@ -1,52 +1,60 @@
 import classNames from 'classnames';
 import { get } from 'lodash';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, matchPath } from 'react-router-dom';
 
-import Progress from 'components/Progress';
+/** Actions **/
+import { fetchTable } from '../ducks/actions';
 
 import styles from './TableSelector.scss'
 
-const TablespacesTableSelector = ({ id, name, progress, selected, to }) => {
-  const className = classNames(styles.Root, {
-    [styles.RootSelected]: selected,
-  });
+class TablespacesTableSelector extends Component {
+  componentDidMount() {
+    const { fetchTable, name } = this.props;
+    name === undefined && fetchTable();
+  }
 
-  return (
-    <Link className={className} to={to}>
-      <div className={styles.Name}>
-        {name}
-      </div>
+  render() {
+    const { hash, name, selected, to } = this.props;
 
-      <div className={styles.Hash}>
-        0X{id}
-      </div>
+    const className = classNames(styles.Root, {
+      [styles.RootSelected]: selected,
+    });
 
-      {progress && (
-        <div className={styles.Progress}>
-          <Progress />
+    return (
+      <Link className={className} to={to}>
+        <div className={styles.Name}>
+          {name || 'Loading...'}
         </div>
-      )}
-    </Link>
-  );
-};
 
-const mapStateToProps = ({ entities, router, services }, { id }) => {
+        <div className={styles.Hash}>
+          {hash}
+        </div>
+      </Link>
+    );
+  }
+}
+
+const mapStateToProps = ({ entities, router, services }, { hash }) => {
   const pathname = get(router, 'location.pathname', '');
-  const progress = get(services, `background.${id}`);
-  const table = get(entities, `tables.${id}`, {});
+  const progress = get(services, `background.${hash}`);
+  const table = get(entities, `tables.${hash}`, {});
 
-  const match = matchPath(pathname, '/:tablespaceId/:tableId?');
+  const match = matchPath(pathname, '/:tablespaceHash/:tableHash?');
 
-  const tableId = get(match, 'params.tableId', '');
-  const tablespaceId = get(match, 'params.tablespaceId', '');
+  const tableHash = get(match, 'params.tableHash', '');
+  const tablespaceHash = get(match, 'params.tablespaceHash', '');
 
   return {
     ...table, progress,
-    selected: tableId === id,
-    to: `/${tablespaceId}/${id}`,
+    selected: tableHash === hash,
+    to: `/${tablespaceHash}/${hash}`,
   };
 };
 
-export default connect(mapStateToProps)(TablespacesTableSelector);
+const mapDispatchToProps = (dispatch, { hash }) => ({
+  fetchTable: () => dispatch(fetchTable(hash)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TablespacesTableSelector);

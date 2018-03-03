@@ -18,24 +18,26 @@ const Table = ({ fields, indexes, name, triggers }) => (
     </div>
 
     <div className={styles.Container}>
-      <div className={styles.Section}>
-        <Fields fields={fields} />
-      </div>
 
-      <div className={styles.Section}>
-        <Indexes indexes={indexes} />
-      </div>
-
-      <div className={styles.Section}>
-        <Triggers triggers={triggers} />
-      </div>
     </div>
   </div>
 );
 
 const mapStateToProps = ({ entities }, { match }) => {
-  const id = get(match, 'params.tableId');
-  return get(entities, `tables.${id}`);
+  const hash = get(match, 'params.tableHash');
+  return get(entities, `tables.${hash}`);
 };
 
 export default connect(mapStateToProps)(Table);
+
+{/*<div className={styles.Section}>*/}
+  {/*<Fields fields={fields} />*/}
+{/*</div>*/}
+
+{/*<div className={styles.Section}>*/}
+{/*<Indexes indexes={indexes} />*/}
+{/*</div>*/}
+
+{/*<div className={styles.Section}>*/}
+  {/*<Triggers triggers={triggers} />*/}
+  {/*</div>*/}

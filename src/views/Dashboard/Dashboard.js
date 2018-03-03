@@ -31,7 +31,7 @@ class Dashboard extends Component {
 
   render() {
     const { match, tablespaces } = this.props;
-console.log(tablespaces)
+
     return (
       <div className={styles.Root}>
         <div className={styles.Tablespaces}>
@@ -42,7 +42,7 @@ console.log(tablespaces)
 
         <div className={styles.Container}>
           <Switch>
-            <Route path={`${match.url}:tablespaceId`} component={Tablespace}/>
+            <Route path={`${match.url}:tablespaceHash`} component={Tablespace}/>
           </Switch>
         </div>
 

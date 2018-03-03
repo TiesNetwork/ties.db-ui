@@ -7,11 +7,11 @@ const contractMiddleware = store => next => action => {
     return action.contract
       .then(res => {
         console.log(res);
-        return next({ ...action, type: RESOLVED });
+        next({ ...action, type: RESOLVED });
       })
       .catch(err => {
         console.error(err);
-        return next({ ...action, type: REJECTED });
+         next({ ...action, type: REJECTED });
       });
   } else {
     return next(action);
