@@ -17,6 +17,20 @@
     margin-top: 20px;
   }
 
+  &Empty {
+    .Hash,
+    .Name {
+      background-color: #989898;
+      border-radius: 4px;
+      color: transparent;
+      opacity: .2;
+    }
+
+    .Name {
+      max-width: 100px;
+    }
+  }
+
   &Selected {
     box-shadow: 0 0 0 2px #4da1ff;
     pointer-events: none;
@@ -26,17 +40,17 @@
 .Hash {
   color: #989898;
   font-size: 14px;
+  margin-top: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-.Link {
-}
-
 .Name {
   font-size: 22px;
+  line-height: 28px;
+  min-height: 28px;
 }
 
 .Progress {

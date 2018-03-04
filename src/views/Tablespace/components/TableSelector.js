@@ -19,13 +19,14 @@ class TablespacesTableSelector extends Component {
     const { hash, name, selected, to } = this.props;
 
     const className = classNames(styles.Root, {
+      [styles.RootEmpty]: !name,
       [styles.RootSelected]: selected,
     });
 
     return (
       <Link className={className} to={to}>
         <div className={styles.Name}>
-          {name || 'Loading...'}
+          {name}
         </div>
 
         <div className={styles.Hash}>

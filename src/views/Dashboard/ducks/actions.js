@@ -1,5 +1,3 @@
-import { normalize } from 'normalizr';
-
 /** Actions **/
 import { updateTablespace } from 'entities/models/tablespaces';
 // import { closeModal } from 'services/modals';
@@ -18,9 +16,16 @@ import {
   FETCH_TABLESPACES_SUCCESS,
   FETCH_TABLESPACES_FAILURE,
 
+  SEND_TABLESPACE_FORM_REQUEST,
+  SEND_TABLESPACE_FORM_SUCCESS,
+  SEND_TABLESPACE_FORM_FAILURE,
+
   UPDATE_TABLESPACES,
 } from './types';
 
+/**
+ * @param {string} hash
+ */
 export const fetchTablespace = hash => (dispatch, getState, { contract }) => dispatch({
   types: [FETCH_TABLESPACE_REQUEST, FETCH_TABLESPACE_SUCCESS, FETCH_TABLESPACE_FAILURE],
   contract: contract.callMethod('getTablespace', hash)
@@ -42,8 +47,11 @@ export const fetchTablespaces = () => (dispatch, getState, { contract, schema })
     })
 });
 
+/**
+ * @param name
+ */
 export const sendTablespaceForm = ({ name }) => (dispatch, getState, { contract }) => dispatch({
-  types: ['1', '2', '3'],
+  types: [SEND_TABLESPACE_FORM_REQUEST, SEND_TABLESPACE_FORM_SUCCESS, SEND_TABLESPACE_FORM_FAILURE],
   contract: contract.sendMethod('createTablespace', name, '0x22d1b55ebb5bcd17084c3c9d690056875263fec1')
     .then(res => console.log(res))
 });

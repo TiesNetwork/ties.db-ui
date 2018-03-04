@@ -4,7 +4,7 @@ import React from 'react';
 import { fetchTrigger } from '../../ducks/actions';
 
 /** Components **/
-import { DataFetcher, Name } from 'components/Table';
+import { DataFetcher } from 'components/Table';
 
 export default [
   {
