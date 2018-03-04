@@ -18,6 +18,10 @@
         display: flex;
         padding: 0 16px;
         text-align: left;
+
+        &:first-child {
+          display: none;
+        }
       }
     }
 

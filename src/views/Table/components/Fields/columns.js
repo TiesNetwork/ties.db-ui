@@ -12,13 +12,15 @@ export default [
     id: 'data',
     Header: '',
     maxWidth: 0,
+    sortable: false,
+    style: { padding: 0 },
   },
   {
     accessor: 'name',
     Cell: ({ value }) => <Name {...value} />,
     id: 'name',
     Header: 'Name',
-    sortable: true,
+    sortable: false,
   },
   {
     accessor: 'defaultValue',

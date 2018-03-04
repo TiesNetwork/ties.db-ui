@@ -13,12 +13,14 @@ export default [
     id: 'data',
     Header: '',
     maxWidth: 0,
+    sortable: false,
+    style: { display: 'none', padding: 0 },
   },
   {
     accessor: 'name',
     id: 'name',
     Header: 'Name',
-    sortable: true,
+    sortable: false,
   },
   {
     accessor: 'payload',
