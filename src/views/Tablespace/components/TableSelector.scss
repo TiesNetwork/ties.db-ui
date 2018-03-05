@@ -20,13 +20,17 @@
   &Empty {
     .Hash,
     .Name {
-      background-color: #989898;
       border-radius: 4px;
       color: transparent;
-      opacity: .2;
+      opacity: .5;
+    }
+
+    .Hash {
+      background-color: #989898;
     }
 
     .Name {
+      background-color: #313c47;
       max-width: 100px;
     }
   }
@@ -40,17 +44,23 @@
 .Hash {
   color: #989898;
   font-size: 14px;
+  line-height: 16px;
   margin-top: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
+  min-height: 16px;
+  //text-transform: uppercase;
 }
 
 .Name {
   font-size: 22px;
   line-height: 28px;
   min-height: 28px;
+}
+
+.Hash,
+.Name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Progress {

@@ -20,7 +20,8 @@ class DashboardTablespaceSelector extends Component {
     const { hash, name, selected } = this.props;
 
     const className = classNames(styles.Root, {
-      [styles.RootSelected]: selected,
+      [styles.RootEmpty]: !name,
+      [styles.RootSelected]: name && selected,
     });
 
     return (

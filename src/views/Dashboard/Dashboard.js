@@ -36,8 +36,6 @@ class Dashboard extends Component {
       <div className={styles.Root}>
         <div className={styles.Tablespaces}>
           {tablespaces.map(hash => <TablespaceSelector hash={hash} key={hash} />)}
-
-          <TablespaceTrigger />
         </div>
 
         <div className={styles.Container}>

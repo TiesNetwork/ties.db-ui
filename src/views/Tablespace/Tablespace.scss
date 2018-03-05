@@ -2,6 +2,24 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+
+  &Empty {
+    .Hash,
+    .Name {
+      border-radius: 4px;
+      color: transparent;
+      opacity: .5;
+    }
+
+    .Hash {
+      background-color: #989898;
+    }
+
+    .Name {
+      background-color: #313c47;
+      min-width: 100px;
+    }
+  }
 }
 
 .Container {
@@ -23,23 +41,29 @@
 .Hash {
   color: #989898;
   font-size: 14px;
-  margin: 10px 0 0 8px;
+  line-height: 20px;
+  margin-left: 8px;
+  min-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.Name {
+.Left {
   align-items: center;
   border-right: 1px solid #e9eef4;
   box-sizing: border-box;
   display: flex;
   flex: 0 0 260px;
-  font-size: 28px;
   height: 100%;
   max-width: 260px;
   padding: 0 16px;
+}
+
+.Name {
+  font-size: 28px;
+  line-height: 36px;
+  min-height: 36px;
 }
 
 .Nav {
