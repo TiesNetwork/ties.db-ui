@@ -8,13 +8,13 @@ import styles from './Fields.scss';
 const TableFields = ({ fields }) => {
   return (
     <div className={styles.Root}>
-      {fields && fields.length > 0 && fields.map(field => {
+      {fields && fields.length > 0 && fields.map((field, index) => {
         const className = classNames(styles.Field, {
           [styles.FieldEmpty]: !field,
         });
 
         return (
-          <div className={className}>
+          <div className={className} key={index}>
             <div className={styles.FieldContent}>
               {field}
             </div>

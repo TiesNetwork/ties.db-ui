@@ -41,7 +41,7 @@ const TablespaceForm = ({ handleCancelClick, handleSubmit }) => (
         type="submit"
         variant={Button.VARIANT.SUCCESS}
       >
-        Create Table
+        Create Tablespace
       </Button>
     </Actions>
   </Form>

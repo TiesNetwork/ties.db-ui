@@ -5,9 +5,6 @@ import { updateEntities } from 'entities/actions';
 
 /** Types **/
 import {
-  // CREATE_TABLESPACE,
-  // TABLESPACE_FORM_ID,
-
   FETCH_TABLESPACE_REQUEST,
   FETCH_TABLESPACE_SUCCESS,
   FETCH_TABLESPACE_FAILURE,
@@ -20,8 +17,11 @@ import {
   SEND_TABLESPACE_FORM_SUCCESS,
   SEND_TABLESPACE_FORM_FAILURE,
 
+  TABLESPACE_FORM_ID,
+
   UPDATE_TABLESPACES,
 } from './types';
+import {closeModal} from "services/modals";
 
 /**
  * @param {string} hash
@@ -29,7 +29,8 @@ import {
 export const fetchTablespace = hash => (dispatch, getState, { contract }) => dispatch({
   types: [FETCH_TABLESPACE_REQUEST, FETCH_TABLESPACE_SUCCESS, FETCH_TABLESPACE_FAILURE],
   contract: contract.callMethod('getTablespace', hash)
-    .then(({ name, tables }) => {
+    .then(({ name, tables, ...res }) => {
+      console.log(res)
       dispatch(updateTablespace(hash, { name, tables }));
     })
 })
@@ -50,11 +51,14 @@ export const fetchTablespaces = () => (dispatch, getState, { contract, schema })
 /**
  * @param name
  */
-export const sendTablespaceForm = ({ name }) => (dispatch, getState, { contract }) => dispatch({
-  types: [SEND_TABLESPACE_FORM_REQUEST, SEND_TABLESPACE_FORM_SUCCESS, SEND_TABLESPACE_FORM_FAILURE],
-  contract: contract.sendMethod('createTablespace', name, '0x22d1b55ebb5bcd17084c3c9d690056875263fec1')
-    .then(res => console.log(res))
-});
+export const sendTablespaceForm = ({ name }) => (dispatch, getState, { contract }) => {
+  dispatch(closeModal(TABLESPACE_FORM_ID));
+  dispatch({
+    types: [SEND_TABLESPACE_FORM_REQUEST, SEND_TABLESPACE_FORM_SUCCESS, SEND_TABLESPACE_FORM_FAILURE],
+    contract: contract.sendMethod('createTablespace', name, '0x29a60CeA1aDED2EF4B64Ed219Acdb0F351B5ADed')
+      .then(res => console.log(res))
+  });
+}
 
 export const updateTablespaces = payload => ({ type: UPDATE_TABLESPACES, payload });
 

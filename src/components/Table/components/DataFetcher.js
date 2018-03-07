@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 class TableDataFetcher extends Component {
   componentDidMount() {
     const { fetchData, isEmpty } = this.props;
-    console.log(123, isEmpty);
     isEmpty && fetchData();
   }
 
