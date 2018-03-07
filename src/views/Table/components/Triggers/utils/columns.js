@@ -1,10 +1,10 @@
 import React from 'react';
 
 /** Actions **/
-import { fetchTrigger } from '../../ducks/actions';
+import { fetchTrigger } from '../../../ducks/actions';
 
 /** Components **/
-import { DataFetcher } from 'components/Table';
+import { Cell, DataFetcher } from 'components/Table/index';
 
 export default [
   {
@@ -18,12 +18,14 @@ export default [
   },
   {
     accessor: 'name',
+    Cell: ({ value }) => <Cell value={value} />,
     id: 'name',
     Header: 'Name',
     sortable: false,
   },
   {
     accessor: 'payload',
+    Cell: ({ value }) => <Cell value={value} />,
     id: 'payload',
     Header: 'Payload',
     sortable: false,

@@ -19,7 +19,7 @@ import { TRIGGER_FORM_ID } from '../../ducks/types';
 /** Utils **/
 import tableSettings from '../../utils/tableSettings';
 
-import columns from './columns';
+import columns from './utils/columns';
 import styles from './Triggers.scss';
 
 const TableIndexes = ({ handleTriggerClick, tableHash, triggers }) => (

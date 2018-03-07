@@ -1,4 +1,13 @@
 .Root {
+  &Empty {
+    .Name {
+      background-color: #313c47;
+      border-radius: 4px;
+      color: transparent;
+      opacity: .5;
+      width: 120px;
+    }
+  }
 }
 
 .Container {
@@ -14,6 +23,12 @@
   padding: 0 24px;
 }
 
+.Name {
+  font-size: 28px;
+  line-height: 36px;
+  min-height: 36px;
+}
+
 .Records {
   color: #989898;
   font-size: 14px;
@@ -25,10 +40,6 @@
     margin-top: 28px;
     padding-top: 20px;
   }
-}
-
-.Title {
-  font-size: 28px;
 }
 
 .Upload {

@@ -1,0 +1,13 @@
+.Root {
+  line-height: 20px;
+  min-height: 20px;
+  width: 100%;
+
+  &Empty {
+    background-color: #313c47;
+    border-radius: 4px;
+    color: transparent;
+    opacity: .5;
+    width: 150px;
+  }
+}

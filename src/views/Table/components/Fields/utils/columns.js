@@ -1,9 +1,9 @@
 import React from 'react'
 
 /** Actions **/
-import { fetchField } from '../../ducks/actions';
+import { fetchField } from '../../../ducks/actions';
 
-import { DataFetcher, Name } from 'components/Table';
+import { Cell, DataFetcher, Name } from 'components/Table/index';
 
 export default [
   {
@@ -24,6 +24,7 @@ export default [
   },
   {
     accessor: 'defaultValue',
+    Cell: ({ value }) => <Cell value={value} />,
     id: 'default',
     Header: 'Default',
     sortable: false,

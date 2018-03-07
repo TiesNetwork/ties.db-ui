@@ -17,10 +17,10 @@ import Form from './components/Form';
 import { INDEX_FORM_ID } from '../../ducks/types';
 
 /** Utils **/
-import tableAdapter from './utils/tableAdapter';
+import tableAdapter from './utils/adapter';
 import tableSettings from '../../utils/tableSettings';
 
-import columns from './columns';
+import columns from './utils/columns';
 import styles from './Indexes.scss';
 
 const TableIndexes = ({ indexes, handleTriggerClick, tableHash }) => (
@@ -59,18 +59,9 @@ const mapStateToProps = ({ entities, router  }, { indexes }) => {
     tableHash,
     indexes: indexes && indexes.map(hash => {
       const index = get(entities, `indexes.${hash}`, {});
-      const fields = [];
-
-      if (!isEmpty(index)) {
-        (index.fields || []).forEach(hash => {
-          fields.push(get(entities, `fields.${hash}`, {}).name);
-        });
-      }
 
       return tableAdapter({
-        ...index,
-        tableHash, hash,
-        fields: fields.join(', '),
+        ...index, tableHash, hash,
       });
     }),
   };

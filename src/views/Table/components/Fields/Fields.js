@@ -17,10 +17,10 @@ import Form from './components/Form';
 import { FIELD_FORM_ID } from '../../ducks/types';
 
 /** Utils **/
-import tableAdapter from './utils/tableAdapter';
+import tableAdapter from './utils/adapter';
 import tableSettings from '../../utils/tableSettings';
 
-import columns from './columns'
+import columns from './utils/columns'
 
 import styles from './Fields.scss';
 

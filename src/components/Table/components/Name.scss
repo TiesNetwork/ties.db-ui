@@ -2,6 +2,33 @@
   align-items: center;
   display: flex;
   height: 60px;
+
+  &Empty {
+    .Icon {
+      background-color: #989898;
+    }
+
+    .Name {
+      background-color: #313c47;
+    }
+
+    .Type {
+      background-color: #989898;
+    }
+
+    .Icon,
+    .Name,
+    .Type {
+      border-radius: 4px;
+      color: transparent;
+      opacity: .5;
+    }
+
+    .Name,
+    .Type {
+      width: 80px;
+    }
+  }
 }
 
 .Icon {
@@ -42,10 +69,15 @@
 
 .Name {
   font-size: 16px;
+  line-height: 22px;
+  min-height: 22px;
 }
 
 .Type {
   color: #989898;
   font-size: 14px;
+  line-height: 16px;
+  margin-top: 2px;
+  min-height: 16px;
   text-transform: lowercase;
 }

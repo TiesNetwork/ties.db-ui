@@ -1,0 +1,27 @@
+.Root {
+  display: flex;
+}
+
+.Field {
+  display: flex;
+
+  &:not(:first-child) {
+    margin-left: 4px;
+  }
+
+  &:not(:last-child) {
+    &:after {
+      content: ', ';
+    }
+  }
+
+  &Empty {
+    .FieldContent {
+      background-color: #313c47;
+      border-radius: 4px;
+      color: transparent;
+      opacity: .5;
+      width: 60px;
+    }
+  }
+}

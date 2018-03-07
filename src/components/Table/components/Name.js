@@ -12,6 +12,10 @@ const TYPE = {
 };
 
 const TableName = ({ name, type }) => {
+  const className = classNames(styles.Root, {
+    [styles.RootEmpty]: !name,
+  });
+
   const iconClassName = classNames(styles.Icon, {
     [styles.IconExternal]: type === TYPE.EXTERNAL,
     [styles.IconInteger]: type === TYPE.INTEGER,
@@ -21,9 +25,9 @@ const TableName = ({ name, type }) => {
   });
 
   return (
-    <div className={styles.Root}>
+    <div className={className}>
       <div className={iconClassName}>
-        {type.substr(0, 1)}
+        {type && type.substr(0, 1)}
       </div>
 
       <div className={styles.Info}>
@@ -40,10 +44,5 @@ const TableName = ({ name, type }) => {
 };
 
 TableName.TYPE = TYPE;
-
-TableName.defaultProps = {
-  name: 'Loading...',
-  type: 'Loading...',
-}
 
 export default TableName;

@@ -1,10 +1,10 @@
 import React from 'react';
 
 /** Actions **/
-import { fetchIndex } from '../../ducks/actions';
+import { fetchIndex } from '../../../ducks/actions';
 
 /** Components **/
-import { DataFetcher, Name } from 'components/Table';
+import { DataFetcher, Fields, Name } from 'components/Table/index';
 
 export default [
   {
@@ -23,6 +23,7 @@ export default [
   },
   {
     accessor: 'fields',
+    Cell: ({ value }) => <Fields items={value} />,
     id: 'fields',
     Header: 'Fields',
     sortable: false,
