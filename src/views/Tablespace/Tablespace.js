@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 /** Components **/
-// import TableForm from './components/TableForm';
+import TableForm from './components/TableForm';
 import TableSelector from './components/TableSelector';
 import TableTrigger from './components/TableTrigger';
-// import Modal from 'components/Modal';
+
+import Modal from 'components/Modal';
 import Tabs, { Tab } from 'components/Tabs';
 
 /** Types **/
-// import { TABLE_FORM_ID } from './ducks/types';
+import { TABLE_FORM_ID } from './ducks/types';
 
 /** Views **/
 import Table from '../Table';
@@ -31,10 +32,6 @@ const Tablespace = ({ hash, match, name, tables }) => {
           <div className={styles.Name}>
             {name}
           </div>
-
-          <span className={styles.Hash}>
-            {hash}
-          </span>
         </div>
 
         <div className={styles.Nav}>
@@ -50,6 +47,8 @@ const Tablespace = ({ hash, match, name, tables }) => {
             {tables && tables.length > 0 && tables.map(hash => (
               <TableSelector hash={hash} key={hash} />
             ))}
+
+            <TableTrigger />
           </div>
         </div>
 
@@ -59,6 +58,10 @@ const Tablespace = ({ hash, match, name, tables }) => {
           </Switch>
         </div>
       </div>
+
+      <Modal id={TABLE_FORM_ID} title="Create a table">
+        <TableForm initialValues={{ tablespaceHash: hash }}/>
+      </Modal>
     </div>
   );
 };
@@ -69,7 +72,3 @@ const mapStateToProps = (state, { match }) => {
 };
 
 export default connect(mapStateToProps)(Tablespace);
-//
-// <Modal id={TABLE_FORM_ID} title="Create a table">
-//   <TableForm initialValues={{ tablespaceHash: hash }}/>
-// </Modal>

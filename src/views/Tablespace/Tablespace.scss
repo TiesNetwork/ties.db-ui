@@ -4,15 +4,10 @@
   flex-direction: column;
 
   &Empty {
-    .Hash,
     .Name {
       border-radius: 4px;
       color: transparent;
       opacity: .5;
-    }
-
-    .Hash {
-      background-color: #989898;
     }
 
     .Name {
@@ -36,17 +31,6 @@
   border-bottom: 1px solid #e9eef4;
   display: flex;
   height: 56px;
-}
-
-.Hash {
-  color: #989898;
-  font-size: 14px;
-  line-height: 20px;
-  margin-left: 8px;
-  min-height: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .Left {
