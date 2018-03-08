@@ -21,8 +21,6 @@ const FieldsForm = ({ handleCancelClick, handleSubmit }) => (
     <Input label="Type" name="type" />
     <Input label="Default value" name="defaultValue" />
 
-    <Input name="tableHash" type="hidden" />
-
     <Actions>
       <Button
         onClick={handleCancelClick}

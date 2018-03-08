@@ -4,15 +4,22 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 /** Actions **/
-import { fetchTrigger } from './ducks/actions';
+import { openModal } from 'services/modals';
+import { fetchTrigger, sendTriggerForm } from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
+import Modal from 'components/Modal';
+
+import Form from './components/Form';
 import Trigger from './components/Item';
+
+/** Types **/
+import { TRIGGER_FORM_ID } from './ducks/types';
 
 import styles from './Triggers.scss';
 
-const Triggers = ({ handleFetch, triggers }) => (
+const Triggers = ({ handleClick, handleFetch, handleSubmit, triggers }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -20,7 +27,10 @@ const Triggers = ({ handleFetch, triggers }) => (
       </div>
 
       <div className={styles.Actions}>
-        <Button variant={Button.VARIANT.PRIMARY}>
+        <Button
+          onClick={handleClick}
+          variant={Button.VARIANT.PRIMARY}
+        >
           Create trigger
         </Button>
       </div>
@@ -40,6 +50,16 @@ const Triggers = ({ handleFetch, triggers }) => (
         </div>
       )}
     </div>
+
+    <Modal
+      id={TRIGGER_FORM_ID}
+      title="Create a trigger"
+    >
+      <Form
+        initialValues={{ payload: '0x6465663131' }}
+        onSubmit={handleSubmit}
+      />
+    </Modal>
   </div>
 );
 
@@ -55,7 +75,9 @@ const mapDispatchToProps = (dispatch, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
 
   return {
+    handleClick: () => dispatch(openModal(TRIGGER_FORM_ID)),
     handleFetch: hash => dispatch(fetchTrigger(tableHash, hash)),
+    handleSubmit: values => dispatch(sendTriggerForm(tableHash, values)),
   };
 }
 
