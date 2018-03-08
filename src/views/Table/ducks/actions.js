@@ -27,29 +27,6 @@ import {
   FETCH_TRIGGER_FAILURE,
 } from './types';
 
-/**
- * @param {string} tableHash
- * @param {string} hash
- */
-export const fetchField = (tableHash, hash) => (dispatch, getState, { contract }) => ({
-  types: [FETCH_FIELD_REQUEST, FETCH_FIELD_SUCCESS, FETCH_FIELD_FAILURE],
-  contract: contract.callMethod('getField', tableHash, hash)
-    .then(({ def: defaultValue, fType: type, name }) =>
-      dispatch(updateField(hash, { defaultValue, type, name }))
-    )
-});
-
-/**
- * @param {string} tableHash
- * @param {string} hash
- */
-export const fetchIndex = (tableHash, hash) => (dispatch, getState, { contract }) => ({
-  types: [FETCH_INDEX_REQUEST, FETCH_INDEX_SUCCESS, FETCH_INDEX_FAILURE],
-  contract: contract.callMethod('getIndex', tableHash, hash)
-    .then(({ fields, iType: type, name }) =>
-      dispatch(updateIndex(hash, { fields, type, name }))
-    )
-});
 
 /**
  * @param {string} tableHash

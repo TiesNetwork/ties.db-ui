@@ -27,23 +27,15 @@ const Tablespace = ({ hash, match, name, tables }) => {
 
   return (
     <div className={className}>
-      <div className={styles.Header}>
-        <div className={styles.Left}>
-          <div className={styles.Name}>
-            {name}
-          </div>
-        </div>
-
-        <div className={styles.Nav}>
-          <Tabs value="Tables">
-            <Tab label="Tables"  />
-          </Tabs>
-        </div>
-      </div>
-
       <div className={styles.Container}>
-        <div className={styles.Tables}>
-          <div className={styles.TablesContainer}>
+        <div className={styles.Sidebar}>
+          <div className={styles.Header}>
+            <div className={styles.Name}>
+              {name}
+            </div>
+          </div>
+
+          <div className={styles.Tables}>
             {tables && tables.length > 0 && tables.map(hash => (
               <TableSelector hash={hash} key={hash} />
             ))}

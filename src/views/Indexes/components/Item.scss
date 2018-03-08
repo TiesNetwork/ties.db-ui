@@ -1,0 +1,102 @@
+.Root {
+  align-items: center;
+  display: flex;
+  height: 60px;
+
+  &Empty {
+    .Field {
+      background-color: #989898;
+    }
+
+    .Icon {
+      background-color: #989898;
+    }
+
+    .Name {
+      background-color: #313c47;
+    }
+
+    .Type {
+      background-color: #989898;
+    }
+
+    .Field, .Icon, .Name, .Type {
+      border-radius: 4px;
+      color: transparent;
+      opacity: .5;
+    }
+
+    .Name, .Type {
+      width: 120px;
+    }
+  }
+}
+
+.Field {
+  &:not(:first-child) {
+    margin-left: 4px;
+  }
+
+  &:not(:last-child) {
+    &:after {
+      content: ',';
+    }
+  }
+}
+
+.Fields {
+  color: #989898;
+  display: flex;
+  flex: 1 1 auto;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 12px;
+  min-height: 18px;
+}
+
+.Icon {
+  align-items: center;
+  background-color: #4da1ff;
+  border-radius: 6px;
+  color: #fff;
+  display: flex;
+  height: 40px;
+  flex: 0 0 40px;
+  font-size: 22px;
+  justify-content: center;
+  text-transform: uppercase;
+  width: 40px;
+
+  &External {
+    background-color: #ff6d4a;
+  }
+
+  &Internal {
+    background-color: #4da1ff;
+  }
+
+  &Primary {
+    background-color: #9dde24;
+  }
+}
+
+.Info {
+  display: flex;
+  flex: 0 0 200px;
+  flex-direction: column;
+  margin: 0 12px;
+}
+
+.Name {
+  font-size: 16px;
+  line-height: 22px;
+  min-height: 22px;
+}
+
+.Type {
+  color: #989898;
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 2px;
+  min-height: 16px;
+}

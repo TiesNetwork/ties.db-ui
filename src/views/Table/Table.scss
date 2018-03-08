@@ -1,4 +1,7 @@
 .Root {
+  background-color: #f4f7f9;
+  flex: 1 1 auto;
+
   &Empty {
     .Name {
       background-color: #313c47;
@@ -11,16 +14,26 @@
 }
 
 .Container {
-  padding: 20px 24px 24px;
+  padding: 16px;
+}
+
+.Extra {
+  display: flex;
+  margin: 16px -8px 0;
 }
 
 .Header {
   align-items: center;
   border-bottom: 1px solid #e9eef4;
   display: flex;
-  height: 100px;
+  height: 56px;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 16px;
+}
+
+.Indexes {
+  flex: 1 1 60%;
+  margin: 0 8px;
 }
 
 .Name {
@@ -40,6 +53,11 @@
     margin-top: 28px;
     padding-top: 20px;
   }
+}
+
+.Triggers {
+  flex: 1 1 40%;
+  margin: 0 8px;
 }
 
 .Upload {

@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { normalize } from 'normalizr';
 import Web3 from 'web3';
 
 /** Actions **/
@@ -20,14 +21,12 @@ import {
 } from './types';
 
 /**
- * @param {string} hash
+ * @param {string} tableHash
  */
-export const fetchTable = hash => (dispatch, getState, { contract }) => ({
+export const fetchTable = tableHash => (dispatch, getState, { contract }) => ({
   types: [FETCH_TABLE_REQUEST, FETCH_TABLE_SUCCESS, FETCH_TABLE_FAILURE],
-  contract: contract.callMethod('getTable', hash)
-    .then(({ fields, indexes, name, triggers }) =>
-      dispatch(updateTable(hash, { fields, indexes, name, triggers }))
-    )
+  contract: contract.callMethod('getTable', tableHash)
+    .then(({ fields, name, indexes, triggers }) => dispatch(updateTable(tableHash, { fields, indexes, name, triggers })))
 });
 
 /**

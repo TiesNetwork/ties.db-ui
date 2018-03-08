@@ -23,14 +23,17 @@
 }
 
 .Content {
+  display: flex;
   flex: 1 1 auto;
 }
 
 .Header {
+  align-items: center;
   background-color: #f4f7f9;
   border-bottom: 1px solid #e9eef4;
   display: flex;
   height: 56px;
+  padding: 0 16px;
 }
 
 .Left {
@@ -57,7 +60,7 @@
   padding: 0 24px;
 }
 
-.Tables {
+.Sidebar {
   background-color: #f4f7f9;
   border-right: 1px solid #e9eef4;
   box-sizing: border-box;
@@ -68,7 +71,7 @@
   width: 260px;
 }
 
-.TablesContainer {
+.Tables {
   flex: 1 1 auto;
   padding: 16px;
 }

@@ -3,14 +3,14 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 
-/** Components **/
-import Fields from './components/Fields';
-import Indexes from './components/Indexes';
-import Triggers from './components/Triggers';
+/** Views **/
+import Fields from 'views/Fields';
+import Indexes from 'views/Indexes';
+// import Triggers from 'views/Triggers';
 
 import styles from './Table.scss';
 
-const Table = ({ fields, hash, indexes, name, triggers }) => {
+const Table = ({ hash, name }) => {
   const className = classNames(styles.Root, {
     [styles.RootEmpty]: !name,
   });
@@ -24,25 +24,17 @@ const Table = ({ fields, hash, indexes, name, triggers }) => {
       </div>
 
       <div className={styles.Container}>
-        <div className={styles.Section}>
-          <Fields
-            fields={fields}
-            key={`${hash}-fields`}
-          />
+        <div className={styles.Fields}>
+          <Fields />
         </div>
 
-        <div className={styles.Section}>
-          <Indexes
-            indexes={indexes}
-            key={`${hash}-indexes`}
-          />
-        </div>
+        <div className={styles.Extra}>
+          <div className={styles.Indexes}>
+            <Indexes />
+          </div>
 
-        <div className={styles.Section}>
-          <Triggers
-            key={`${hash}-triggers`}
-            triggers={triggers}
-          />
+          <div className={styles.Triggers}>
+          </div>
         </div>
       </div>
     </div>
