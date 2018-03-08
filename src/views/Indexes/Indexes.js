@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { fetchIndex } from './ducks/actions';
 
 /** Components **/
+import Button from 'components/Button';
 import Index from './components/Item';
 
 import styles from './Indexes.scss';
@@ -16,6 +17,12 @@ const Indexes = ({ handleFetch, indexes }) => (
     <div className={styles.Header}>
       <div className={styles.Title}>
         Indexes
+      </div>
+
+      <div className={styles.Actions}>
+        <Button variant={Button.VARIANT.PRIMARY}>
+          Create index
+        </Button>
       </div>
     </div>
 

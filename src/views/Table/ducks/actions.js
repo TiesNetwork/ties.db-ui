@@ -28,18 +28,6 @@ import {
 } from './types';
 
 
-/**
- * @param {string} tableHash
- * @param {string} hash
- */
-export const fetchTrigger = (tableHash, hash) => (dispatch, getState, { contract }) => ({
-  types: [FETCH_TRIGGER_REQUEST, FETCH_TRIGGER_SUCCESS, FETCH_TRIGGER_FAILURE],
-  contract: contract.callMethod('getTrigger', tableHash, hash)
-    .then(({ name, payload }) =>
-      dispatch(updateTrigger(hash, { name, payload }))
-    )
-});
-
 export const sendFieldForm = ({ tableId, ...payload }) => dispatch => {
   const id = hash.sha256().update(`${payload.name}${new Date().toString()}`).digest('hex');
 

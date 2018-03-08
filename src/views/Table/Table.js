@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 /** Views **/
 import Fields from 'views/Fields';
 import Indexes from 'views/Indexes';
-// import Triggers from 'views/Triggers';
+import Triggers from 'views/Triggers';
 
 import styles from './Table.scss';
 
@@ -34,6 +34,7 @@ const Table = ({ hash, name }) => {
           </div>
 
           <div className={styles.Triggers}>
+            <Triggers />
           </div>
         </div>
       </div>

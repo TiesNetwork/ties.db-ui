@@ -48,8 +48,8 @@ class IndexesItem extends Component {
         </div>
 
         <div className={styles.Fields}>
-          {fields && fields.map(field => (
-            <div className={styles.Field}>
+          {fields && fields.map((field, index) => (
+            <div className={styles.Field} key={index}>
               {field}
             </div>
           ))}

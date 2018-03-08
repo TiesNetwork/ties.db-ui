@@ -2,7 +2,5 @@ export const FIELD_FORM_ID = 'fieldForm';
 export const INDEX_FORM_ID = 'indexForm';
 export const TRIGGER_FORM_ID = 'triggerForm';
 
-export const FETCH_TRIGGER_REQUEST = 'VIEWS/TABLE/FETCH_TRIGGER_REQUEST';
-export const FETCH_TRIGGER_SUCCESS = 'VIEWS/TABLE/FETCH_TRIGGER_SUCCESS';
-export const FETCH_TRIGGER_FAILURE = 'VIEWS/TABLE/FETCH_TRIGGER_FAILURE';
+
 
