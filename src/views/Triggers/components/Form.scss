@@ -2,6 +2,12 @@
   display: flex;
   justify-content: space-between;
 
+  &Main {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
   &Submit {
     margin-left: 8px;
   }

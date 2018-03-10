@@ -9,7 +9,7 @@ const FormActions = ({ children, className: classNameProp }) => {
 
   return (
     <div className={className}>
-      {Children.map(children, child => cloneElement(child, {
+      {Children.map(children, child => child && cloneElement(child, {
         className: classNames(styles.Action, child.props.className)
       }))}
     </div>

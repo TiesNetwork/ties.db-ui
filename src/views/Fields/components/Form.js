@@ -47,7 +47,7 @@ const FieldsForm = ({
           </div>
         )}
 
-        <div>
+        <div className={styles.ActionsMain}>
           <Button
             onClick={handleCancelClick}
             size={Button.SIZE.LARGE}
@@ -72,8 +72,10 @@ const FieldsForm = ({
 
 
 const mapStateToProps = ({ entities, services }) => {
-  const hash = get(services, `modals.${FIELD_FORM_ID}`).hash;
-  const initialValues = hash && { ...get(entities, `fields.${hash}`, {}), hash };
+  const hash = get(services, `modals.${FIELD_FORM_ID}`, {}).hash;
+  const initialValues = hash
+    ? { ...get(entities, `fields.${hash}`, {}), hash }
+    : {};
 
   return { initialValues };
 };

@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+/** Actions **/
+import { openModal } from 'services/modals';
+
+/** Types **/
+import { INDEXES_FORM_ID } from '../ducks/types';
+
 import styles from './Item.scss';
 
 const TYPE = {
@@ -19,7 +25,7 @@ class IndexesItem extends Component {
   }
 
   render() {
-    const { className: classNameProp, fields, name, type } = this.props;
+    const { className: classNameProp, fields, handleClick, name, type } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
@@ -33,26 +39,31 @@ class IndexesItem extends Component {
 
     return (
       <div className={className}>
-        <div className={iconClassName}>
-          {type && type.substr(0, 1)}
-        </div>
-
-        <div className={styles.Info}>
-          <div className={styles.Name}>
-            {name}
+        <div
+          className={styles.Container}
+          onClick={handleClick}
+        >
+          <div className={iconClassName}>
+            {type && type.substr(0, 1)}
           </div>
 
-          <div className={styles.Type}>
-            {type}
-          </div>
-        </div>
-
-        <div className={styles.Fields}>
-          {fields && fields.map((field, index) => (
-            <div className={styles.Field} key={index}>
-              {field}
+          <div className={styles.Info}>
+            <div className={styles.Name}>
+              {name}
             </div>
-          ))}
+
+            <div className={styles.Type}>
+              {type}
+            </div>
+          </div>
+
+          <div className={styles.Fields}>
+            {fields && fields.map((field, index) => (
+              <div className={styles.Field} key={index}>
+                {field}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -76,6 +87,10 @@ const mapStateToProps = ({ entities }, { hash }) => {
     ...index,
     fields: fields && fields.map(hash => get(entities, `fields.${hash}`, {}).name),
   };
-}
+};
 
-export default connect(mapStateToProps)(IndexesItem);
+const mapDispatchToProps = (dispatch, { hash }) => ({
+  handleClick: () => dispatch(openModal(INDEXES_FORM_ID, { hash, title: 'Update a index' })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexesItem);

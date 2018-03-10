@@ -11,14 +11,15 @@ import Button from 'components/Button';
 import Form, { Actions, Input } from 'components/Form';
 
 /** Types **/
-import { TRIGGER_FORM_ID } from '../ducks/types';
+import { INDEXES_FORM_ID } from '../ducks/types';
 
 /** Utils **/
 import validate, { required } from 'utils/validate';
 
 import styles from './Form.scss';
 
-const TriggersForm = ({
+const IndexesForm = ({
+  fields,
   handleCancelClick,
   handleSubmit,
   initialValues: { hash },
@@ -29,7 +30,7 @@ const TriggersForm = ({
   return (
     <Form onSubmit={handleSubmit}>
       <Input label="Name" name="name" />
-      <Input label="Payload" name="payload" />
+      <Input label="Type" name="type" />
 
       <Input name="hash" type="hidden" />
 
@@ -41,7 +42,7 @@ const TriggersForm = ({
               size={Button.SIZE.LARGE}
               variant={Button.VARIANT.DANGER}
             >
-              Delete trigger
+              Delete field
             </Button>
           </div>
         )}
@@ -61,31 +62,39 @@ const TriggersForm = ({
             type="submit"
             variant={Button.VARIANT.SUCCESS}
           >
-            {`${hash ? 'Update' : 'Create'} trigger`}
+            {`${hash ? 'Update' : 'Create'} index`}
           </Button>
         </div>
       </Actions>
     </Form>
-  )
+  );
 }
 
+
 const mapStateToProps = ({ entities, services }) => {
-  const hash = get(services, `modals.${TRIGGER_FORM_ID}`).hash;
+  const hash = get(services, `modals.${INDEXES_FORM_ID}`, {}).hash;
+  const { fieldHashes, ...index } = get(entities, `indexes.${hash}`, {});
+
+  const fields = fieldHashes && fieldHashes.map(fieldHash => ({
+    hash: fieldHash,
+    name: get(entities, `fields.${fieldHash}`, {}).name,
+  }));
+
   const initialValues = hash
-    ? { ...get(entities, `triggers.${hash}`, {}), hash }
+    ? { ...index, hash}
     : {};
 
-  return { initialValues };
+  return { fields, initialValues };
 };
 
-const mapDispatchToProps = dispatch => ({
-  handleCancelClick: () => dispatch(closeModal(TRIGGER_FORM_ID)),
+const mapDispatchToProps = (dispatch) => ({
+  handleCancelClick: () => dispatch(closeModal(INDEXES_FORM_ID))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
-  form: TRIGGER_FORM_ID,
+  form: INDEXES_FORM_ID,
   validate: validate({
     name: [required()],
-    payload: [required()],
+    type: [required()],
   }),
-})(TriggersForm))
+})(IndexesForm))
