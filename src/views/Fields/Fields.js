@@ -5,7 +5,11 @@ import { withRouter } from 'react-router-dom';
 
 /** Actions **/
 import { openModal } from 'services/modals';
-import { fetchField, sendFieldForm } from './ducks/actions';
+import {
+  deleteField,
+  fetchField,
+  sendFieldForm
+} from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
@@ -19,7 +23,7 @@ import { FIELD_FORM_ID } from './ducks/types';
 
 import styles from './Fields.scss';
 
-const Fields = ({ handleClick, handleFetch, handleSubmit, fields }) => (
+const Fields = ({ handleClick, handleDelete, handleFetch, handleSubmit, fields }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -41,7 +45,6 @@ const Fields = ({ handleClick, handleFetch, handleSubmit, fields }) => (
         <div className={styles.Fields}>
           {fields.map(hash => (
             <Field
-              className={styles.Field}
               hash={hash}
               key={hash}
               onFetch={handleFetch}
@@ -51,12 +54,9 @@ const Fields = ({ handleClick, handleFetch, handleSubmit, fields }) => (
       )}
     </div>
 
-    <Modal
-      id={FIELD_FORM_ID}
-      title="Create a field"
-    >
+    <Modal id={FIELD_FORM_ID}>
       <Form
-        initialValues={{ defaultValue: '0x6465663131' }}
+        onDelete={handleDelete}
         onSubmit={handleSubmit}
       />
     </Modal>
@@ -75,7 +75,8 @@ const mapDispatchToProps = (dispatch, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
 
   return {
-    handleClick: () => dispatch(openModal(FIELD_FORM_ID)),
+    handleClick: () => dispatch(openModal(FIELD_FORM_ID, { title: 'Create a field' })),
+    handleDelete: hash => dispatch(deleteField(tableHash, hash)),
     handleFetch: hash => dispatch(fetchField(tableHash, hash)),
     handleSubmit: values => dispatch(sendFieldForm(tableHash, values)),
   };

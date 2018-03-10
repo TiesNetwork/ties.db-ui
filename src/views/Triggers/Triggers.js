@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 /** Actions **/
 import { openModal } from 'services/modals';
-import { fetchTrigger, sendTriggerForm } from './ducks/actions';
+import { deleteTrigger, fetchTrigger, sendTriggerForm } from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
@@ -19,7 +19,7 @@ import { TRIGGER_FORM_ID } from './ducks/types';
 
 import styles from './Triggers.scss';
 
-const Triggers = ({ handleClick, handleFetch, handleSubmit, triggers }) => (
+const Triggers = ({ handleClick, handleDelete, handleFetch, handleSubmit, triggers }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -51,12 +51,9 @@ const Triggers = ({ handleClick, handleFetch, handleSubmit, triggers }) => (
       )}
     </div>
 
-    <Modal
-      id={TRIGGER_FORM_ID}
-      title="Create a trigger"
-    >
+    <Modal id={TRIGGER_FORM_ID}>
       <Form
-        initialValues={{ payload: '0x6465663131' }}
+        onDelete={handleDelete}
         onSubmit={handleSubmit}
       />
     </Modal>
@@ -75,7 +72,8 @@ const mapDispatchToProps = (dispatch, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
 
   return {
-    handleClick: () => dispatch(openModal(TRIGGER_FORM_ID)),
+    handleClick: () => dispatch(openModal(TRIGGER_FORM_ID, { title: 'Create a trigger' })),
+    handleDelete: hash => dispatch(deleteTrigger(tableHash, hash)),
     handleFetch: hash => dispatch(fetchTrigger(tableHash, hash)),
     handleSubmit: values => dispatch(sendTriggerForm(tableHash, values)),
   };

@@ -10,6 +10,7 @@ const SIZE = {
 };
 
 const VARIANT = {
+  DANGER: 'Danger',
   PRIMARY: 'Primary',
   SECONDARY: 'Secondary',
   SUCCESS: 'Success',
@@ -27,6 +28,7 @@ const Button = (props) => {
     [styles.RootSizeNormal]: size === SIZE.NORMAL,
     [styles.RootSizeLarge]: size === SIZE.LARGE,
 
+    [styles.RootVariantDanger]: variant === VARIANT.DANGER,
     [styles.RootVariantPrimary]: variant === VARIANT.PRIMARY,
     [styles.RootVariantSecondary]: variant === VARIANT.SECONDARY,
     [styles.RootVariantSuccess]: variant === VARIANT.SUCCESS,
@@ -45,7 +47,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   size: PropTypes.oneOf([SIZE.NORMAL, SIZE.LARGE]),
   type: PropTypes.string,
-  variant: PropTypes.oneOf([VARIANT.PRIMARY, VARIANT.SECONDARY, VARIANT.SUCCESS]),
+  variant: PropTypes.oneOf([VARIANT.DANGER, VARIANT.PRIMARY, VARIANT.SECONDARY, VARIANT.SUCCESS]),
 };
 
 Button.defaultProps = {

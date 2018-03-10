@@ -10,7 +10,6 @@ import TableSelector from './components/TableSelector';
 import TableTrigger from './components/TableTrigger';
 
 import Modal from 'components/Modal';
-import Tabs, { Tab } from 'components/Tabs';
 
 /** Types **/
 import { TABLE_FORM_ID } from './ducks/types';

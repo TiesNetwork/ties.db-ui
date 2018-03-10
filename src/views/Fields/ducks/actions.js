@@ -1,4 +1,8 @@
 import {
+  DELETE_FIELD_REQUEST,
+  DELETE_FIELD_SUCCESS,
+  DELETE_FIELD_FAILURE,
+
   FETCH_FIELD_REQUEST,
   FETCH_FIELD_SUCCESS,
   FETCH_FIELD_FAILURE,
@@ -10,6 +14,16 @@ import {
 
 /** Actions **/
 import { updateField } from 'entities/models/fields';
+
+/**
+ * @param {string} tableHash
+ * @param {string} hash
+ */
+export const deleteField = (tableHash, hash) => (dispatch, getState, { contract }) => ({
+  types: [DELETE_FIELD_REQUEST, DELETE_FIELD_SUCCESS, DELETE_FIELD_FAILURE],
+  contract: contract.sendMethod('deleteField', tableHash, hash)
+    .then(res => console.log(res))
+});
 
 /**
  * @param {string} tableHash

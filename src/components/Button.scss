@@ -1,6 +1,6 @@
 .Root {
   border: 1px solid;
-  border-radius: 5px;
+  border-radius: 6px;
   min-width: 100px;
   padding: 0 16px;
   text-transform: uppercase;
@@ -26,6 +26,12 @@
   }
 
   &Variant {
+    &Danger {
+      background-color: #ff6d4a;
+      border-color: #ff6d4a;
+      color: #fff;
+    }
+
     &Primary {
       background-color: #4da1ff;
       border-color: #4da1ff;

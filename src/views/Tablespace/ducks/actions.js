@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import { normalize } from 'normalizr';
 import Web3 from 'web3';
 
 /** Actions **/

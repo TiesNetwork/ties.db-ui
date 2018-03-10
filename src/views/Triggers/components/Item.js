@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+/** Actions **/
+import { openModal } from 'services/modals';
+
+/** Types **/
+import { TRIGGER_FORM_ID } from '../ducks/types';
+
 import styles from './Item.scss';
 
 class TriggersItem extends Component {
@@ -13,7 +19,7 @@ class TriggersItem extends Component {
   }
 
   render() {
-    const { className: classNameProp, name } = this.props;
+    const { className: classNameProp, handleClick, name } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
@@ -21,8 +27,13 @@ class TriggersItem extends Component {
 
     return (
       <div className={className}>
-        <div className={styles.Name}>
-          {name}
+        <div
+          className={styles.Container}
+          onClick={handleClick}
+        >
+          <div className={styles.Name}>
+            {name}
+          </div>
         </div>
       </div>
     );
@@ -36,5 +47,8 @@ TriggersItem.propTypes = {
 };
 
 const mapStateToProps = ({ entities }, { hash }) => get(entities, `triggers.${hash}`, {});
+const mapDispatchToProps = (dispatch, { hash }) => ({
+  handleClick: () => dispatch(openModal(TRIGGER_FORM_ID, { hash, title: 'Update a trigger' })),
+});
 
-export default connect(mapStateToProps)(TriggersItem);
+export default connect(mapStateToProps, mapDispatchToProps)(TriggersItem);
