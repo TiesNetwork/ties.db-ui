@@ -4,7 +4,11 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /** Actions **/
-import { fetchTablespaces } from './ducks/actions';
+import {
+  deleteTablespace,
+  fetchTablespaces,
+  sendTablespaceForm,
+} from './ducks/actions';
 
 /** Components **/
 import Modal from 'components/Modal';
@@ -30,7 +34,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { match, tablespaces } = this.props;
+    const { handleDelete, handleSubmit, match, tablespaces } = this.props;
 
     return (
       <div className={styles.Root}>
@@ -50,7 +54,10 @@ class Dashboard extends Component {
           id={TABLESPACE_FORM_ID}
           title="Create a tablespace"
         >
-          <TablespaceForm />
+          <TablespaceForm
+            onDelete={handleDelete}
+            onSubmit={handleSubmit}
+          />
         </Modal>
       </div>
     );
@@ -60,6 +67,8 @@ class Dashboard extends Component {
 const mapStateToProps = state => get(state, 'views.dashboard', {});
 const mapDispatchToProps = dispatch => ({
   fetchTablespaces: () => dispatch(fetchTablespaces()),
+  handleDelete: hash => dispatch(deleteTablespace(hash)),
+  handleSubmit: values => dispatch(sendTablespaceForm(values)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

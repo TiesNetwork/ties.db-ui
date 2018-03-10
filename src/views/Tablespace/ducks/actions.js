@@ -12,12 +12,25 @@ import {
   CREATE_TABLE_SUCCESS,
   CREATE_TABLE_FAILURE,
 
+  DELETE_TABLE_REQUEST,
+  DELETE_TABLE_SUCCESS,
+  DELETE_TABLE_FAILURE,
+
   FETCH_TABLE_REQUEST,
   FETCH_TABLE_SUCCESS,
   FETCH_TABLE_FAILURE,
 
   TABLE_FORM_ID,
 } from './types';
+
+/**
+ * @param {string} tablespaceHash
+ * @param {string} hash
+ */
+export const deleteTable = (tablespaceHash, hash) => (dispatch, getState, { contract }) => ({
+  types: [DELETE_TABLE_REQUEST, DELETE_TABLE_SUCCESS, DELETE_TABLE_FAILURE],
+  contract: contract.sendMethod('deleteTable', tablespaceHash, hash)
+});
 
 /**
  * @param {string} tableHash

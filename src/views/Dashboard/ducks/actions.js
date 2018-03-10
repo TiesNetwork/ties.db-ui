@@ -3,11 +3,14 @@ import Web3 from 'web3';
 /** Actions **/
 import { createTablespace, updateTablespace } from 'entities/models/tablespaces';
 import { updateEntities } from 'entities/actions';
-
-// import { closeModal } from 'services/modals';
+import { closeModal } from 'services/modals';
 
 /** Types **/
 import {
+  DELETE_TABLESPACE_REQUEST,
+  DELETE_TABLESPACE_SUCCESS,
+  DELETE_TABLESPACE_FAILURE,
+
   FETCH_TABLESPACE_REQUEST,
   FETCH_TABLESPACE_SUCCESS,
   FETCH_TABLESPACE_FAILURE,
@@ -24,7 +27,14 @@ import {
 
   UPDATE_TABLESPACES,
 } from './types';
-import {closeModal} from "services/modals";
+
+/**
+ * @param {string} hash
+ */
+export const deleteTablespace = hash => (dispatch, getState, { contract }) => dispatch({
+  types: [DELETE_TABLESPACE_REQUEST, DELETE_TABLESPACE_SUCCESS, DELETE_TABLESPACE_FAILURE],
+  contract: contract.sendMethod('deleteTablespace', hash)
+})
 
 /**
  * @param {string} hash

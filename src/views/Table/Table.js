@@ -3,6 +3,16 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 
+/** Actions **/
+import { openModal } from 'services/modals';
+
+/** Components **/
+import Button from 'components/Button';
+import Icon from 'components/Icon';
+
+/** Types **/
+import { TABLE_FORM_ID } from 'views/Tablespace/ducks/types';
+
 /** Views **/
 import Fields from 'views/Fields';
 import Indexes from 'views/Indexes';
@@ -10,7 +20,7 @@ import Triggers from 'views/Triggers';
 
 import styles from './Table.scss';
 
-const Table = ({ hash, name }) => {
+const Table = ({ handleSettingsClick, hash, name }) => {
   const className = classNames(styles.Root, {
     [styles.RootEmpty]: !name,
   });
@@ -20,6 +30,16 @@ const Table = ({ hash, name }) => {
       <div className={styles.Header}>
         <div className={styles.Name}>
           {name}
+        </div>
+
+        <div className={styles.Actions}>
+          <Button
+            onClick={handleSettingsClick}
+            size={Button.SIZE.ICON}
+            variant={Button.VARIANT.ICON}
+          >
+            <Icon type={Icon.TYPE.SETTINGS} />
+          </Button>
         </div>
       </div>
 
@@ -47,4 +67,11 @@ const mapStateToProps = ({ entities }, { match }) => {
   return { hash, ...get(entities, `tables.${hash}`)};
 };
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch, { match }) => {
+  const hash = get(match, 'params.tableHash');
+  return ({
+    handleSettingsClick: () => dispatch(openModal(TABLE_FORM_ID, { hash, title: 'Update a table' }))
+  });
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

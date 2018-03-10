@@ -4,22 +4,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
+/** Actions **/
+import { openModal } from 'services/modals';
+import { deleteTable, sendTableForm } from './ducks/actions';
+
 /** Components **/
+import Button from 'components/Button';
+import Icon from 'components/Icon';
+import Modal from 'components/Modal';
+
 import TableForm from './components/TableForm';
 import TableSelector from './components/TableSelector';
 import TableTrigger from './components/TableTrigger';
 
-import Modal from 'components/Modal';
-
 /** Types **/
 import { TABLE_FORM_ID } from './ducks/types';
+import { TABLESPACE_FORM_ID } from 'views/Dashboard/ducks/types';
 
 /** Views **/
 import Table from '../Table';
 
 import styles from './Tablespace.scss';
 
-const Tablespace = ({ hash, match, name, tables }) => {
+const Tablespace = ({
+  handleDelete,
+  handleSettingsClick,
+  handleSubmit,
+  hash,
+  match,
+  name,
+  tables,
+}) => {
   const className = classNames(styles.Root, {
     [styles.RootEmpty]: !name,
   });
@@ -31,6 +46,16 @@ const Tablespace = ({ hash, match, name, tables }) => {
           <div className={styles.Header}>
             <div className={styles.Name}>
               {name}
+            </div>
+
+            <div className={styles.Actions}>
+              <Button
+                onClick={handleSettingsClick}
+                size={Button.SIZE.ICON}
+                variant={Button.VARIANT.ICON}
+              >
+                <Icon type={Icon.TYPE.SETTINGS} />
+              </Button>
             </div>
           </div>
 
@@ -51,15 +76,28 @@ const Tablespace = ({ hash, match, name, tables }) => {
       </div>
 
       <Modal id={TABLE_FORM_ID} title="Create a table">
-        <TableForm initialValues={{ tablespaceHash: hash }}/>
+        <TableForm
+          onDelete={handleDelete}
+          onSubmit={handleSubmit}
+        />
       </Modal>
     </div>
   );
 };
 
 const mapStateToProps = (state, { match }) => {
-  const hash = get(match, 'params.tablespaceHash', 0);
+  const hash = get(match, 'params.tablespaceHash');
   return get(state, `entities.tablespaces.${hash}`, {});
 };
 
-export default connect(mapStateToProps)(Tablespace);
+const mapDispatchToProps = (dispatch, { match }) => {
+  const tablespaceHash = get(match, 'params.tablespaceHash');
+
+  return ({
+    handleDelete: hash => dispatch(deleteTable(tablespaceHash, hash)),
+    handleSettingsClick: () => dispatch(openModal(TABLESPACE_FORM_ID, { tablespaceHash, title: 'Edit tablespace'})),
+    handleSubmit: values => dispatch(sendTableForm(tablespaceHash, values)),
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tablespace);
