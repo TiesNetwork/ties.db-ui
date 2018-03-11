@@ -4,24 +4,6 @@
   width: 100%;
 }
 
-.Error {
-  color: #ff6d4a;
-  margin-left: 8px;
-}
-
-.Label {
-  color: #bac5cd;
-  font-size: 12px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.Info {
-  color: #989898;
-  font-size: 14px;
-  margin-top: 8px;
-}
-
 .Input {
   border: 1px solid #e9eff4;
   border-radius: 5px;
@@ -40,7 +22,6 @@
       box-shadow: 0 0 0 1px #dcdcdc;
     }
   }
-  
 
   &Error {
     border-color: #ff6d4a;

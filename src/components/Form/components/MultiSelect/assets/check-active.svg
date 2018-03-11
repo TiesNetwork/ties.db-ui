@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>check green</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Tasks" transform="translate(-193.000000, -555.000000)">
+            <g id="4" transform="translate(193.000000, 543.000000)">
+                <g id="check-green" transform="translate(0.000000, 12.000000)">
+                    <circle id="Oval" fill="#9DDF00" cx="13" cy="13" r="13"></circle>
+                    <path d="M18.565,11.555 L18.565,11.555 L17.062,13.056 L17.062,13.056 L12.555,17.562 L12.555,17.562 C12.283,17.834 11.908,18.002 11.493,18.002 C11.078,18.002 10.702,17.834 10.43,17.562 L10.43,17.562 L7.425,14.558 L7.425,14.558 C7.154,14.287 6.985,13.911 6.985,13.497 C6.985,12.667 7.658,11.994 8.488,11.994 C8.903,11.994 9.278,12.162 9.55,12.435 L9.55,12.435 L11.493,14.376 L14.938,10.932 L16.44,9.431 L16.44,9.431 C16.712,9.159 17.088,8.991 17.502,8.991 C18.332,8.991 19.005,9.663 19.005,10.492 C19.005,10.908 18.837,11.283 18.565,11.555 L18.565,11.555 Z" id="Shape" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

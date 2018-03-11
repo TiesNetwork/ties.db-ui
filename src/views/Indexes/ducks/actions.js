@@ -1,8 +1,26 @@
+import Web3 from 'web3';
+
 /** Actions **/
+import { closeModal } from 'services/modals';
+
+import {
+  createIndex as createIndexEntity,
+  deleteIndex as deleteIndexEntity,
+} from 'entities/models/indexes';
+
+import {
+  createIndex as createIndexInTableEntity,
+  deleteIndex as deleteIndexInTableEntity,
+} from 'entities/models/tables';
+
 import { updateIndex } from 'entities/models/indexes';
 
 /** Types **/
 import {
+  CREATE_INDEX_REQUEST,
+  CREATE_INDEX_SUCCESS,
+  CREATE_INDEX_FAILURE,
+
   DELETE_INDEX_REQUEST,
   DELETE_INDEX_SUCCESS,
   DELETE_INDEX_FAILURE,
@@ -10,7 +28,28 @@ import {
   FETCH_INDEX_REQUEST,
   FETCH_INDEX_SUCCESS,
   FETCH_INDEX_FAILURE,
+
+  INDEXES_FORM_ID,
 } from './types';
+
+/**
+ * @param {string} tableHash
+ *
+ * @param {Array} fields
+ * @param {string} name
+ * @param {string} type
+ */
+export const createIndex = (tableHash, { fields, name, type }) => (dispatch, getState, { contract }) => ({
+  types: [CREATE_INDEX_REQUEST, CREATE_INDEX_SUCCESS, CREATE_INDEX_FAILURE],
+  contract: contract.sendMethod('createIndex', tableHash, name, type, fields)
+    .on('transactionHash', transactionHash => {
+      const hash = Web3.utils.sha3(name);
+
+      dispatch(createIndexEntity(hash, { fields, name, type }));
+      dispatch(createIndexInTableEntity(tableHash, hash));
+      dispatch(closeModal(INDEXES_FORM_ID));
+    })
+});
 
 /**
  * @param {string} tableHash
@@ -19,6 +58,11 @@ import {
 export const deleteIndex = (tableHash, hash) => (dispatch, getState, { contract }) => ({
   types: [DELETE_INDEX_REQUEST, DELETE_INDEX_SUCCESS, DELETE_INDEX_FAILURE],
   contract: contract.sendMethod('deleteIndex', tableHash, hash)
+    .on('transactionHash', transactionHash => {
+      dispatch(deleteIndexEntity(hash));
+      dispatch(deleteIndexInTableEntity(tableHash, hash));
+      dispatch(closeModal(INDEXES_FORM_ID));
+    })
 });
 
 /**

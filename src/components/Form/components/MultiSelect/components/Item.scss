@@ -1,0 +1,32 @@
+.Root {
+  align-items: center;
+  display: flex;
+  height: 60px;
+  padding: 0 16px;
+
+  &:hover {
+    background-color: #f4f7f9;
+    cursor: pointer;
+  }
+
+  &:not(:first-child) {
+    border-top: 1px solid #e9eff4;
+  }
+}
+
+.Check {
+  background: url(../assets/check.svg) no-repeat center center;
+  background-size: contain;
+  height: 24px;
+  width: 24px;
+
+  &Selected {
+    background-image: url(../assets/check-active.svg);
+  }
+}
+
+.Title {
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 12px;
+}

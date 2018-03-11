@@ -6,9 +6,9 @@ import { withRouter } from 'react-router-dom';
 /** Actions **/
 import { openModal } from 'services/modals';
 import {
+  createField,
   deleteField,
   fetchField,
-  sendFieldForm
 } from './ducks/actions';
 
 /** Components **/
@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch, { match }) => {
     handleClick: () => dispatch(openModal(FIELD_FORM_ID, { title: 'Create a field' })),
     handleDelete: hash => dispatch(deleteField(tableHash, hash)),
     handleFetch: hash => dispatch(fetchField(tableHash, hash)),
-    handleSubmit: values => dispatch(sendFieldForm(tableHash, values)),
+    handleSubmit: values => dispatch(createField(tableHash, values)),
   };
 }
 

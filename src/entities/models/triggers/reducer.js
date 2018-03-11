@@ -1,5 +1,9 @@
+import { omit } from 'lodash';
+
+/** Types **/
 import {
   CREATE_TRIGGER,
+  DELETE_TRIGGER,
   UPDATE_TRIGGER,
 } from './types';
 
@@ -14,6 +18,8 @@ export default (state = initialState, action) => {
         ...state,
         [action.hash]: action.payload,
       };
+    case DELETE_TRIGGER:
+      return omit(state, action.hash);
     case UPDATE_TRIGGER:
       return {
         ...state,

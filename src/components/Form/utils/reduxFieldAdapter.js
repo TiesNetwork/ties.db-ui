@@ -1,4 +1,2 @@
-export default props => {
-  const { children, input, meta: { error, touched }} = props;
-  return children({ ...input, ...props, error: touched && error });
-}
+export default ({ children, input, meta: { error, touched }, ...props }) =>
+  children({ ...input, ...props, error: touched && error });

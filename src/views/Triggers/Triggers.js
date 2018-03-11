@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 /** Actions **/
 import { openModal } from 'services/modals';
-import { deleteTrigger, fetchTrigger, sendTriggerForm } from './ducks/actions';
+import { createTrigger, deleteTrigger, fetchTrigger } from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch, { match }) => {
     handleClick: () => dispatch(openModal(TRIGGER_FORM_ID, { title: 'Create a trigger' })),
     handleDelete: hash => dispatch(deleteTrigger(tableHash, hash)),
     handleFetch: hash => dispatch(fetchTrigger(tableHash, hash)),
-    handleSubmit: values => dispatch(sendTriggerForm(tableHash, values)),
+    handleSubmit: values => dispatch(createTrigger(tableHash, values)),
   };
 }
 

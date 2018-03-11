@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 /** Actions **/
 import { openModal } from 'services/modals';
 import {
+  createIndex,
   deleteIndex,
   fetchIndex,
 } from './ducks/actions';
@@ -28,6 +29,7 @@ const Indexes = ({
   handleFetch,
   handleSubmit,
   indexes,
+  tableHash,
 }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
@@ -63,6 +65,7 @@ const Indexes = ({
       <Form
         onDelete={handleDelete}
         onSubmit={handleSubmit}
+        tableHash={tableHash}
       />
     </Modal>
   </div>
@@ -72,6 +75,7 @@ const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
 
   return {
+    tableHash,
     indexes: get(entities, `tables.${tableHash}`, {}).indexes,
   };
 };
@@ -83,7 +87,7 @@ const mapDispatchToProps = (dispatch, { match }) => {
     handleClick: () => dispatch(openModal(INDEXES_FORM_ID, { title: 'Create a index' })),
     handleDelete: hash => dispatch(deleteIndex(tableHash, hash)),
     handleFetch: hash => dispatch(fetchIndex(tableHash, hash)),
-    // handleSubmit: values => dispatch(sendFieldForm(tableHash, values)),
+    handleSubmit: values => dispatch(createIndex(tableHash, values)),
   };
 }
 

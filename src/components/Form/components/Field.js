@@ -19,11 +19,23 @@ class FormField extends Component {
     });
 
     return (
-      <div className={className}>
-        <Field {...this.props} component={reduxFieldAdapter}>
-          {props => cloneElement(children, { ...props, id })}
-        </Field>
-      </div>
+      <Field {...this.props} component={reduxFieldAdapter}>
+        {({ error, label, info, ...props }) => (
+          <div className={className}>
+            <label className={styles.Label} htmlFor={id}>
+              {label}
+
+              {error && (<span className={styles.Error}>{error}</span>)}
+            </label>
+
+            <div className={styles.Control}>
+              {cloneElement(children, { ...props, error, id })}
+            </div>
+
+            {info && (<div className={styles.Info}>{info}</div>)}
+          </div>
+        )}
+      </Field>
     )
   }
 }
@@ -32,6 +44,8 @@ class FormField extends Component {
 FormField.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  label: PropTypes.string,
+  info: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string
 };

@@ -1,5 +1,9 @@
+import { omit } from 'lodash';
+
+/** Types **/
 import {
   CREATE_INDEX,
+  DELETE_INDEX,
   UPDATE_INDEX,
 } from './types';
 
@@ -14,6 +18,8 @@ export default (state = initialState, action) => {
         ...state,
         [action.hash]: action.payload,
       };
+    case DELETE_INDEX:
+      return omit(state, action.hash);
     case UPDATE_INDEX:
       return {
         ...state,

@@ -24,19 +24,6 @@ const FormInput = ({
 
   return (
     <div className={styles.Root}>
-      <label
-        className={styles.Label}
-        htmlFor={id}
-      >
-        {label}
-
-        {error && (
-          <span className={styles.Error}>
-          {error}
-        </span>
-        )}
-      </label>
-
       <input
         className={inputClassName}
         disabled={disabled}
@@ -47,12 +34,6 @@ const FormInput = ({
         type={type}
         value={value}
       />
-
-      {info && (
-        <div className={styles.Info}>
-          {info}
-        </div>
-      )}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { closeModal } from 'services/modals';
 
 /** Components **/
 import Button from 'components/Button';
-import Form, { Actions, Input } from 'components/Form';
+import Form, { Actions, Input, MultiSelect, MultiSelectItem } from 'components/Form';
 
 /** Types **/
 import { INDEXES_FORM_ID } from '../ducks/types';
@@ -32,6 +32,16 @@ const IndexesForm = ({
       <Input label="Name" name="name" />
       <Input label="Type" name="type" />
 
+      <MultiSelect label="Fields" name="fields">
+        {fields && fields.length > 0 && fields.map(({ hash, name }) => (
+          <MultiSelectItem
+            key={hash}
+            title={name || hash}
+            value={hash}
+          />
+        ))}
+      </MultiSelect>
+
       <Input name="hash" type="hidden" />
 
       <Actions className={styles.Actions}>
@@ -42,7 +52,7 @@ const IndexesForm = ({
               size={Button.SIZE.LARGE}
               variant={Button.VARIANT.DANGER}
             >
-              Delete field
+              Delete index
             </Button>
           </div>
         )}
@@ -71,14 +81,15 @@ const IndexesForm = ({
 }
 
 
-const mapStateToProps = ({ entities, services }) => {
+const mapStateToProps = ({ entities, services }, { tableHash }) => {
   const hash = get(services, `modals.${INDEXES_FORM_ID}`, {}).hash;
-  const { fieldHashes, ...index } = get(entities, `indexes.${hash}`, {});
+  const index = get(entities, `indexes.${hash}`, {});
 
+  const fieldHashes = get(entities, `tables.${tableHash}`, {}).fields;
   const fields = fieldHashes && fieldHashes.map(fieldHash => ({
-    hash: fieldHash,
-    name: get(entities, `fields.${fieldHash}`, {}).name,
-  }));
+      hash: fieldHash,
+      name: get(entities, `fields.${fieldHash}`, {}).name,
+    }));
 
   const initialValues = hash
     ? { ...index, hash}

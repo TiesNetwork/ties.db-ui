@@ -1,10 +1,15 @@
-import { omit } from 'lodash';
+import { omit, remove } from 'lodash';
 
 /** Types **/
 import {
-  ADD_FIELD,
-  ADD_INDEX,
-  ADD_TRIGGER,
+  CREATE_FIELD,
+  DELETE_FIELD,
+
+  CREATE_INDEX,
+  DELETE_INDEX,
+
+  CREATE_TRIGGER,
+  DELETE_TRIGGER,
 
   CREATE_TABLE,
   DELETE_TABLE,
@@ -17,7 +22,7 @@ export default (state = initialState, action) => {
   const table = state[action.hash];
 
   switch (action.type) {
-    case ADD_FIELD:
+    case CREATE_FIELD:
       return {
         ...state,
         [action.hash]: {
@@ -25,7 +30,16 @@ export default (state = initialState, action) => {
           fields: [...table.fields, action.payload],
         }
       };
-    case ADD_INDEX:
+    case DELETE_FIELD:
+      return {
+        ...state,
+        [action.hash]: {
+          ...table,
+          fields: remove(table.fields, n => n !== action.payload)
+        }
+      };
+
+    case CREATE_INDEX:
       return {
         ...state,
         [action.hash]: {
@@ -33,7 +47,16 @@ export default (state = initialState, action) => {
           indexes: [...table.indexes, action.payload],
         }
       };
-    case ADD_TRIGGER:
+    case DELETE_INDEX:
+      return {
+        ...state,
+        [action.hash]: {
+          ...table,
+          indexes: remove(table.indexes, n => n !== action.payload)
+        }
+      };
+
+    case CREATE_TRIGGER:
       return {
         ...state,
         [action.hash]: {
@@ -41,6 +64,15 @@ export default (state = initialState, action) => {
           triggers: [...table.triggers, action.payload],
         }
       };
+    case DELETE_TRIGGER:
+      return {
+        ...state,
+        [action.hash]: {
+          ...table,
+          triggers: remove(table.triggers, n => n !== action.payload)
+        }
+      };
+
     case CREATE_TABLE:
       return {
         ...state,

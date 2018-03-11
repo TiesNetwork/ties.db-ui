@@ -1,7 +1,6 @@
 const contractMiddleware = store => next => action => {
   if (action.contract && action.types) {
     const [REQUESTED, RESOLVED, REJECTED] = action.types;
-    const transaction = action.transaction;
 
     next({ ...action, type: REQUESTED });
 

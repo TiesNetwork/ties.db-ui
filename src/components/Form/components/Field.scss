@@ -7,3 +7,26 @@
     display: none;
   }
 }
+
+.Control {
+  width: 100%;
+}
+
+.Error {
+  color: #ff6d4a;
+  margin-left: 8px;
+}
+
+.Info {
+  color: #989898;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.Label {
+  color: #bac5cd;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
