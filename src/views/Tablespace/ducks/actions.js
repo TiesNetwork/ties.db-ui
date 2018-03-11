@@ -2,8 +2,15 @@ import { get } from 'lodash';
 import Web3 from 'web3';
 
 /** Actions **/
-import { createTable, updateTable } from 'entities/models/tables';
-import { addTable } from 'entities/models/tablespaces';
+import {
+  createTable as createTableEntity,
+  deleteTable as deleteTableEntity,
+  updateTable
+} from 'entities/models/tables';
+import {
+  createTable as createTableInTablespaceEntity,
+  deleteTable as deleteTableInTablespaceEntity,
+} from 'entities/models/tablespaces';
 import { closeModal } from 'services/modals';
 
 /** Types **/
@@ -24,12 +31,40 @@ import {
 } from './types';
 
 /**
+ * @param tableName
+ * @param tablespaceHash
+ */
+export const createTable = (tablespaceHash, { name }) => (dispatch, getState, { contract }) => dispatch({
+  types: [CREATE_TABLE_REQUEST, CREATE_TABLE_SUCCESS, CREATE_TABLE_FAILURE],
+  contract: contract.sendMethod('createTable', tablespaceHash, name)
+    .on('transactionHash', transactionHash => {
+      const { entities } = getState();
+      const tableSpaceName = get(entities, `tablespaces.${tablespaceHash}`, {}).name;
+      const hash = Web3.utils.sha3(`${tableSpaceName}#${name}`);
+
+      dispatch(createTableEntity(hash, {
+        hash, name,
+        fields: [],
+        indexes: [],
+        triggers: [],
+      }));
+      dispatch(createTableInTablespaceEntity(tablespaceHash, hash));
+      dispatch(closeModal(TABLE_FORM_ID));
+    }),
+});
+
+/**
  * @param {string} tablespaceHash
  * @param {string} hash
  */
 export const deleteTable = (tablespaceHash, hash) => (dispatch, getState, { contract }) => ({
   types: [DELETE_TABLE_REQUEST, DELETE_TABLE_SUCCESS, DELETE_TABLE_FAILURE],
   contract: contract.sendMethod('deleteTable', tablespaceHash, hash)
+    .on('transactionHash', transactionHash => {
+      dispatch(deleteTableInTablespaceEntity(tablespaceHash, hash));
+      dispatch(deleteTableEntity(hash));
+      dispatch(closeModal(TABLE_FORM_ID));
+    })
 });
 
 /**
@@ -40,32 +75,3 @@ export const fetchTable = tableHash => (dispatch, getState, { contract }) => ({
   contract: contract.callMethod('getTable', tableHash)
     .then(({ fields, name, indexes, triggers }) => dispatch(updateTable(tableHash, { fields, indexes, name, triggers })))
 });
-
-/**
- * @param {string} tableName
- * @param {string} tablespaceHash
- */
-export const sendTableForm = ({ name: tableName, tablespaceHash }) => (dispatch, getState, { contract }) => {
-  const { entities } = getState();
-
-  const tableSpaceName = get(entities, `tablespaces.${tablespaceHash}`, {}).name;
-
-  const tableHash = Web3.utils.sha3(`${tableSpaceName}#${tableName}`);
-  const payload = {
-    hash: tableHash,
-    name: tableName,
-    fields: [],
-    indexes: [],
-    triggers: [],
-  };
-
-  dispatch(createTable(tableHash, payload));
-  dispatch(addTable(tablespaceHash, tableHash))
-  dispatch(closeModal(TABLE_FORM_ID));
-
-  dispatch({
-    types: [CREATE_TABLE_REQUEST, CREATE_TABLE_SUCCESS, CREATE_TABLE_FAILURE],
-    contract: contract.sendMethod('createTable', tablespaceHash, tableName)
-      .then(res => console.log(res))
-  });
-};

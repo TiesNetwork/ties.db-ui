@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 
 /** Actions **/
 import { openModal } from 'services/modals';
-import { deleteTable, sendTableForm } from './ducks/actions';
+import { createTable, deleteTable } from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch, { match }) => {
   return ({
     handleDelete: hash => dispatch(deleteTable(tablespaceHash, hash)),
     handleSettingsClick: () => dispatch(openModal(TABLESPACE_FORM_ID, { hash: tablespaceHash, title: 'Edit tablespace'})),
-    handleSubmit: values => dispatch(sendTableForm(tablespaceHash, values)),
+    handleSubmit: values => dispatch(createTable(tablespaceHash, values)),
   });
 }
 

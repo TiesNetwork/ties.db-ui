@@ -1,8 +1,10 @@
-import { omit } from 'lodash';
+import { omit, remove } from 'lodash';
 
 /** Types **/
 import {
-  ADD_TABLE,
+  CREATE_TABLE,
+  DELETE_TABLE,
+
   CREATE_TABLESPACE,
   DELETE_TABLESPACE,
   UPDATE_TABLESPACE,
@@ -12,12 +14,20 @@ export default (state = {}, action) => {
   const tablespace = state[action.hash];
 
   switch (action.type) {
-    case ADD_TABLE:
+    case CREATE_TABLE:
       return {
         ...state,
         [action.hash]: {
           ...tablespace,
           tables: [...tablespace.tables, action.payload],
+        },
+      };
+    case DELETE_TABLE:
+      return {
+        ...state,
+        [action.hash]: {
+          ...tablespace,
+          tables: remove(tablespace.tables, n => n !== action.payload),
         },
       };
     case CREATE_TABLESPACE:

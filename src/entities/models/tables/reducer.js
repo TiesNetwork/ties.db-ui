@@ -1,9 +1,13 @@
+import { omit } from 'lodash';
+
+/** Types **/
 import {
   ADD_FIELD,
   ADD_INDEX,
   ADD_TRIGGER,
 
   CREATE_TABLE,
+  DELETE_TABLE,
   UPDATE_TABLE,
 } from './types';
 
@@ -42,6 +46,8 @@ export default (state = initialState, action) => {
         ...state,
         [action.hash]: action.payload,
       };
+    case DELETE_TABLE:
+      return omit(state, action.hash);
     case UPDATE_TABLE:
       return {
         ...state,
