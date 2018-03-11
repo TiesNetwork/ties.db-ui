@@ -49,9 +49,9 @@ Button.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  size: PropTypes.oneOf([SIZE.NORMAL, SIZE.LARGE]),
+  size: PropTypes.oneOf([SIZE.ICON, SIZE.NORMAL, SIZE.LARGE]),
   type: PropTypes.string,
-  variant: PropTypes.oneOf([VARIANT.DANGER, VARIANT.PRIMARY, VARIANT.SECONDARY, VARIANT.SUCCESS]),
+  variant: PropTypes.oneOf([VARIANT.DANGER, VARIANT.ICON, VARIANT.PRIMARY, VARIANT.SECONDARY, VARIANT.SUCCESS]),
 };
 
 Button.defaultProps = {

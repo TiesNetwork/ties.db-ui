@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 
 /** Services reducers **/
-import background from './background';
 import modals from './modals';
+import transactions from './transactions';
 
 const servicesReducer = combineReducers({
-  background, modals,
+  modals,
+  transactions,
 });
 
 export default (state = {}, action) => {

@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch, { match }) => {
 
   return ({
     handleDelete: hash => dispatch(deleteTable(tablespaceHash, hash)),
-    handleSettingsClick: () => dispatch(openModal(TABLESPACE_FORM_ID, { tablespaceHash, title: 'Edit tablespace'})),
+    handleSettingsClick: () => dispatch(openModal(TABLESPACE_FORM_ID, { hash: tablespaceHash, title: 'Edit tablespace'})),
     handleSubmit: values => dispatch(sendTableForm(tablespaceHash, values)),
   });
 }

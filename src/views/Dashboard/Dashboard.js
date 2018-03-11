@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 /** Actions **/
 import {
+  createTablespace,
   deleteTablespace,
   fetchTablespaces,
-  sendTablespaceForm,
 } from './ducks/actions';
 
 /** Components **/
@@ -68,7 +68,7 @@ const mapStateToProps = state => get(state, 'views.dashboard', {});
 const mapDispatchToProps = dispatch => ({
   fetchTablespaces: () => dispatch(fetchTablespaces()),
   handleDelete: hash => dispatch(deleteTablespace(hash)),
-  handleSubmit: values => dispatch(sendTablespaceForm(values)),
+  handleSubmit: values => dispatch(createTablespace(values)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

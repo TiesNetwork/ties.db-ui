@@ -1,6 +1,10 @@
+import { omit } from 'lodash';
+
+/** Types **/
 import {
   ADD_TABLE,
   CREATE_TABLESPACE,
+  DELETE_TABLESPACE,
   UPDATE_TABLESPACE,
 } from './types';
 
@@ -21,6 +25,8 @@ export default (state = {}, action) => {
         ...state,
         [action.hash]: action.payload,
       };
+    case DELETE_TABLESPACE:
+      return omit(state, action.hash);
     case UPDATE_TABLESPACE:
       return {
         ...state,
