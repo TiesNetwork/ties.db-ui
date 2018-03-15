@@ -9,7 +9,7 @@
   transition: all .2s ease;
   text-decoration: none;
 
-  &:hover {
+  &:hover:not(&Loading) {
     box-shadow: 0 0 0 2px #4da1ff;
     cursor: pointer;
   }
@@ -33,6 +33,14 @@
     .Name {
       background-color: #313c47;
       max-width: 100px;
+    }
+  }
+
+  &Loading {
+    pointer-events: none;
+
+    .Hash, .Name {
+      opacity: .5;
     }
   }
 

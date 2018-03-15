@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link, matchPath } from 'react-router-dom';
 
 /** Actions **/
-import { fetchTablespace } from '../ducks/actions';
+import { fetchTablespace } from '../../ducks/actions';
 
 import styles from './TablespaceSelector.scss';
 
@@ -17,10 +17,16 @@ class DashboardTablespaceSelector extends Component {
   }
 
   render() {
-    const { hash, name, selected } = this.props;
+    const {
+      hash,
+      isLoading,
+      name,
+      selected,
+    } = this.props;
 
     const className = classNames(styles.Root, {
       [styles.RootEmpty]: !name,
+      [styles.RootLoading]: isLoading,
       [styles.RootSelected]: name && selected,
     });
 
@@ -44,7 +50,8 @@ DashboardTablespaceSelector.propTypes = {
   selected: PropTypes.bool,
 };
 
-const mapStateToProps = ({ entities, router }, { hash }) => {
+const mapStateToProps = ({ entities, router, services }, { hash }) => {
+  const isLoading = get(services, `transactions.${hash}`, false);
   const pathname = get(router, 'location.pathname', '');
   const tablespace = get(entities, `tablespaces.${hash}`, {});
 
@@ -52,7 +59,7 @@ const mapStateToProps = ({ entities, router }, { hash }) => {
   const tablespaceHash = get(match, 'params.tablespaceHash', '');
 
   return {
-    ...tablespace,
+    ...tablespace, isLoading,
     selected: tablespaceHash === hash,
   }
 };

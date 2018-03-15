@@ -14,6 +14,11 @@ import {
 
 import { closeModal } from 'services/modals';
 
+import {
+  createTransaction,
+  deleteTransaction,
+} from 'services/transactions';
+
 /** Types **/
 import {
   CREATE_TRIGGER_REQUEST,
@@ -30,6 +35,7 @@ import {
 
   TRIGGER_FORM_ID,
 } from './types';
+import {deleteIndex as deleteIndexEntity} from "entities/models/indexes";
 
 /**
  * @param {string} tableHash
@@ -37,17 +43,23 @@ import {
  * @param {string} name
  * @param {string} payload
  */
-export const createTrigger = (tableHash, { name, payload }) => (dispatch, getState, { contract }) => ({
-  types: [CREATE_TRIGGER_REQUEST, CREATE_TRIGGER_SUCCESS, CREATE_TRIGGER_FAILURE],
-  contract: contract.sendMethod('createTrigger', tableHash, name, payload)
-    .on('transactionHash', transactionHash => {
-      const hash = Web3.utils.sha3(name);
+export const createTrigger = (tableHash, { name, payload }) => (dispatch, getState, { contract }) => {
+  const hash = Web3.utils.sha3(name);
 
-      dispatch(createTriggerEntity(hash, { name, payload }));
-      dispatch(createTriggerInTableEntity(tableHash, hash));
-      dispatch(closeModal(TRIGGER_FORM_ID));
-    })
-});
+  dispatch({
+    types: [CREATE_TRIGGER_REQUEST, CREATE_TRIGGER_SUCCESS, CREATE_TRIGGER_FAILURE],
+    contract: contract.sendMethod('createTrigger', tableHash, name, payload)
+      .on('transactionHash', transactionHash => {
+        dispatch(createTransaction(hash));
+        dispatch(createTriggerEntity(hash, { name, payload }));
+        dispatch(createTriggerInTableEntity(tableHash, hash));
+        dispatch(closeModal(TRIGGER_FORM_ID));
+      })
+      .on('receipt', () => {
+        dispatch(deleteTransaction(hash));
+      })
+  });
+}
 
 /**
  * @param {string} tableHash
@@ -57,9 +69,13 @@ export const deleteTrigger = (tableHash, hash) => (dispatch, getState, { contrac
   types: [DELETE_TRIGGER_REQUEST, DELETE_TRIGGER_SUCCESS, DELETE_TRIGGER_FAILURE],
   contract: contract.sendMethod('deleteTrigger', tableHash, hash)
     .on('transactionHash', transactionHash => {
+      dispatch(createTransaction(hash));
+      dispatch(closeModal(TRIGGER_FORM_ID));
+    })
+    .on('receipt', () => {
+      dispatch(deleteIndexEntity(hash));
       dispatch(deleteTriggerEntity(hash));
       dispatch(deleteTriggerInTableEntity(tableHash, hash));
-      dispatch(closeModal(TRIGGER_FORM_ID));
     })
 });
 

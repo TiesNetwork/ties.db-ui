@@ -13,6 +13,11 @@ import {
   deleteIndex as deleteIndexInTableEntity,
 } from 'entities/models/tables';
 
+import {
+  createTransaction,
+  deleteTransaction,
+} from 'services/transactions';
+
 import { updateIndex } from 'entities/models/indexes';
 
 /** Types **/
@@ -39,17 +44,23 @@ import {
  * @param {string} name
  * @param {string} type
  */
-export const createIndex = (tableHash, { fields, name, type }) => (dispatch, getState, { contract }) => ({
-  types: [CREATE_INDEX_REQUEST, CREATE_INDEX_SUCCESS, CREATE_INDEX_FAILURE],
-  contract: contract.sendMethod('createIndex', tableHash, name, type, fields)
-    .on('transactionHash', transactionHash => {
-      const hash = Web3.utils.sha3(name);
+export const createIndex = (tableHash, { fields, name, type }) => (dispatch, getState, { contract }) => {
+  const hash = Web3.utils.sha3(name);
 
-      dispatch(createIndexEntity(hash, { fields, name, type }));
-      dispatch(createIndexInTableEntity(tableHash, hash));
-      dispatch(closeModal(INDEXES_FORM_ID));
-    })
-});
+  dispatch({
+    types: [CREATE_INDEX_REQUEST, CREATE_INDEX_SUCCESS, CREATE_INDEX_FAILURE],
+    contract: contract.sendMethod('createIndex', tableHash, name, type, fields)
+      .on('transactionHash', transactionHash => {
+        dispatch(createTransaction(hash));
+        dispatch(createIndexEntity(hash, { fields, name, type }));
+        dispatch(createIndexInTableEntity(tableHash, hash));
+        dispatch(closeModal(INDEXES_FORM_ID));
+      })
+      .on('receipt', () => {
+        dispatch(deleteTransaction(hash));
+      })
+  });
+}
 
 /**
  * @param {string} tableHash
@@ -59,9 +70,13 @@ export const deleteIndex = (tableHash, hash) => (dispatch, getState, { contract 
   types: [DELETE_INDEX_REQUEST, DELETE_INDEX_SUCCESS, DELETE_INDEX_FAILURE],
   contract: contract.sendMethod('deleteIndex', tableHash, hash)
     .on('transactionHash', transactionHash => {
+      dispatch(createTransaction(hash));
+      dispatch(closeModal(INDEXES_FORM_ID));
+    })
+    .on('receipt', () => {
       dispatch(deleteIndexEntity(hash));
       dispatch(deleteIndexInTableEntity(tableHash, hash));
-      dispatch(closeModal(INDEXES_FORM_ID));
+      dispatch(deleteTransaction(hash));
     })
 });
 

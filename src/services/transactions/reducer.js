@@ -13,7 +13,7 @@ export default (state = {}, action) => {
     case CREATE_TRANSACTION:
       return {
         ...state,
-        [action.hash]: action.payload,
+        [action.hash]: action.payload || true,
       };
     case DELETE_TRANSACTION:
       return omit(state, action.hash);

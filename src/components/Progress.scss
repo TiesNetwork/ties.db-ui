@@ -3,22 +3,32 @@
   border: 1px solid #e9eff4;
   border-radius: 5px;
   height: 4px;
+  overflow: hidden;
   position: relative;
 }
 
 .Bar {
-  animation: example 2s;
+  animation: example 1.5s infinite;
   background-color: #9dde24;
   border-radius: 5px;
   height: 6px;
   left: 0;
   position: absolute;
   top: -1px;
-  transition: all 2s ease;
   width: 0;
 }
 
 @keyframes example {
-  from { width: 0 }
-  to { width: 100% }
+  0% {
+    left: 0;
+    width: 0;
+  }
+  50% {
+    left: 0;
+    width: 100%
+  }
+  100% {
+    left: 100%;
+    width: 0;
+  }
 }

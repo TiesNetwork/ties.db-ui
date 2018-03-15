@@ -7,6 +7,9 @@ import { Link, matchPath } from 'react-router-dom';
 /** Actions **/
 import { fetchTable } from '../ducks/actions';
 
+/** Components **/
+import Progress from 'components/Progress';
+
 import styles from './TableSelector.scss'
 
 class TablespacesTableSelector extends Component {
@@ -16,10 +19,11 @@ class TablespacesTableSelector extends Component {
   }
 
   render() {
-    const { hash, name, selected, to } = this.props;
+    const { hash, isLoading, name, selected, to } = this.props;
 
     const className = classNames(styles.Root, {
       [styles.RootEmpty]: !name,
+      [styles.RootLoading]: isLoading,
       [styles.RootSelected]: selected,
     });
 
@@ -32,12 +36,19 @@ class TablespacesTableSelector extends Component {
         <div className={styles.Hash}>
           {hash}
         </div>
+
+        {isLoading && (
+          <div className={styles.Progress}>
+            <Progress />
+          </div>
+        )}
       </Link>
     );
   }
 }
 
 const mapStateToProps = ({ entities, router, services }, { hash }) => {
+  const isLoading = get(services, `transactions.${hash}`, false);
   const pathname = get(router, 'location.pathname', '');
   const progress = get(services, `background.${hash}`);
   const table = get(entities, `tables.${hash}`, {});
@@ -48,7 +59,7 @@ const mapStateToProps = ({ entities, router, services }, { hash }) => {
   const tablespaceHash = get(match, 'params.tablespaceHash', '');
 
   return {
-    ...table, progress,
+    ...table, isLoading, progress,
     selected: tableHash === hash,
     to: `/${tablespaceHash}/${hash}`,
   };

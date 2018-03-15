@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 /** Actions **/
 import { openModal } from 'services/modals';
 
+/** Components **/
+import Progress from 'components/Progress';
+
 /** Types **/
 import { TRIGGER_FORM_ID } from '../ducks/types';
 
@@ -19,10 +22,16 @@ class TriggersItem extends Component {
   }
 
   render() {
-    const { className: classNameProp, handleClick, name } = this.props;
+    const {
+      className: classNameProp,
+      handleClick,
+      isLoading,
+      name,
+    } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
+      [styles.RootLoading]: isLoading,
     });
 
     return (
@@ -34,6 +43,12 @@ class TriggersItem extends Component {
           <div className={styles.Name}>
             {name}
           </div>
+
+          {isLoading && (
+            <div className={styles.Progress}>
+              <Progress />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -46,7 +61,12 @@ TriggersItem.propTypes = {
   onFetch: PropTypes.func,
 };
 
-const mapStateToProps = ({ entities }, { hash }) => get(entities, `triggers.${hash}`, {});
+const mapStateToProps = ({ entities, services }, { hash }) => {
+  const trigger = get(entities, `triggers.${hash}`, {});
+  const isLoading = get(services, `transactions.${hash}`, false);
+
+  return { ...trigger, isLoading };
+}
 const mapDispatchToProps = (dispatch, { hash }) => ({
   handleClick: () => dispatch(openModal(TRIGGER_FORM_ID, { hash, title: 'Update a trigger' })),
 });

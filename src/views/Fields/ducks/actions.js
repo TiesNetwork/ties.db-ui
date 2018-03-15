@@ -13,6 +13,11 @@ import {
   deleteField as deleteFieldInTableEntity,
 } from 'entities/models/tables';
 
+import {
+  createTransaction,
+  deleteTransaction,
+} from 'services/transactions';
+
 /** Types **/
 import {
   CREATE_FIELD_REQUEST,
@@ -40,17 +45,23 @@ import { updateField } from 'entities/models/fields';
  * @param {string} name
  * @param {string} type
  */
-export const createField = (tableHash, { defaultValue, name, type }) => (dispatch, getState, { contract }) => ({
-  types: [CREATE_FIELD_REQUEST, CREATE_FIELD_SUCCESS, CREATE_FIELD_FAILURE],
-  contract: contract.sendMethod('createField', tableHash, name, type, defaultValue)
-    .on('transactionHash', transactionHash => {
-      const hash = Web3.utils.sha3(name);
+export const createField = (tableHash, { defaultValue, name, type }) => (dispatch, getState, { contract }) => {
+  const hash = Web3.utils.sha3(name);
 
-      dispatch(createFieldEntity(hash, { defaultValue, name, type }));
-      dispatch(createFieldInTableEntity(tableHash, hash));
-      dispatch(closeModal(FIELD_FORM_ID));
-    })
-});
+  dispatch({
+    types: [CREATE_FIELD_REQUEST, CREATE_FIELD_SUCCESS, CREATE_FIELD_FAILURE],
+    contract: contract.sendMethod('createField', tableHash, name, type, defaultValue)
+      .on('transactionHash', transactionHash => {
+        dispatch(createTransaction(hash));
+        dispatch(createFieldEntity(hash, { defaultValue, name, type }));
+        dispatch(createFieldInTableEntity(tableHash, hash));
+        dispatch(closeModal(FIELD_FORM_ID));
+      })
+      .on('receipt', () => {
+        dispatch(deleteTransaction(hash));
+      })
+  });
+}
 
 /**
  * @param {string} tableHash
@@ -60,9 +71,13 @@ export const deleteField = (tableHash, hash) => (dispatch, getState, { contract 
   types: [DELETE_FIELD_REQUEST, DELETE_FIELD_SUCCESS, DELETE_FIELD_FAILURE],
   contract: contract.sendMethod('deleteField', tableHash, hash)
     .on('transactionHash', transactionHash => {
+      dispatch(createTransaction(hash));
+      dispatch(closeModal(FIELD_FORM_ID));
+    })
+    .on('receipt', () => {
       dispatch(deleteFieldEntity(hash));
       dispatch(deleteFieldInTableEntity(tableHash, hash));
-      dispatch(closeModal(FIELD_FORM_ID));
+      dispatch(deleteTransaction(hash));
     })
 });
 

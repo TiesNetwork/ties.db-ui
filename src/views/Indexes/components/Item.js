@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 /** Actions **/
 import { openModal } from 'services/modals';
 
+/** Components **/
+import Progress from 'components/Progress';
+
 /** Types **/
 import { INDEXES_FORM_ID } from '../ducks/types';
 
@@ -25,10 +28,18 @@ class IndexesItem extends Component {
   }
 
   render() {
-    const { className: classNameProp, fields, handleClick, name, type } = this.props;
+    const {
+      className: classNameProp,
+      fields,
+      handleClick,
+      isLoading,
+      name,
+      type,
+    } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
+      [styles.RootLoading]: isLoading,
     });
 
     const iconClassName = classNames(styles.Icon, {
@@ -57,13 +68,21 @@ class IndexesItem extends Component {
             </div>
           </div>
 
-          <div className={styles.Fields}>
-            {fields && fields.map((field, index) => (
-              <div className={styles.Field} key={index}>
-                {field}
-              </div>
-            ))}
-          </div>
+          {!isLoading && (
+            <div className={styles.Fields}>
+              {fields && fields.map((field, index) => (
+                <div className={styles.Field} key={index}>
+                  {field}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {isLoading && (
+            <div className={styles.Progress}>
+              <Progress />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -80,11 +99,12 @@ IndexesItem.propTypes = {
 
 IndexesItem.TYPE = TYPE;
 
-const mapStateToProps = ({ entities }, { hash }) => {
+const mapStateToProps = ({ entities, services }, { hash }) => {
   const { fields, ...index } = get(entities, `indexes.${hash}`, {});
+  const isLoading = get(services, `transactions.${hash}`, false);
 
   return {
-    ...index,
+    ...index, isLoading,
     fields: fields && fields.map(hash => get(entities, `fields.${hash}`, {}).name),
   };
 };

@@ -14,7 +14,7 @@ import {
 import Modal from 'components/Modal';
 
 import TablespaceForm from './components/TablespaceForm';
-import TablespaceSelector from './components/TablespaceSelector';
+import TablespaceSelector from './components/TablespaceSelector/TablespaceSelector';
 import TablespaceTrigger from './components/TablespaceTrigger';
 
 /** Types **/

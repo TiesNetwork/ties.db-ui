@@ -32,6 +32,21 @@
     color: transparent;
   }
 
+  &Loading {
+    pointer-events: none;
+    opacity: .8;
+
+    &:before {
+      background: url(./assets/spinner.svg) no-repeat center center;
+      background-size: cover;
+      content: '';
+      display: block;
+      height: 52px;
+      position: absolute;
+      width: 52px;
+    }
+  }
+
   &Selected {
     box-shadow: 0 0 0 2px #ff6d4a;
     opacity: 1;
@@ -42,6 +57,12 @@
 .Name {
   font-size: 28px;
   text-transform: uppercase;
+}
+
+.Progress {
+  bottom: 4px;
+  position: absolute;
+  width: 36px;
 }
 
 .Tooltip {

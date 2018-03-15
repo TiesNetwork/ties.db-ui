@@ -39,10 +39,19 @@
       width: 120px;
     }
   }
+
+  &Loading {
+    pointer-events: none;
+
+    .DefaultValue, .Icon, .Name, .Type {
+      opacity: .5;
+    }
+  }
 }
 
 .Container {
   align-items: center;
+  box-sizing: border-box;
   display: flex;
   height: 100%;
   padding: 0 16px;
@@ -86,7 +95,7 @@
 
 .Info {
   display: flex;
-  flex: 0 0 200px;
+  flex: 0 0 150px;
   flex-direction: column;
   margin: 0 12px;
 }
@@ -95,6 +104,10 @@
   font-size: 16px;
   line-height: 22px;
   min-height: 22px;
+}
+
+.Progress {
+  flex: 0 0 200px;
 }
 
 .Type {

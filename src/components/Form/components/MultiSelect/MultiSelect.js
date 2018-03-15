@@ -20,7 +20,7 @@ const FormMultiSelect = ({
   return (
     <div className={styles.Root}>
       <div className={styles.Container}>
-        {Children.map(children, child => cloneElement(child, {
+        {Children.map(children, child => child && cloneElement(child, {
           onClick: handleClick,
           selected: values.indexOf(child.props.value) > -1,
         }))}

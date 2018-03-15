@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 /** Actions **/
 import { openModal } from 'services/modals';
 
+/** Components **/
+import Progress from 'components/Progress';
+
 /** Types **/
 import { FIELD_FORM_ID } from '../ducks/types';
 
@@ -29,12 +32,14 @@ class FieldsItem extends Component {
       className: classNameProp,
       defaultValue,
       handleClick,
+      isLoading,
       name,
       type
     } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
+      [styles.RootLoading]: isLoading,
     });
 
     const iconClassName = classNames(styles.Icon, {
@@ -66,6 +71,12 @@ class FieldsItem extends Component {
           <div className={styles.DefaultValue}>
             Default: {defaultValue}
           </div>
+
+          {isLoading && (
+            <div className={styles.Progress}>
+              <Progress />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -82,7 +93,13 @@ FieldsItem.propTypes = {
 
 FieldsItem.TYPE = TYPE;
 
-const mapStateToProps = ({ entities }, { hash }) => get(entities, `fields.${hash}`, {});
+const mapStateToProps = ({ entities, services }, { hash }) => {
+  const field = get(entities, `fields.${hash}`, {});
+  const isLoading = get(services, `transactions.${hash}`, false);
+
+  return { ...field, isLoading }
+};
+
 const mapDispatchToProps = (dispatch, { hash }) => ({
   handleClick: () => dispatch(openModal(FIELD_FORM_ID, { hash, title: 'Update a field' })),
 });
