@@ -4,47 +4,44 @@ import React from 'react';
 
 import Field from './Field';
 
-import styles from './Input.scss';
+import styles from './Select.scss';
 
-const FormInput = ({
+const FormSelect = ({
+  children,
   disabled,
   error,
   id,
   name,
   onChange,
-  placeholder,
-  type,
   value,
 }) => {
-  const inputClassName = classNames(styles.Input, {
-    [styles.InputError]: !!error,
+  const selectClassName = classNames(styles.Select, {
+    [styles.SelectError]: !!error,
   });
 
   return (
     <div className={styles.Root}>
-      <input
-        className={inputClassName}
+      <select
+        className={selectClassName}
         disabled={disabled}
         id={id}
         name={name}
         onChange={onChange}
-        placeholder={placeholder}
-        type={type}
         value={value}
-      />
+      >
+        {children}
+      </select>
     </div>
   );
 };
 
-FormInput.propTypes = {
+FormSelect.propTypes = {
   disabled: PropTypes.bool,
   error: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.string,
   ]),
   name: PropTypes.string,
-  placeholder: PropTypes.string,
-  type: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.number,
@@ -52,12 +49,10 @@ FormInput.propTypes = {
   ]),
 };
 
-FormInput.defaultProps = {
-  type: 'text',
-};
-
-export default props => (
+export default ({ children, ...props }) => (
   <Field {...props}>
-    <FormInput />
+    <FormSelect>
+      {children}
+    </FormSelect>
   </Field>
 );

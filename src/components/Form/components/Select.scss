@@ -4,16 +4,20 @@
   width: 100%;
 }
 
-.Input {
+.Select {
   background-color: transparent;
   border: 1px solid #e9eff4;
   border-radius: 5px;
   box-shadow: none;
-  height: 50px;
+  height: 52px;
   font-family: inherit;
   font-size: 16px;
   padding: 0 16px;
   transition: all .2s ease;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
   &:focus {
     outline: none;
@@ -22,6 +26,10 @@
       border-color: #dcdcdc;
       box-shadow: 0 0 0 1px #dcdcdc;
     }
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 
   &Error {

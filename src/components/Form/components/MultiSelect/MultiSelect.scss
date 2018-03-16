@@ -1,7 +1,43 @@
+.Root {
+  position: relative;
+}
+
 .Container {
   background-color: #fff;
   border: 1px solid #e9eff4;
   border-radius: 6px;
+  display: flex;
+  height: 50px;
+  padding: 0 4px;
+}
+
+.Input {
+  background-color: transparent;
+  border: 0;
+  flex: 1 1 auto;
+  height: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  padding: 0 12px 0 16px;
+}
+
+.Options {
+  background-color: #fff;
+  border: 1px solid #e9eff4;
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  left: 0;
+  padding: 4px;
+  position: absolute;
+  top: 54px;
+  width: 100%;
+}
+
+.Values {
+  align-items: center;
+  display: flex;
+  height: 100%;
 }
 
 

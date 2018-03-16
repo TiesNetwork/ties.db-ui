@@ -1,32 +1,27 @@
 .Root {
   align-items: center;
+  background-color: #f4f7f9;
+  border: 1px solid #e9eff4;
+  border-radius: 6px;
+  color: #989898;
   display: flex;
-  height: 60px;
-  padding: 0 16px;
+  height: 40px;
+  padding: 0 12px;
 
   &:hover {
-    background-color: #f4f7f9;
     cursor: pointer;
   }
 
   &:not(:first-child) {
-    border-top: 1px solid #e9eff4;
+    margin-left: 4px;
   }
 }
 
-.Check {
-  background: url(../assets/check.svg) no-repeat center center;
-  background-size: contain;
-  height: 24px;
-  width: 24px;
-
-  &Selected {
-    background-image: url(../assets/check-active.svg);
-  }
+.Icon {
+  font-size: 20px;
+  margin-left: 8px;
 }
 
 .Title {
   font-size: 16px;
-  line-height: 24px;
-  margin-left: 12px;
 }
