@@ -16,9 +16,20 @@ import { FIELD_FORM_ID } from '../ducks/types';
 import styles from './Item.scss';
 
 const TYPE = {
-  BOOLEAN: 'boolean',
-  INTEGER: 'integer',
-  STRING: 'string',
+  BAG: 'Bag',
+  BINARY: 'Binary',
+  BOOLEAN: 'Boolean',
+  DECIMAL: 'Decimal',
+  DOUBLE: 'Double',
+  DURATION: 'Duration',
+  FLOAT: 'Float',
+  INTEGER: 'Integer',
+  LIST: 'List',
+  LONG: 'Long',
+  MAP: 'Map',
+  STRING: 'String',
+  STRUCTURE: 'Structure',
+  TIME: 'Time',
 };
 
 class FieldsItem extends Component {
@@ -34,7 +45,7 @@ class FieldsItem extends Component {
       handleClick,
       isLoading,
       name,
-      type
+      type,
     } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
@@ -43,9 +54,20 @@ class FieldsItem extends Component {
     });
 
     const iconClassName = classNames(styles.Icon, {
+      [styles.IconBag]: type === TYPE.BAG,
+      [styles.IconBinary]: type === TYPE.BINARY,
       [styles.IconBoolean]: type === TYPE.BOOLEAN,
+      [styles.IconDecimal]: type === TYPE.DECIMAL,
+      [styles.IconDouble]: type === TYPE.DOUBLE,
+      [styles.IconDuration]: type === TYPE.DURATION,
+      [styles.IconFloat]: type === TYPE.FLOAT,
       [styles.IconInteger]: type === TYPE.INTEGER,
-      [styles.IconString]:  type === TYPE.STRING,
+      [styles.IconList]: type === TYPE.LIST,
+      [styles.IconLong]: type === TYPE.LONG,
+      [styles.IconMap]: type === TYPE.MAP,
+      [styles.IconString]: type === TYPE.STRING,
+      [styles.IconStructure]: type === TYPE.STRUCTURE,
+      [styles.IconTime]: type === TYPE.TIME,
     });
 
     return (
@@ -55,7 +77,7 @@ class FieldsItem extends Component {
           onClick={handleClick}
         >
           <div className={iconClassName}>
-            {type && type.substr(0, 1)}
+            {type && type.replace(/[aeiou]/g, '').substr(0, 2)}
           </div>
 
           <div className={styles.Info}>

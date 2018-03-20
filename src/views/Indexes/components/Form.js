@@ -98,7 +98,7 @@ const mapStateToProps = ({ entities, services }, { tableHash }) => {
 
   const initialValues = hash
     ? { ...index, hash}
-    : {};
+    : { type: '0x1' };
 
   return { fields, initialValues };
 };

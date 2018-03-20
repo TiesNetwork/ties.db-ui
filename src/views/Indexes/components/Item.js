@@ -16,10 +16,11 @@ import { INDEXES_FORM_ID } from '../ducks/types';
 import styles from './Item.scss';
 
 const TYPE = {
-  EXTERNAL: 'external',
-  INTERNAL: 'internal',
-  PRIMARY: 'primary',
+  EXTERNAL: '4',
+  INTERNAL: '2',
+  PRIMARY: '1',
 };
+
 
 class IndexesItem extends Component {
   componentDidMount() {
@@ -48,6 +49,12 @@ class IndexesItem extends Component {
       [styles.IconPrimary]:  type === TYPE.PRIMARY,
     });
 
+    const displayType = type === TYPE.PRIMARY
+      ? 'Primary'
+      : type === TYPE.EXTERNAL
+        ? 'External'
+        : 'Internal';
+
     return (
       <div className={className}>
         <div
@@ -55,7 +62,7 @@ class IndexesItem extends Component {
           onClick={handleClick}
         >
           <div className={iconClassName}>
-            {type && type.substr(0, 1)}
+            {displayType.substr(0, 1)}
           </div>
 
           <div className={styles.Info}>
@@ -64,7 +71,7 @@ class IndexesItem extends Component {
             </div>
 
             <div className={styles.Type}>
-              {type}
+              {displayType}
             </div>
           </div>
 

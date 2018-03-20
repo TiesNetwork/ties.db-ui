@@ -16,7 +16,7 @@ class FormMultiSelect extends Component {
   handleAdd = value => {
     const { onChange, value: values } = this.props;
     onChange && onChange([...values, value]);
-    
+
     this.setState({ isFocused: false });
   }
 

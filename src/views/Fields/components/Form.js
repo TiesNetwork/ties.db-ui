@@ -8,7 +8,7 @@ import { closeModal } from 'services/modals';
 
 /** Components **/
 import Button from 'components/Button';
-import Form, { Actions, Input } from 'components/Form';
+import Form, { Actions, Input, Select } from 'components/Form';
 
 /** Types **/
 import { FIELD_FORM_ID } from '../ducks/types';
@@ -29,7 +29,32 @@ const FieldsForm = ({
   return (
     <Form onSubmit={handleSubmit}>
       <Input label="Name" name="name" />
-      <Input label="Type" name="type" />
+
+      <Select label="Type" name="type">
+        <optgroup label="Primitive">
+          <option value="Boolean">Boolean</option>
+          <option value="Integer">Integer</option>
+          <option value="Long">Long</option>
+          <option value="Float">Float</option>
+          <option value="Double">Double</option>
+          <option value="Decimal">Decimal</option>
+          <option value="String">String</option>
+          <option value="Binary">Binary</option>
+          <option value="Time">Time</option>
+          <option value="Duration">Duration</option>
+        </optgroup>
+
+        <optgroup label="Collections">
+          <option value="List">List</option>
+          <option value="Bag">Bag</option>
+          <option value="Map">Map</option>
+        </optgroup>
+
+        <optgroup label="Compound">
+          <option value="Structure">Structure</option>
+        </optgroup>
+      </Select>
+
       <Input label="Default value" name="defaultValue" />
 
       <Input name="hash" type="hidden" />
@@ -75,7 +100,7 @@ const mapStateToProps = ({ entities, services }) => {
   const hash = get(services, `modals.${FIELD_FORM_ID}`, {}).hash;
   const initialValues = hash
     ? { ...get(entities, `fields.${hash}`, {}), hash }
-    : {};
+    : { type: 'Integer' };
 
   return { initialValues };
 };

@@ -77,19 +77,26 @@
   flex: 0 0 40px;
   font-size: 22px;
   justify-content: center;
-  text-transform: uppercase;
   width: 40px;
 
-  &Boolean {
+  &Boolean, &Duration, &Time {
     background-color: #ff6d4a;
   }
 
-  &Integer {
+  &Decimal, &Double, &Float, &Integer, &Long {
     background-color: #4da1ff;
   }
 
-  &String {
+  &Binary, &String {
     background-color: #9dde24;
+  }
+
+  &Bag, &List, &Map {
+    background-color: #ffd012;
+  }
+
+  &Structure {
+    background-color: #624096;
   }
 }
 
