@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { clone } from 'lodash';
 import PropTypes from 'prop-types';
 import React,  { Children, Component, cloneElement } from 'react'
@@ -28,8 +29,12 @@ class FormMultiSelect extends Component {
   }
 
   render() {
-    const { children, name, value: values } = this.props;
+    const { children, error, name, value: values } = this.props;
     const { isFocused } = this.state;
+
+    const containerClassName = classNames(styles.Container, {
+      [styles.ContainerError]: !!error,
+    });
 
     const Options = [];
     const Values = clone(values || []);
@@ -49,7 +54,7 @@ class FormMultiSelect extends Component {
 
     return (
       <div className={styles.Root}>
-        <div className={styles.Container}>
+        <div className={containerClassName}>
           <div className={styles.Values}>
             {Values}
           </div>

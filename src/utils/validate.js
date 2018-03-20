@@ -2,7 +2,10 @@
  * @param {string} message
  */
 export const required = (message = 'Field is required!') => value => ({
-  isValid: value && value.trim() !== '', message
+  isValid: value && (
+    Array.isArray(value) && value.length > 0 ||
+    typeof value === 'string' && value.trim() !== ''
+  ), message
 });
 
 export default fields => values => {

@@ -110,6 +110,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: INDEXES_FORM_ID,
   validate: validate({
+    fields: [required()],
     name: [required()],
     type: [required()],
   }),
