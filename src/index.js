@@ -6,6 +6,8 @@ import { ConnectedRouter } from 'react-router-redux';
 import Web3 from 'web3';
 
 import App from './App';
+import Metamask from 'views/Metamask';
+
 import createStore from './store';
 
 const web3 = new Web3(Web3.givenProvider);
@@ -21,6 +23,11 @@ web3.eth.getAccounts()
           <App />
         </ConnectedRouter>
       </Provider>,
+      document.getElementById('root')
+    );
+  }).catch(() => {
+    ReactDOM.render(
+      <Metamask />,
       document.getElementById('root')
     );
   });

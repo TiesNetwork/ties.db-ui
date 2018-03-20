@@ -1,0 +1,28 @@
+.Root {
+  align-items: center;
+  background-color: #313c47;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.Link {
+  color: #ffd012;
+  font-size: 28px;
+}
+
+.Logo {
+  height: 500px;
+  margin: 40px 0;
+  width: 500px;
+}
+
+.Title {
+  color: #fff;
+  font-size: 42px;
+}
