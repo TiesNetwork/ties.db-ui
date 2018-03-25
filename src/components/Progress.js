@@ -9,14 +9,22 @@ const VARIANT = {
   SUCCESS: 'Success',
 };
 
-const Progress = ({ className: classNameProp, variant = VARIANT.SUCCESS }) => {
+const Progress = ({ className: classNameProp, variant = VARIANT.SUCCESS, value }) => {
   const className = classNames(classNameProp, styles.Root, {
+    [styles.RootDeterminate]: value,
+    [styles.RootIndeterminate]: !value,
+    [styles.RootVariantSecondary]: variant === VARIANT.SECONDARY,
     [styles.RootVariantSuccess]: variant === VARIANT.SUCCESS,
   });
 
   return (
     <div className={className}>
-      <div className={styles.Bar} />
+      <div
+        className={styles.Bar}
+        style={{
+          width: `${Math.max(0, Math.min(100, value))}%`,
+        }}
+      />
     </div>
   );
 };

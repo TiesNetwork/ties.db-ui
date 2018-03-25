@@ -2,47 +2,83 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 /** Components **/
+import Label from 'components/Label';
 import Icon from 'components/Icon';
 import Progress from 'components/Progress';
+
+/** Types **/
+import {
+  CONFIRMATION,
+} from 'entities/models/transactions';
 
 import styles from './Transaction.scss';
 
 const DashboardTransaction = ({
   action,
+  block,
   hash,
   name,
-}) => (
-  <div className={styles.Root}>
-    <div className={styles.Container}>
-      <div className={styles.Action}>
-        {action}:
-      </div>
+  status,
+}) => {
+  const progress = block
+    ? block / 24 * 100
+    : null;
 
-      <div className={styles.Name}>
-        &laquo;{name}&raquo;
-      </div>
+  const variant = status === CONFIRMATION
+    ? Label.VARIANT.SUCCESS
+    : Label.VARIANT.SECONDARY;
 
-      <div className={styles.Hash}>
-        <a
-          className={styles.Link}
-          href={`https://rinkeby.etherscan.io/tx/${hash}`}
-          target="_blank"
+  return (
+    <div className={styles.Root}>
+      <div className={styles.Container}>
+        <div className={styles.Action}>
+          {action}:
+        </div>
+
+        <div className={styles.Name}>
+          &laquo;{name}&raquo;
+        </div>
+
+        <div className={styles.Hash}>
+          <a
+            className={styles.Link}
+            href={`https://rinkeby.etherscan.io/tx/${hash}`}
+            target="_blank"
+          >
+            <Icon
+              className={styles.LinkIcon}
+              type={Icon.TYPE.EXTERNAL}
+            />
+
+            <div className={styles.LinkText}>
+              {hash}
+            </div>
+          </a>
+        </div>
+
+        <Label
+          className={styles.Status}
+          variant={variant}
         >
-          <Icon
-            className={styles.LinkIcon}
-            type={Icon.TYPE.EXTERNAL}
-          />
+          {status}
+        </Label>
+      </div>
 
-          {hash}
-        </a>
+      <div className={styles.Confirmation}>
+        <div className={styles.Blocks}>
+          {block}/24
+        </div>
+
+        <div className={styles.Progress}>
+          <Progress
+            value={progress}
+            variant={variant}
+          />
+        </div>
       </div>
     </div>
-
-    <div className={styles.Progress}>
-      <Progress />
-    </div>
-  </div>
-)
+  );
+}
 
 DashboardTransaction.propTypes = {
   action: PropTypes.string,

@@ -5,11 +5,35 @@
   height: 4px;
   overflow: hidden;
   position: relative;
+
+  &Determinate {
+    .Bar {
+      transition: all .2s ease-in-out;
+    }
+  }
+
+  &Indeterminate {
+    .Bar {
+      animation: example 1.5s infinite;
+    }
+  }
+
+  &Variant {
+    &Secondary {
+      .Bar {
+        background-color: #98a0a8;
+      }
+    }
+
+    &Success {
+      .Bar {
+        background-color: #9dde24;
+      }
+    }
+  }
 }
 
 .Bar {
-  animation: example 1.5s infinite;
-  background-color: #9dde24;
   border-radius: 5px;
   height: 6px;
   left: 0;

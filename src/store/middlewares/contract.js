@@ -2,6 +2,13 @@
 import {
   createTransaction,
   deleteTransaction,
+  updateTransaction,
+} from 'entities/models/transactions';
+
+/** Types **/
+import {
+  CONFIRMATION,
+  PENDING,
 } from 'entities/models/transactions';
 
 const contractMiddleware = store => next => action => {
@@ -19,12 +26,24 @@ const contractMiddleware = store => next => action => {
       } = transaction;
 
       contract
+        .on('confirmation', (number, { transactionHash: hash }) => {
+          next(updateTransaction(hash, { block: number }));
+
+          if (number === 24) {
+            next(deleteTransaction(hash));
+            onSuccess && onSuccess(hash);
+          }
+        })
         .on('receipt', ({ transactionHash: hash }) => {
-          next(deleteTransaction(hash));
-          onSuccess && onSuccess(hash);
+          next(updateTransaction(hash, { status: CONFIRMATION }));
         })
         .on('transactionHash', hash => {
-          next(createTransaction(hash, { ...payload, hash }));
+          next(createTransaction(hash, {
+            ...payload, hash,
+            block: 0,
+            status: PENDING,
+          }));
+          
           onCreate && onCreate(hash);
         })
     }

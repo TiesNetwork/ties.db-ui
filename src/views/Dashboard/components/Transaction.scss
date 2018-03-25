@@ -13,8 +13,22 @@
   color: #989898;
 }
 
+.Blocks {
+  color: #989898;
+  margin-right: 8px;
+}
+
+.Confirmation {
+  align-items: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e9eff4;
+  display: flex;
+  padding: 16px;
+}
+
 .Container {
   padding: 16px;
+  position: relative;
 }
 
 .Hash {
@@ -33,6 +47,12 @@
     flex: 0 0 18px;
     margin-right: 8px;
   }
+
+  &Text {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .Name {
@@ -41,7 +61,11 @@
 }
 
 .Progress {
-  background-color: #f9f9f9;
-  border-top: 1px solid #e9eff4;
-  padding: 16px;
+  flex: 1 1 auto;
+}
+
+.Status {
+  position: absolute;
+  right: 16px;
+  top: 16px;
 }

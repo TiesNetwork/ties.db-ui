@@ -1,0 +1,25 @@
+.Root {
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  text-transform: uppercase;
+
+  &Variant {
+    &Danger {
+      background-color: #ff6d4a;
+    }
+
+    &Primary {
+      background-color: #4da1ff;
+    }
+
+    &Secondary {
+      background-color: #989898;
+    }
+
+    &Success {
+      background-color: #9dde24;
+    }
+  }
+}
