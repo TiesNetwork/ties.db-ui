@@ -16,8 +16,6 @@ import { INDEXES_FORM_ID } from '../ducks/types';
 /** Utils **/
 import validate, { required } from 'utils/validate';
 
-import styles from './Form.scss';
-
 const IndexesForm = ({
   fields,
   handleCancelClick,
@@ -49,37 +47,32 @@ const IndexesForm = ({
 
       <Input name="hash" type="hidden" />
 
-      <Actions className={styles.Actions}>
-        {hash && (
-          <div>
-            <Button
-              onClick={handleDeleteClick}
-              size={Button.SIZE.LARGE}
-              variant={Button.VARIANT.DANGER}
-            >
-              Delete index
-            </Button>
-          </div>
-        )}
+      <Actions>
+        <Button
+          onClick={handleCancelClick}
+          size={Button.SIZE.LARGE}
+          variant={Button.VARIANT.SECONDARY}
+        >
+          Cancel
+        </Button>
 
-        <div className={styles.ActionsMain}>
+        {hash ? (
           <Button
-            onClick={handleCancelClick}
+            onClick={handleDeleteClick}
             size={Button.SIZE.LARGE}
-            variant={Button.VARIANT.SECONDARY}
+            variant={Button.VARIANT.DANGER}
           >
-            Cancel
+            Delete index
           </Button>
-
+        ) : (
           <Button
-            className={styles.ActionsSubmit}
             size={Button.SIZE.LARGE}
             type="submit"
             variant={Button.VARIANT.SUCCESS}
           >
-            {`${hash ? 'Update' : 'Create'} index`}
+            Create index
           </Button>
-        </div>
+        )}
       </Actions>
     </Form>
   );

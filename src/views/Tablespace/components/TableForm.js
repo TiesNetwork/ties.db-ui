@@ -16,8 +16,6 @@ import { TABLE_FORM_ID } from '../ducks/types';
 /** Utils **/
 import validate, { required } from 'utils/validate';
 
-import styles from './TableForm.scss';
-
 const TableForm = ({
   handleCancelClick,
   handleSubmit,
@@ -31,8 +29,16 @@ const TableForm = ({
       <Input label="Name" name="name" />
       <Input name="tablespaceId" type="hidden" />
 
-      <Actions className={styles.Actions}>
-        {hash && (
+      <Actions>
+        <Button
+          onClick={handleCancelClick}
+          size={Button.SIZE.LARGE}
+          variant={Button.VARIANT.SECONDARY}
+        >
+          Cancel
+        </Button>
+
+        {hash ? (
           <div>
             <Button
               onClick={handleDeleteClick}
@@ -42,26 +48,15 @@ const TableForm = ({
               Delete table
             </Button>
           </div>
-        )}
-
-        <div className={styles.ActionsMain}>
+        ) : (
           <Button
-            onClick={handleCancelClick}
-            size={Button.SIZE.LARGE}
-            variant={Button.VARIANT.SECONDARY}
-          >
-            Cancel
-          </Button>
-
-          <Button
-            className={styles.ActionsSubmit}
             size={Button.SIZE.LARGE}
             type="submit"
             variant={Button.VARIANT.SUCCESS}
           >
-            {`${hash ? 'Update' : 'Create'} table`}
+            Create table
           </Button>
-        </div>
+        )}
       </Actions>
     </Form>
   );

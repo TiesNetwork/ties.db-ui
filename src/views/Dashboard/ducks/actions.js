@@ -71,7 +71,7 @@ export const deleteTablespace = hash => (dispatch, getState, { contract }) => {
     types: [DELETE_TABLESPACE_REQUEST, DELETE_TABLESPACE_SUCCESS, DELETE_TABLESPACE_FAILURE],
     contract: contract.sendMethod('deleteTablespace', hash),
     transaction: {
-      action: 'Delete tablespace:',
+      action: 'Delete tablespace',
       link: `tablespace.${hash}`,
       name: tablespace.name,
       onCreate: () => dispatch(closeModal(TABLESPACE_FORM_ID)),

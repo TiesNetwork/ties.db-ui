@@ -3,6 +3,10 @@
   border: 1px solid #e9eff4;
   border-radius: 6px;
   overflow: hidden;
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
 }
 
 .Action {

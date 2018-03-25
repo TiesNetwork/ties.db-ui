@@ -15,7 +15,7 @@ const DashboardTransaction = ({
   <div className={styles.Root}>
     <div className={styles.Container}>
       <div className={styles.Action}>
-        {action}
+        {action}:
       </div>
 
       <div className={styles.Name}>

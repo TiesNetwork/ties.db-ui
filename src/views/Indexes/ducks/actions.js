@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import Web3 from 'web3';
 
 /** Actions **/
@@ -12,11 +13,6 @@ import {
   createIndex as createIndexInTableEntity,
   deleteIndex as deleteIndexInTableEntity,
 } from 'entities/models/tables';
-
-import {
-  createTransaction,
-  deleteTransaction,
-} from 'services/transactions';
 
 import { updateIndex } from 'entities/models/indexes';
 
@@ -49,16 +45,18 @@ export const createIndex = (tableHash, { fields, name, type }) => (dispatch, get
 
   dispatch({
     types: [CREATE_INDEX_REQUEST, CREATE_INDEX_SUCCESS, CREATE_INDEX_FAILURE],
-    contract: contract.sendMethod('createIndex', tableHash, name, type, fields)
-      .on('transactionHash', transactionHash => {
-        dispatch(createTransaction(hash));
+    contract: contract.sendMethod('createIndex', tableHash, name, type, fields),
+    transaction: {
+      action: 'Create index',
+      data: { fields, name, type },
+      link: `indexes.${hash}`,
+      name: name,
+      onCreate: () => dispatch(closeModal(INDEXES_FORM_ID)),
+      onSuccess: () => {
         dispatch(createIndexEntity(hash, { fields, name, type }));
         dispatch(createIndexInTableEntity(tableHash, hash));
-        dispatch(closeModal(INDEXES_FORM_ID));
-      })
-      .on('receipt', () => {
-        dispatch(deleteTransaction(hash));
-      })
+      },
+    },
   });
 }
 
@@ -66,19 +64,25 @@ export const createIndex = (tableHash, { fields, name, type }) => (dispatch, get
  * @param {string} tableHash
  * @param {string} hash
  */
-export const deleteIndex = (tableHash, hash) => (dispatch, getState, { contract }) => ({
-  types: [DELETE_INDEX_REQUEST, DELETE_INDEX_SUCCESS, DELETE_INDEX_FAILURE],
-  contract: contract.sendMethod('deleteIndex', tableHash, hash)
-    .on('transactionHash', transactionHash => {
-      dispatch(createTransaction(hash));
-      dispatch(closeModal(INDEXES_FORM_ID));
-    })
-    .on('receipt', () => {
-      dispatch(deleteIndexEntity(hash));
-      dispatch(deleteIndexInTableEntity(tableHash, hash));
-      dispatch(deleteTransaction(hash));
-    })
-});
+export const deleteIndex = (tableHash, hash) => (dispatch, getState, { contract }) => {
+  const { entities } = getState();
+  const index = get(entities, `indexes.${hash}`, {});
+
+  dispatch({
+    types: [DELETE_INDEX_REQUEST, DELETE_INDEX_SUCCESS, DELETE_INDEX_FAILURE],
+    contract: contract.sendMethod('deleteIndex', tableHash, hash),
+    transaction: {
+      action: 'Delete index',
+      link: `indexes.${hash}`,
+      name: index.name,
+      onCreate: () => dispatch(closeModal(INDEXES_FORM_ID)),
+      onSuccess: () => {
+        dispatch(deleteIndexEntity(hash));
+        dispatch(deleteIndexInTableEntity(tableHash, hash));
+      },
+    },
+  });
+}
 
 /**
  * @param {string} tableHash

@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import Web3 from 'web3';
 
 /** Actions **/
@@ -13,11 +14,6 @@ import {
 } from 'entities/models/tables';
 
 import { closeModal } from 'services/modals';
-
-import {
-  createTransaction,
-  deleteTransaction,
-} from 'services/transactions';
 
 /** Types **/
 import {
@@ -48,16 +44,18 @@ export const createTrigger = (tableHash, { name, payload }) => (dispatch, getSta
 
   dispatch({
     types: [CREATE_TRIGGER_REQUEST, CREATE_TRIGGER_SUCCESS, CREATE_TRIGGER_FAILURE],
-    contract: contract.sendMethod('createTrigger', tableHash, name, payload)
-      .on('transactionHash', transactionHash => {
-        dispatch(createTransaction(hash));
+    contract: contract.sendMethod('createTrigger', tableHash, name, payload),
+    transaction: {
+      action: 'Create trigger',
+      data: { name, payload },
+      link: `triggers.${hash}`,
+      name: name,
+      onCreate: () => dispatch(closeModal(TRIGGER_FORM_ID)),
+      onSuccess: () => {
         dispatch(createTriggerEntity(hash, { name, payload }));
         dispatch(createTriggerInTableEntity(tableHash, hash));
-        dispatch(closeModal(TRIGGER_FORM_ID));
-      })
-      .on('receipt', () => {
-        dispatch(deleteTransaction(hash));
-      })
+      },
+    },
   });
 }
 
@@ -65,19 +63,25 @@ export const createTrigger = (tableHash, { name, payload }) => (dispatch, getSta
  * @param {string} tableHash
  * @param {string} hash
  */
-export const deleteTrigger = (tableHash, hash) => (dispatch, getState, { contract }) => ({
-  types: [DELETE_TRIGGER_REQUEST, DELETE_TRIGGER_SUCCESS, DELETE_TRIGGER_FAILURE],
-  contract: contract.sendMethod('deleteTrigger', tableHash, hash)
-    .on('transactionHash', transactionHash => {
-      dispatch(createTransaction(hash));
-      dispatch(closeModal(TRIGGER_FORM_ID));
-    })
-    .on('receipt', () => {
-      dispatch(deleteIndexEntity(hash));
-      dispatch(deleteTriggerEntity(hash));
-      dispatch(deleteTriggerInTableEntity(tableHash, hash));
-    })
-});
+export const deleteTrigger = (tableHash, hash) => (dispatch, getState, { contract }) => {
+  const { entities } = getState();
+  const trigger = get(entities, `triggers.${hash}`, {});
+
+  dispatch({
+    types: [DELETE_TRIGGER_REQUEST, DELETE_TRIGGER_SUCCESS, DELETE_TRIGGER_FAILURE],
+    contract: contract.sendMethod('deleteTrigger', tableHash, hash),
+    transaction: {
+      action: 'Delete trigger',
+      link: `triggers.${hash}`,
+      name: trigger.name,
+      onCreate: () => dispatch(closeModal(TRIGGER_FORM_ID)),
+      onSuccess: () => {
+        dispatch(deleteTriggerEntity(hash));
+        dispatch(deleteTriggerInTableEntity(tableHash, hash));
+      },
+    },
+  });
+}
 
 /**
  * @param {string} tableHash

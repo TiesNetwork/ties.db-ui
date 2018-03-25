@@ -89,7 +89,7 @@ class Dashboard extends Component {
 const mapStateToProps = ({ entities, views }) => {
   const transactions = values(get(entities, 'transactions', {}));
   const view = get(views, 'dashboard', {});
-console.log(transactions);
+  
   return { ...view, transactions };
 }
 

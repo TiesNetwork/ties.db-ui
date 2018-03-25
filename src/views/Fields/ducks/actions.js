@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import Web3 from 'web3';
 
 /** Actions **/
@@ -12,11 +13,6 @@ import {
   createField as createFieldInTableEntity,
   deleteField as deleteFieldInTableEntity,
 } from 'entities/models/tables';
-
-import {
-  createTransaction,
-  deleteTransaction,
-} from 'services/transactions';
 
 /** Types **/
 import {
@@ -50,16 +46,18 @@ export const createField = (tableHash, { defaultValue, name, type }) => (dispatc
 
   dispatch({
     types: [CREATE_FIELD_REQUEST, CREATE_FIELD_SUCCESS, CREATE_FIELD_FAILURE],
-    contract: contract.sendMethod('createField', tableHash, name, type, defaultValue)
-      .on('transactionHash', transactionHash => {
-        dispatch(createTransaction(hash));
+    contract: contract.sendMethod('createField', tableHash, name, type, defaultValue),
+    transaction: {
+      action: 'Create field',
+      data: { defaultValue, name, type },
+      link: `fields.${hash}`,
+      name: name,
+      onCreate: () => dispatch(closeModal(FIELD_FORM_ID)),
+      onSuccess: () => {
         dispatch(createFieldEntity(hash, { defaultValue, name, type }));
         dispatch(createFieldInTableEntity(tableHash, hash));
-        dispatch(closeModal(FIELD_FORM_ID));
-      })
-      .on('receipt', () => {
-        dispatch(deleteTransaction(hash));
-      })
+      },
+    },
   });
 }
 
@@ -67,19 +65,25 @@ export const createField = (tableHash, { defaultValue, name, type }) => (dispatc
  * @param {string} tableHash
  * @param {string} hash
  */
-export const deleteField = (tableHash, hash) => (dispatch, getState, { contract }) => ({
-  types: [DELETE_FIELD_REQUEST, DELETE_FIELD_SUCCESS, DELETE_FIELD_FAILURE],
-  contract: contract.sendMethod('deleteField', tableHash, hash)
-    .on('transactionHash', transactionHash => {
-      dispatch(createTransaction(hash));
-      dispatch(closeModal(FIELD_FORM_ID));
-    })
-    .on('receipt', () => {
-      dispatch(deleteFieldEntity(hash));
-      dispatch(deleteFieldInTableEntity(tableHash, hash));
-      dispatch(deleteTransaction(hash));
-    })
-});
+export const deleteField = (tableHash, hash) => (dispatch, getState, { contract }) => {
+  const { entities } = getState();
+  const field = get(entities, `fields.${hash}`, {});
+
+  dispatch({
+    types: [DELETE_FIELD_REQUEST, DELETE_FIELD_SUCCESS, DELETE_FIELD_FAILURE],
+    contract: contract.sendMethod('deleteField', tableHash, hash),
+    transaction: {
+      action: 'Delete field',
+      link: `fields.${hash}`,
+      name: field.name,
+      onCreate: () => dispatch(closeModal(FIELD_FORM_ID)),
+      onSuccess: () => {
+        dispatch(deleteFieldEntity(hash));
+        dispatch(deleteFieldInTableEntity(tableHash, hash));
+      },
+    },
+  });
+}
 
 /**
  * @param {string} tableHash
