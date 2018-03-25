@@ -8,6 +8,7 @@ import fields from './models/fields';
 import indexes from './models/indexes';
 import tables from './models/tables';
 import tablespaces from './models/tablespaces';
+import transactions from './models/transactions';
 import triggers from './models/triggers';
 
 const modelsReducer = combineReducers({
@@ -15,6 +16,7 @@ const modelsReducer = combineReducers({
   indexes,
   tables,
   tablespaces,
+  transactions,
   triggers,
 });
 

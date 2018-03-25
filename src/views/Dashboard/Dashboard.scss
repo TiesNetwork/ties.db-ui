@@ -15,3 +15,23 @@
   flex-direction: column;
   padding: 16px;
 }
+
+.Transactions {
+  background-color: #f4f7f9;
+  border-left: 1px solid #e9eef4;
+  flex: 0 0 300px;
+  max-width: 300px;
+
+  &Container {
+    padding: 16px;
+  }
+
+  &Header {
+    align-items: center;
+    border-bottom: 1px solid #e9eef4;
+    display: flex;
+    font-size: 28px;
+    height: 56px;
+    padding: 0 16px;
+  }
+}

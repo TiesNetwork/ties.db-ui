@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, values } from 'lodash';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,6 +16,7 @@ import Modal from 'components/Modal';
 import TablespaceForm from './components/TablespaceForm';
 import TablespaceSelector from './components/TablespaceSelector/TablespaceSelector';
 import TablespaceTrigger from './components/TablespaceTrigger';
+import Transaction from './components/Transaction';
 
 /** Types **/
 import {
@@ -34,7 +35,13 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { handleDelete, handleSubmit, match, tablespaces } = this.props;
+    const {
+      handleDelete,
+      handleSubmit,
+      match,
+      tablespaces,
+      transactions,
+    } = this.props;
 
     return (
       <div className={styles.Root}>
@@ -48,6 +55,21 @@ class Dashboard extends Component {
             <Route path={`${match.url}:tablespaceHash`} component={Tablespace}/>
           </Switch>
         </div>
+
+
+        {transactions && transactions.length > 0 && (
+          <div className={styles.Transactions}>
+            <div className={styles.TransactionsHeader}>
+              Transactions
+            </div>
+
+            <div className={styles.TransactionsContainer}>
+              {transactions.map(transaction => (
+                <Transaction {...transaction} key={transaction.hash} />
+              ))}
+            </div>
+          </div>
+        )}
 
         <Modal
           description="Tablespace where you create the tables"
@@ -64,7 +86,13 @@ class Dashboard extends Component {
   }
 }
 
-const mapStateToProps = state => get(state, 'views.dashboard', {});
+const mapStateToProps = ({ entities, views }) => {
+  const transactions = values(get(entities, 'transactions', {}));
+  const view = get(views, 'dashboard', {});
+console.log(transactions);
+  return { ...view, transactions };
+}
+
 const mapDispatchToProps = dispatch => ({
   fetchTablespaces: () => dispatch(fetchTablespaces()),
   handleDelete: hash => dispatch(deleteTablespace(hash)),

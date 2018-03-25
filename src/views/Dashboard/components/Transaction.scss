@@ -1,0 +1,43 @@
+.Root {
+  background-color: #fff;
+  border: 1px solid #e9eff4;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.Action {
+  color: #989898;
+}
+
+.Container {
+  padding: 16px;
+}
+
+.Hash {
+  margin-top: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Link {
+  align-items: center;
+  color: #4da1ff;
+  display: flex;
+
+  &Icon {
+    flex: 0 0 18px;
+    margin-right: 8px;
+  }
+}
+
+.Name {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.Progress {
+  background-color: #f9f9f9;
+  border-top: 1px solid #e9eff4;
+  padding: 16px;
+}

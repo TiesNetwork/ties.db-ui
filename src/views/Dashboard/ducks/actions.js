@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import Web3 from 'web3';
 
 /** Actions **/
@@ -8,11 +9,6 @@ import {
 } from 'entities/models/tablespaces';
 import { updateEntities } from 'entities/actions';
 import { closeModal } from 'services/modals';
-
-import {
-  createTransaction,
-  deleteTransaction,
-} from 'services/transactions';
 
 /** Types **/
 import {
@@ -47,16 +43,18 @@ export const createTablespace = ({ name }) => (dispatch, getState, { contract })
 
   dispatch({
     types: [CREATE_TABLESPACE_REQUEST, CREATE_TABLESPACE_SUCCESS, CREATE_TABLESPACE_FAILURE],
-    contract: contract.sendMethod('createTablespace', name, '0x29a60CeA1aDED2EF4B64Ed219Acdb0F351B5ADed')
-      .on('transactionHash', transactionHash => {
-        dispatch(createTransaction(hash));
+    contract: contract.sendMethod('createTablespace', name, '0x29a60CeA1aDED2EF4B64Ed219Acdb0F351B5ADed'),
+    transaction: {
+      action: 'Create tablespace',
+      data: { name },
+      link: `tablespace.${hash}`,
+      name: name,
+      onCreate: () => dispatch(closeModal(TABLESPACE_FORM_ID)),
+      onSuccess: () => {
         dispatch(createTablespaceEntity(hash, { hash, name, tables: [] }));
         dispatch(createTablespaceView(hash));
-        dispatch(closeModal(TABLESPACE_FORM_ID));
-      })
-      .on('receipt', () => {
-        dispatch(deleteTransaction(hash));
-      })
+      },
+    },
   });
 }
 
@@ -65,19 +63,25 @@ export const createTablespace = ({ name }) => (dispatch, getState, { contract })
  */
 export const createTablespaceView = hash => ({ type: CREATE_TABLESPACE, hash });
 
-export const deleteTablespace = hash => (dispatch, getState, { contract }) => dispatch({
-  types: [DELETE_TABLESPACE_REQUEST, DELETE_TABLESPACE_SUCCESS, DELETE_TABLESPACE_FAILURE],
-  contract: contract.sendMethod('deleteTablespace', hash)
-    .on('transactionHash', transactionHash => {
-      dispatch(createTransaction(hash));
-      dispatch(closeModal(TABLESPACE_FORM_ID));
-    })
-    .on('receipt', () => {
-      dispatch(deleteTablespaceView(hash));
-      dispatch(deleteTablespaceEntity(hash));
-      dispatch(deleteTransaction(hash));
-    })
-});
+export const deleteTablespace = hash => (dispatch, getState, { contract }) => {
+  const { entities } = getState();
+  const tablespace = get(entities, `tablespaces.${hash}`, {});
+
+  dispatch({
+    types: [DELETE_TABLESPACE_REQUEST, DELETE_TABLESPACE_SUCCESS, DELETE_TABLESPACE_FAILURE],
+    contract: contract.sendMethod('deleteTablespace', hash),
+    transaction: {
+      action: 'Delete tablespace:',
+      link: `tablespace.${hash}`,
+      name: tablespace.name,
+      onCreate: () => dispatch(closeModal(TABLESPACE_FORM_ID)),
+      onSuccess: () => {
+        dispatch(deleteTablespaceView(hash));
+        dispatch(deleteTablespaceEntity(hash));
+      },
+    },
+  });
+}
 
 /**
  * @param {string} hash
