@@ -7,6 +7,15 @@ import { Link, matchPath } from 'react-router-dom';
 /** Actions **/
 import { fetchTable } from '../ducks/actions';
 
+/** Entities **/
+import {
+  getTransactionByLink,
+
+  /** Transactions types **/
+  CONFIRMATION,
+  PENDING,
+ } from 'entities/models/transactions';
+
 /** Components **/
 import Progress from 'components/Progress';
 
@@ -19,13 +28,15 @@ class TablespacesTableSelector extends Component {
   }
 
   render() {
-    const { hash, isLoading, name, selected, to } = this.props;
+    const { hash, name, selected, to, transaction } = this.props;
 
     const className = classNames(styles.Root, {
       [styles.RootEmpty]: !name,
-      [styles.RootLoading]: isLoading,
+      [styles.RootLoading]: !!transaction,
       [styles.RootSelected]: selected,
     });
+
+    // @todo - transaction wrapper;
 
     return (
       <Link className={className} to={to}>
@@ -37,9 +48,16 @@ class TablespacesTableSelector extends Component {
           {hash}
         </div>
 
-        {isLoading && (
+        {transaction && (
           <div className={styles.Progress}>
-            <Progress />
+            <Progress
+              value={transaction.block / 24 * 100}
+              variant={
+                transaction.status === PENDING
+                  ? Progress.VARIANT.SECONDARY
+                  : Progress.VARIANT.SUCCESS
+              }
+            />
           </div>
         )}
       </Link>
@@ -48,10 +66,10 @@ class TablespacesTableSelector extends Component {
 }
 
 const mapStateToProps = ({ entities, router, services }, { hash }) => {
-  const isLoading = get(services, `transactions.${hash}`, false);
   const pathname = get(router, 'location.pathname', '');
   const progress = get(services, `background.${hash}`);
   const table = get(entities, `tables.${hash}`, {});
+  const transaction = getTransactionByLink(entities, `tables.${hash}`);
 
   const match = matchPath(pathname, '/:tablespaceHash/:tableHash?');
 
@@ -59,7 +77,7 @@ const mapStateToProps = ({ entities, router, services }, { hash }) => {
   const tablespaceHash = get(match, 'params.tablespaceHash', '');
 
   return {
-    ...table, isLoading, progress,
+    ...table, progress, transaction,
     selected: tableHash === hash,
     to: `/${tablespaceHash}/${hash}`,
   };
