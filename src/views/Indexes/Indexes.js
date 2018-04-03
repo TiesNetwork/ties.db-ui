@@ -18,6 +18,11 @@ import Modal from 'components/Modal';
 import Form from './components/Form';
 import Index from './components/Item';
 
+/** Entities **/
+import {
+    getTransactionByLink,
+} from 'entities/models/transactions';
+
 /** Types **/
 import { INDEXES_FORM_ID } from './ducks/types';
 
@@ -30,6 +35,7 @@ const Indexes = ({
   handleSubmit,
   indexes,
   tableHash,
+  tableIsLoading,
 }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
@@ -38,12 +44,14 @@ const Indexes = ({
       </div>
 
       <div className={styles.Actions}>
-        <Button
-          onClick={handleClick}
-          variant={Button.VARIANT.PRIMARY}
-        >
-          Create index
-        </Button>
+        {!tableIsLoading && (
+          <Button
+            onClick={handleClick}
+            variant={Button.VARIANT.PRIMARY}
+          >
+            Create index
+          </Button>
+        )}
       </div>
     </div>
 
@@ -55,6 +63,7 @@ const Indexes = ({
               hash={hash}
               key={hash}
               onFetch={handleFetch}
+              readOnly={tableIsLoading}
             />
           ))}
         </div>
@@ -73,9 +82,10 @@ const Indexes = ({
 
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
+  const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableHash,
+    tableHash, tableIsLoading,
     indexes: get(entities, `tables.${tableHash}`, {}).indexes,
   };
 };

@@ -50,8 +50,8 @@ export const createTrigger = (tableHash, { name, payload }) => (dispatch, getSta
       data: { name, payload },
       link: `triggers.${hash}`,
       name: name,
-      onCreate: () => dispatch(closeModal(TRIGGER_FORM_ID)),
-      onSuccess: () => {
+      onCreate: () => {
+        dispatch(closeModal(TRIGGER_FORM_ID));
         dispatch(createTriggerEntity(hash, { name, payload }));
         dispatch(createTriggerInTableEntity(tableHash, hash));
       },

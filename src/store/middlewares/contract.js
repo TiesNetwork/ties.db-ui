@@ -21,6 +21,7 @@ const contractMiddleware = store => next => action => {
     if (transaction) {
       const {
         onCreate,
+        onError,
         onSuccess,
         ...payload,
       } = transaction;
@@ -34,6 +35,11 @@ const contractMiddleware = store => next => action => {
             onSuccess && onSuccess(hash);
           }
         })
+        .on('error', (message, res) => {
+          onError && onError();
+          // @todo - wtf, res undefined
+          // next(updateTransaction(hash, { status: ERROR }));
+        })
         .on('receipt', ({ transactionHash: hash }) => {
           next(updateTransaction(hash, { status: CONFIRMATION }));
         })
@@ -43,7 +49,7 @@ const contractMiddleware = store => next => action => {
             block: 0,
             status: PENDING,
           }));
-          
+
           onCreate && onCreate(hash);
         })
     }

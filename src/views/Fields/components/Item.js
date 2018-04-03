@@ -10,6 +10,15 @@ import { openModal } from 'services/modals';
 /** Components **/
 import Progress from 'components/Progress';
 
+/** Entities **/
+import {
+    getTransactionByLink,
+
+    /** types **/
+    CONFIRMATION,
+    PENDING,
+} from 'entities/models/transactions';
+
 /** Types **/
 import { FIELD_FORM_ID } from '../ducks/types';
 
@@ -43,14 +52,15 @@ class FieldsItem extends Component {
       className: classNameProp,
       defaultValue,
       handleClick,
-      isLoading,
       name,
+      readOnly,
+      transaction,
       type,
     } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
-      [styles.RootLoading]: isLoading,
+      [styles.RootReadOnly]: readOnly || transaction,
     });
 
     const iconClassName = classNames(styles.Icon, {
@@ -70,11 +80,17 @@ class FieldsItem extends Component {
       [styles.IconTime]: type === TYPE.TIME,
     });
 
+    const isLoading =
+      transaction && (
+        transaction.status === CONFIRMATION ||
+        transaction.status === PENDING
+      );
+
     return (
       <div className={className}>
         <div
           className={styles.Container}
-          onClick={handleClick}
+          onClick={!readOnly ? handleClick : undefined}
         >
           <div className={iconClassName}>
             {type && type.replace(/[aeiou]/g, '').substr(0, 2)}
@@ -96,7 +112,14 @@ class FieldsItem extends Component {
 
           {isLoading && (
             <div className={styles.Progress}>
-              <Progress />
+              <Progress
+                value={transaction.block / 24 * 100}
+                variant={
+                  transaction.status === PENDING
+                    ? Progress.VARIANT.SECONDARY
+                    : Progress.VARIANT.SUCCESS
+                }
+              />
             </div>
           )}
         </div>
@@ -110,6 +133,7 @@ FieldsItem.propTypes = {
   hash: PropTypes.string,
   name: PropTypes.string,
   onFetch: PropTypes.func,
+  readOnly: PropTypes.bool,
   type: PropTypes.string,
 };
 
@@ -117,9 +141,9 @@ FieldsItem.TYPE = TYPE;
 
 const mapStateToProps = ({ entities, services }, { hash }) => {
   const field = get(entities, `fields.${hash}`, {});
-  const isLoading = get(services, `transactions.${hash}`, false);
+  const transaction = getTransactionByLink(entities, `fields.${hash}`);
 
-  return { ...field, isLoading }
+  return { ...field, transaction };
 };
 
 const mapDispatchToProps = (dispatch, { hash }) => ({

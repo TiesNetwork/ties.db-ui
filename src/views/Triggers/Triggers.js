@@ -14,12 +14,24 @@ import Modal from 'components/Modal';
 import Form from './components/Form';
 import Trigger from './components/Item';
 
+/** Entities **/
+import {
+    getTransactionByLink,
+} from 'entities/models/transactions';
+
 /** Types **/
 import { TRIGGER_FORM_ID } from './ducks/types';
 
 import styles from './Triggers.scss';
 
-const Triggers = ({ handleClick, handleDelete, handleFetch, handleSubmit, triggers }) => (
+const Triggers = ({
+  handleClick,
+  handleDelete,
+  handleFetch,
+  handleSubmit,
+  tableIsLoading,
+  triggers,
+}) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -27,12 +39,14 @@ const Triggers = ({ handleClick, handleDelete, handleFetch, handleSubmit, trigge
       </div>
 
       <div className={styles.Actions}>
-        <Button
-          onClick={handleClick}
-          variant={Button.VARIANT.PRIMARY}
-        >
-          Create trigger
-        </Button>
+        {!tableIsLoading && (
+          <Button
+            onClick={handleClick}
+            variant={Button.VARIANT.PRIMARY}
+          >
+            Create trigger
+          </Button>
+        )}
       </div>
     </div>
 
@@ -45,6 +59,7 @@ const Triggers = ({ handleClick, handleDelete, handleFetch, handleSubmit, trigge
               hash={hash}
               key={hash}
               onFetch={handleFetch}
+              readOnly={tableIsLoading}
             />
           ))}
         </div>
@@ -62,8 +77,10 @@ const Triggers = ({ handleClick, handleDelete, handleFetch, handleSubmit, trigge
 
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
+  const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
+    tableIsLoading,
     triggers: get(entities, `tables.${tableHash}`, {}).triggers,
   };
 };

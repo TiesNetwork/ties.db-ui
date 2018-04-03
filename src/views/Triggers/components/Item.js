@@ -10,6 +10,15 @@ import { openModal } from 'services/modals';
 /** Components **/
 import Progress from 'components/Progress';
 
+/** Entities **/
+import {
+    getTransactionByLink,
+
+    /** types **/
+    CONFIRMATION,
+    PENDING,
+} from 'entities/models/transactions';
+
 /** Types **/
 import { TRIGGER_FORM_ID } from '../ducks/types';
 
@@ -25,20 +34,27 @@ class TriggersItem extends Component {
     const {
       className: classNameProp,
       handleClick,
-      isLoading,
       name,
+      transaction,
+      readOnly,
     } = this.props;
 
     const className = classNames(classNameProp, styles.Root, {
       [styles.RootEmpty]: !name,
-      [styles.RootLoading]: isLoading,
+      [styles.RootReadOnly]: readOnly || transaction,
     });
+
+    const isLoading =
+      transaction && (
+        transaction.status === CONFIRMATION ||
+        transaction.status === PENDING
+      );
 
     return (
       <div className={className}>
         <div
           className={styles.Container}
-          onClick={handleClick}
+          onClick={!readOnly ? handleClick : undefined}
         >
           <div className={styles.Name}>
             {name}
@@ -46,7 +62,14 @@ class TriggersItem extends Component {
 
           {isLoading && (
             <div className={styles.Progress}>
-              <Progress />
+              <Progress
+                value={transaction.block / 24 * 100}
+                variant={
+                  transaction.status === PENDING
+                    ? Progress.VARIANT.SECONDARY
+                    : Progress.VARIANT.SUCCESS
+                }
+              />
             </div>
           )}
         </div>
@@ -59,13 +82,14 @@ TriggersItem.propTypes = {
   hash: PropTypes.string,
   name: PropTypes.string,
   onFetch: PropTypes.func,
+  readOnly: PropTypes.bool,
 };
 
 const mapStateToProps = ({ entities, services }, { hash }) => {
   const trigger = get(entities, `triggers.${hash}`, {});
-  const isLoading = get(services, `transactions.${hash}`, false);
+  const transaction = getTransactionByLink(entities, `triggers.${hash}`);
 
-  return { ...trigger, isLoading };
+  return { ...trigger, transaction };
 }
 const mapDispatchToProps = (dispatch, { hash }) => ({
   handleClick: () => dispatch(openModal(TRIGGER_FORM_ID, { hash, title: 'Update a trigger' })),

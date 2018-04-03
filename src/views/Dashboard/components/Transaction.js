@@ -9,6 +9,8 @@ import Progress from 'components/Progress';
 /** Types **/
 import {
   CONFIRMATION,
+  ERROR,
+  PENDING,
 } from 'entities/models/transactions';
 
 import styles from './Transaction.scss';
@@ -24,9 +26,11 @@ const DashboardTransaction = ({
     ? block / 24 * 100
     : null;
 
-  const variant = status === CONFIRMATION
-    ? Label.VARIANT.SUCCESS
-    : Label.VARIANT.SECONDARY;
+  const variant = status === PENDING
+    ? Label.VARIANT.SECONDARY
+    : status === ERROR
+      ? Label.VARIANT.DANGER
+      : Label.VARIANT.SUCCESS;
 
   return (
     <div className={styles.Root}>

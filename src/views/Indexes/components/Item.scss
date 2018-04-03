@@ -43,6 +43,11 @@
       opacity: .5;
     }
   }
+
+  &ReadOnly {
+    background-color: rgba(0, 0, 0, .04);
+    pointer-events: none;
+  }
 }
 
 .Container {

@@ -53,6 +53,9 @@
   font-size: 28px;
   line-height: 36px;
   min-height: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .Nav {

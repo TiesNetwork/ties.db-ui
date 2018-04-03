@@ -18,12 +18,24 @@ import Modal from 'components/Modal';
 import Form from './components/Form';
 import Field from './components/Item';
 
+/** Entities **/
+import {
+    getTransactionByLink,
+} from 'entities/models/transactions';
+
 /** Types **/
 import { FIELD_FORM_ID } from './ducks/types';
 
 import styles from './Fields.scss';
 
-const Fields = ({ handleClick, handleDelete, handleFetch, handleSubmit, fields }) => (
+const Fields = ({
+  fields,
+  handleClick,
+  handleDelete,
+  handleFetch,
+  handleSubmit,
+  tableIsLoading,
+}) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Title}>
@@ -31,12 +43,14 @@ const Fields = ({ handleClick, handleDelete, handleFetch, handleSubmit, fields }
       </div>
 
       <div className={styles.Actions}>
-        <Button
-          onClick={handleClick}
-          variant={Button.VARIANT.PRIMARY}
-        >
-          Create field
-        </Button>
+        {!tableIsLoading && (
+          <Button
+            onClick={handleClick}
+            variant={Button.VARIANT.PRIMARY}
+          >
+            Create field
+          </Button>
+        )}
       </div>
     </div>
 
@@ -48,6 +62,7 @@ const Fields = ({ handleClick, handleDelete, handleFetch, handleSubmit, fields }
               hash={hash}
               key={hash}
               onFetch={handleFetch}
+              readOnly={tableIsLoading}
             />
           ))}
         </div>
@@ -65,8 +80,10 @@ const Fields = ({ handleClick, handleDelete, handleFetch, handleSubmit, fields }
 
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
+  const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
+    tableIsLoading,
     fields: get(entities, `tables.${tableHash}`, {}).fields,
   };
 };

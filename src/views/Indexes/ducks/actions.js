@@ -51,8 +51,8 @@ export const createIndex = (tableHash, { fields, name, type }) => (dispatch, get
       data: { fields, name, type },
       link: `indexes.${hash}`,
       name: name,
-      onCreate: () => dispatch(closeModal(INDEXES_FORM_ID)),
-      onSuccess: () => {
+      onCreate: () => {
+        dispatch(closeModal(INDEXES_FORM_ID));
         dispatch(createIndexEntity(hash, { fields, name, type }));
         dispatch(createIndexInTableEntity(tableHash, hash));
       },

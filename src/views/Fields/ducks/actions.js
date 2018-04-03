@@ -52,8 +52,8 @@ export const createField = (tableHash, { defaultValue, name, type }) => (dispatc
       data: { defaultValue, name, type },
       link: `fields.${hash}`,
       name: name,
-      onCreate: () => dispatch(closeModal(FIELD_FORM_ID)),
-      onSuccess: () => {
+      onCreate: () => {
+        dispatch(closeModal(FIELD_FORM_ID));
         dispatch(createFieldEntity(hash, { defaultValue, name, type }));
         dispatch(createFieldInTableEntity(tableHash, hash));
       },

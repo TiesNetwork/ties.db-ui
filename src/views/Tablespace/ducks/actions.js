@@ -47,11 +47,10 @@ export const createTable = (tablespaceHash, { name }) => (dispatch, getState, { 
     contract: contract.sendMethod('createTable', tablespaceHash, name),
     transaction: {
       action: 'Create table',
-      data: { name },
       link: `tables.${hash}`,
       name: name,
-      onCreate: () => dispatch(closeModal(TABLE_FORM_ID)),
-      onSuccess: () => {
+      onCreate: () => {
+        dispatch(closeModal(TABLE_FORM_ID));
         dispatch(createTableEntity(hash, {
           hash, name,
           fields: [],
@@ -59,7 +58,7 @@ export const createTable = (tablespaceHash, { name }) => (dispatch, getState, { 
           triggers: [],
         }));
         dispatch(createTableInTablespaceEntity(tablespaceHash, hash));
-      },
+      }
     },
   });
 }
