@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -62,13 +63,19 @@ const TableForm = ({
   );
 };
 
-const mapStateToProps = ({ entities, services }) => {
+const mapStateToProps = ({ entities, services }, { tablespaceHash }) => {
   const hash = get(services, `modals.${TABLE_FORM_ID}`, {}).hash;
   const initialValues = hash
     ? { ...get(entities, `tables.${hash}`, {}), hash }
     : {};
+  const tablespace = get(entities, `tablespaces.${tablespaceHash}`);
 
-  return { initialValues };
+  return {
+    initialValues,
+    hasTable: tableName =>
+      tablespace &&
+      tablespace.tables.indexOf(Web3.utils.sha3(`${tablespace.name}#${tableName}`)) > -1,
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -78,6 +85,12 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: TABLE_FORM_ID,
   validate: validate({
-    name: [required()],
+    name: [
+      required(),
+      (value, { hasTable }) => ({
+        isValid: value && !hasTable(value),
+        message: 'Table exists',
+      }),
+    ],
   }),
 })(TableForm));

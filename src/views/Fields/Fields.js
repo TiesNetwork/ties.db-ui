@@ -35,6 +35,7 @@ const Fields = ({
   handleFetch,
   handleSubmit,
   tableIsLoading,
+  tableHash,
 }) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
@@ -73,6 +74,7 @@ const Fields = ({
       <Form
         onDelete={handleDelete}
         onSubmit={handleSubmit}
+        tableHash={tableHash}
       />
     </Modal>
   </div>
@@ -83,7 +85,7 @@ const mapStateToProps = ({ entities }, { match }) => {
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableIsLoading,
+    tableIsLoading, tableHash,
     fields: get(entities, `tables.${tableHash}`, {}).fields,
   };
 };

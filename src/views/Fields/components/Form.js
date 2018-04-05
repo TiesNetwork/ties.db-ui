@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -14,7 +15,7 @@ import Form, { Actions, Input, Select } from 'components/Form';
 import { FIELD_FORM_ID } from '../ducks/types';
 
 /** Utils **/
-import validate, { required } from 'utils/validate';
+import validate, { matches, required } from 'utils/validate';
 
 const FieldsForm = ({
   handleCancelClick,
@@ -88,14 +89,19 @@ const FieldsForm = ({
   );
 }
 
-
-const mapStateToProps = ({ entities, services }) => {
+const mapStateToProps = ({ entities, services }, { tableHash }) => {
   const hash = get(services, `modals.${FIELD_FORM_ID}`, {}).hash;
   const initialValues = hash
     ? { ...get(entities, `fields.${hash}`, {}), hash }
-    : { type: 'Integer' };
+    : { defaultValue: '0x00', type: 'Integer' };
+  const table = get(entities, `tables.${tableHash}`);
 
-  return { initialValues };
+  return {
+    initialValues,
+    hasField: fieldName =>
+      table &&
+      table.fields.indexOf(Web3.utils.sha3(fieldName)) > -1,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -105,7 +111,17 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: FIELD_FORM_ID,
   validate: validate({
-    name: [required()],
+    defaultValue: [
+      required(),
+      matches(new RegExp('^0x[0-9abcdef]{2,}$')),
+    ],
+    name: [
+      required(),
+      (value, { hasField }) => ({
+        isValid: value && !hasField(value),
+        message: 'Field exists',
+      }),
+    ],
     type: [required()],
   }),
 })(FieldsForm))

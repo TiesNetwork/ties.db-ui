@@ -30,6 +30,7 @@ const Triggers = ({
   handleFetch,
   handleSubmit,
   tableIsLoading,
+  tableHash,
   triggers,
 }) => (
   <div className={styles.Root}>
@@ -70,6 +71,7 @@ const Triggers = ({
       <Form
         onDelete={handleDelete}
         onSubmit={handleSubmit}
+        tableHash={tableHash}
       />
     </Modal>
   </div>
@@ -80,7 +82,7 @@ const mapStateToProps = ({ entities }, { match }) => {
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableIsLoading,
+    tableIsLoading, tableHash,
     triggers: get(entities, `tables.${tableHash}`, {}).triggers,
   };
 };

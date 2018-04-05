@@ -1,19 +1,29 @@
 /**
+ * @param  {Object.<RegExp>} regex
+ * @param  {string} message
+ */
+export const matches = (regex, message = 'Incorrect value!') => value => ({
+  message,
+  isValid: value && regex.test(value),
+});
+
+/**
  * @param {string} message
  */
 export const required = (message = 'Field is required!') => value => ({
+  message,
   isValid: value && (
     Array.isArray(value) && value.length > 0 ||
     typeof value === 'string' && value.trim() !== ''
-  ), message
+  ),
 });
 
-export default fields => values => {
+export default fields => (values, props) => {
   const errors = {};
 
   Object.keys(fields).forEach(key => {
     ([]).concat(fields[key]).forEach(validator => {
-      const res = validator(values[key]);
+      const res = validator(values[key], props);
 
       if (res && !errors[key] && !res.isValid) {
         errors[key] = res.message || true;

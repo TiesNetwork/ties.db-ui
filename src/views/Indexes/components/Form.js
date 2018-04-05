@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -82,6 +83,7 @@ const IndexesForm = ({
 const mapStateToProps = ({ entities, services }, { tableHash }) => {
   const hash = get(services, `modals.${INDEXES_FORM_ID}`, {}).hash;
   const index = get(entities, `indexes.${hash}`, {});
+  const table = get(entities, `tables.${tableHash}`);
 
   const fieldHashes = get(entities, `tables.${tableHash}`, {}).fields;
   const fields = fieldHashes && fieldHashes.map(fieldHash => ({
@@ -93,7 +95,12 @@ const mapStateToProps = ({ entities, services }, { tableHash }) => {
     ? { ...index, hash}
     : { type: '0x1' };
 
-  return { fields, initialValues };
+  return {
+    fields, initialValues,
+    hasIndex: indexName =>
+      table &&
+      table.indexes.indexOf(Web3.utils.sha3(indexName)) > -1,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -104,7 +111,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: INDEXES_FORM_ID,
   validate: validate({
     fields: [required()],
-    name: [required()],
+    name: [
+      required(),
+      (value, { hasIndex }) => ({
+        isValid: value && !hasIndex(value),
+        message: 'Index exists',
+      }),
+    ],
     type: [required()],
   }),
 })(IndexesForm))

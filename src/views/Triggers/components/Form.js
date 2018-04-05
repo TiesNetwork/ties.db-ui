@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -62,13 +63,19 @@ const TriggersForm = ({
   )
 }
 
-const mapStateToProps = ({ entities, services }) => {
+const mapStateToProps = ({ entities, services }, { tableHash }) => {
   const hash = get(services, `modals.${TRIGGER_FORM_ID}`).hash;
   const initialValues = hash
     ? { ...get(entities, `triggers.${hash}`, {}), hash }
     : {};
+  const table = get(entities, `tables.${tableHash}`);
 
-  return { initialValues };
+  return {
+    initialValues,
+    hasTrigger: triggerName =>
+      table &&
+      table.triggers.indexOf(Web3.utils.sha3(triggerName)) > -1,
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -78,7 +85,13 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: TRIGGER_FORM_ID,
   validate: validate({
-    name: [required()],
+    name: [
+      required(),
+      (value, { hasTrigger }) => ({
+        isValid: value && !hasTrigger(value),
+        message: 'Trigger exists',
+      }),
+    ],
     payload: [required()],
   }),
 })(TriggersForm))

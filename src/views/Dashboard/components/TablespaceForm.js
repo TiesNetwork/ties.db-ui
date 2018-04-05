@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -69,7 +70,11 @@ const mapStateToProps = ({ entities, services }) => {
     ? { ...get(entities, `tablespaces.${hash}`), hash }
     : {};
 
-    return { initialValues };
+  return {
+    initialValues,
+    hasTablespace: tablespaceName =>
+      get(entities, `tablespaces.${Web3.utils.sha3(tablespaceName)}`),
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -79,6 +84,12 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: TABLESPACE_FORM_ID,
   validate: validate({
-    name: [required('Don\' forget to name your tablespace')],
+    name: [
+      required('Don\' forget to name your tablespace'),
+      (value, { hasTablespace }) => ({
+        isValid: value && !hasTablespace(value),
+        message: 'Tablespace exists',
+      }),
+    ],
   }),
 })(TablespaceForm));

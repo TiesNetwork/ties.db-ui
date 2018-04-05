@@ -79,6 +79,7 @@ const Tablespace = ({
         <TableForm
           onDelete={handleDelete}
           onSubmit={handleSubmit}
+          tablespaceHash={hash}
         />
       </Modal>
     </div>
