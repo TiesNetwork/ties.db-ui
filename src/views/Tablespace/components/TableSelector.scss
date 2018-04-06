@@ -6,6 +6,7 @@
   color: inherit;
   display: block;
   padding: 16px;
+  position: relative;
   transition: all .2s ease;
   text-decoration: none;
 
@@ -74,4 +75,11 @@
 
 .Progress {
   margin-top: 12px;
+}
+
+.Published {
+  box-shadow: 0 0 12px 12px #fff;
+  position: absolute;
+  right: 16px;
+  top: 16px;
 }

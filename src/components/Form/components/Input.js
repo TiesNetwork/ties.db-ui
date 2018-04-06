@@ -10,6 +10,7 @@ const FormInput = ({
   disabled,
   error,
   id,
+  min,
   name,
   onChange,
   placeholder,
@@ -26,6 +27,7 @@ const FormInput = ({
         className={inputClassName}
         disabled={disabled}
         id={id}
+        min={min}
         name={name}
         onChange={onChange}
         placeholder={placeholder}

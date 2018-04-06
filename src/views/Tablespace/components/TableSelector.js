@@ -12,11 +12,11 @@ import {
   getTransactionByLink,
 
   /** Transactions types **/
-  CONFIRMATION,
   PENDING,
  } from 'entities/models/transactions';
 
 /** Components **/
+import Label from 'components/Label';
 import Progress from 'components/Progress';
 
 import styles from './TableSelector.scss'
@@ -59,6 +59,15 @@ class TablespacesTableSelector extends Component {
               }
             />
           </div>
+        )}
+
+        {false && (
+          <Label
+            className={styles.Published}
+            variant={Label.VARIANT.SUCCESS}
+          >
+            DISTRIBUTED
+          </Label>
         )}
       </Link>
     );

@@ -1,0 +1,11 @@
+.Actions {
+  justify-content: space-between;
+
+  &Main {
+    display: flex;
+  }
+
+  &Submit {
+    margin-left: 8px;
+  }
+}

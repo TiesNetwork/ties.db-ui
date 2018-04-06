@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 
 /** Actions **/
 import { openModal } from 'services/modals';
-import { createTable, deleteTable } from './ducks/actions';
+import { createTable, deleteTable, distributeTable } from './ducks/actions';
 
 /** Components **/
 import Button from 'components/Button';
@@ -14,11 +14,15 @@ import Icon from 'components/Icon';
 import Modal from 'components/Modal';
 
 import TableForm from './components/TableForm';
+import TableDistributeForm from './components/TableDistributeForm';
 import TableSelector from './components/TableSelector';
 import TableTrigger from './components/TableTrigger';
 
 /** Types **/
-import { TABLE_FORM_ID } from './ducks/types';
+import {
+  TABLE_FORM_ID,
+  TABLE_DISTRIBUTE_FORM_ID,
+} from './ducks/types';
 import { TABLESPACE_FORM_ID } from 'views/Dashboard/ducks/types';
 
 /** Views **/
@@ -27,6 +31,7 @@ import Table from '../Table';
 import styles from './Tablespace.scss';
 
 const Tablespace = ({
+  handleDistribute,
   handleDelete,
   handleSettingsClick,
   handleSubmit,
@@ -82,6 +87,16 @@ const Tablespace = ({
           tablespaceHash={hash}
         />
       </Modal>
+
+      <Modal
+        description="Be careful! After distributing, the table can not be changed."
+        id={TABLE_DISTRIBUTE_FORM_ID}
+        title="Distribute a table"
+      >
+        <TableDistributeForm
+          onSubmit={handleDistribute}
+        />
+      </Modal>
     </div>
   );
 };
@@ -96,6 +111,7 @@ const mapDispatchToProps = (dispatch, { match }) => {
 
   return ({
     handleDelete: hash => dispatch(deleteTable(tablespaceHash, hash)),
+    handleDistribute: values => dispatch(distributeTable(values)),
     handleSettingsClick: () => dispatch(openModal(TABLESPACE_FORM_ID, { hash: tablespaceHash, title: 'Edit tablespace'})),
     handleSubmit: values => dispatch(createTable(tablespaceHash, values)),
   });

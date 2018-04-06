@@ -26,11 +26,16 @@ import {
   DELETE_TABLE_SUCCESS,
   DELETE_TABLE_FAILURE,
 
+  DISTRIBUTE_TABLE_REQUEST,
+  DISTRIBUTE_TABLE_SUCCESS,
+  DISTRIBUTE_TABLE_FAILURE,
+
   FETCH_TABLE_REQUEST,
   FETCH_TABLE_SUCCESS,
   FETCH_TABLE_FAILURE,
 
   TABLE_FORM_ID,
+  TABLE_DISTRIBUTE_FORM_ID,
 } from './types';
 
 /**
@@ -88,10 +93,31 @@ export const deleteTable = (tablespaceHash, hash) => (dispatch, getState, { cont
 }
 
 /**
+ * @param  {string} hash
+ * @param  {string} nodes
+ * @param  {string} replicas
+ */
+export const distributeTable = ({ hash, nodes, replicas }) => (dispatch, getState, { contract }) => {
+  const { entities } = getState();
+  const table = get(entities, `tables.${hash}`, {});
+
+  dispatch({
+    types: [DISTRIBUTE_TABLE_REQUEST, DISTRIBUTE_TABLE_SUCCESS, DISTRIBUTE_TABLE_FAILURE],
+    contract: contract.sendMethod('distribute', hash, nodes, replicas),
+    transaction: {
+      action: 'Distribute table',
+      link: `tables.${hash}`,
+      name: table.name,
+      onCreate: () => dispatch(closeModal(TABLE_DISTRIBUTE_FORM_ID)),
+    }
+  });
+}
+
+/**
  * @param {string} tableHash
  */
 export const fetchTable = tableHash => (dispatch, getState, { contract }) => ({
   types: [FETCH_TABLE_REQUEST, FETCH_TABLE_SUCCESS, FETCH_TABLE_FAILURE],
   contract: contract.callMethod('getTable', tableHash)
-    .then(({ fields, name, indexes, triggers }) => dispatch(updateTable(tableHash, { fields, indexes, name, triggers })))
+    .then(({ fields, name, indexes, triggers, ...props }) => dispatch(updateTable(tableHash, { fields, indexes, name, triggers })))
 });
