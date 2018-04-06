@@ -16,7 +16,10 @@ import {
 
     /** types **/
     CONFIRMATION,
+    ERROR,
+    FAIL,
     PENDING,
+    SUCCESS,
 } from 'entities/models/transactions';
 
 /** Types **/
@@ -107,7 +110,11 @@ class IndexesItem extends Component {
                 variant={
                   transaction.status === PENDING
                     ? Progress.VARIANT.SECONDARY
-                    : Progress.VARIANT.SUCCESS
+                    : transaction.status === CONFIRMATION
+                      ? Progress.VARIANT.PRIMARY
+                      : transaction.status === FAIL || transaction.status === ERROR
+                        ? Progress.VARIANT.DANGER
+                        : Progress.VARIANT.SUCCESS
                 }
               />
             </div>
@@ -134,8 +141,9 @@ const mapStateToProps = ({ entities, services }, { hash }) => {
   const transaction = getTransactionByLink(entities, `indexes.${hash}`);
 
   return {
-    ...index, transaction,
+    ...index,
     fields: fields && fields.map(hash => get(entities, `fields.${hash}`, {}).name),
+    transaction: transaction && transaction.status !== SUCCESS ? transaction : null,
   };
 };
 

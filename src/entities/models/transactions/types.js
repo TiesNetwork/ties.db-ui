@@ -5,5 +5,6 @@ export const UPDATE_TRANSACTION = 'ENTITIES/TRANSACTIONS/UPDATE_TRANSACTION';
 /** Statuses **/
 export const CONFIRMATION = 'CONFIRMATION';
 export const ERROR = 'ERROR';
+export const FAIL = 'FAIL';
 export const PENDING = 'PENDING';
 export const SUCCESS = 'SUCCESS';

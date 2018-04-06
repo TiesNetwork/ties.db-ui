@@ -10,6 +10,7 @@ import Progress from 'components/Progress';
 import {
   CONFIRMATION,
   ERROR,
+  FAIL,
   PENDING,
 } from 'entities/models/transactions';
 
@@ -28,9 +29,11 @@ const DashboardTransaction = ({
 
   const variant = status === PENDING
     ? Label.VARIANT.SECONDARY
-    : status === ERROR
-      ? Label.VARIANT.DANGER
-      : Label.VARIANT.SUCCESS;
+    : status === CONFIRMATION
+      ? Label.VARIANT.PRIMARY
+      : status === FAIL || status === ERROR
+        ? Label.VARIANT.DANGER
+        : Label.VARIANT.SUCCESS;
 
   return (
     <div className={styles.Root}>

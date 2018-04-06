@@ -1,14 +1,16 @@
 /** Actions **/
 import {
   createTransaction,
-  deleteTransaction,
   updateTransaction,
 } from 'entities/models/transactions';
 
 /** Types **/
 import {
   CONFIRMATION,
+  ERROR,
+  FAIL,
   PENDING,
+  SUCCESS,
 } from 'entities/models/transactions';
 
 const contractMiddleware = store => next => action => {
@@ -27,15 +29,27 @@ const contractMiddleware = store => next => action => {
       } = transaction;
 
       contract
-        .on('confirmation', (number, { transactionHash: hash }) => {
-          next(updateTransaction(hash, { block: number }));
+        .on('confirmation', (number, { status, transactionHash: hash, ...props }) => {
+          const isFail = status === '0x0';
+          const isLast = number === 24;
 
-          if (number === 24) {
-            next(deleteTransaction(hash));
-            onSuccess && onSuccess(hash);
+          next(updateTransaction(hash, {
+            block: number,
+            status: isLast
+              ? isFail
+                ? FAIL
+                : SUCCESS
+              : CONFIRMATION,
+          }));
+
+          if (isLast) {
+            isFail
+              ? onError && onError(hash)
+              : onSuccess && onSuccess(hash);
           }
         })
         .on('error', (message, res) => {
+          console.info(message[0], res);
           onError && onError();
           // @todo - wtf, res undefined
           // next(updateTransaction(hash, { status: ERROR }));

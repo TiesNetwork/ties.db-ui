@@ -12,6 +12,9 @@ import {
   getTransactionByLink,
 
   /** Transactions types **/
+  CONFIRMATION,
+  ERROR,
+  FAIL,
   PENDING,
  } from 'entities/models/transactions';
 
@@ -55,7 +58,11 @@ class TablespacesTableSelector extends Component {
               variant={
                 transaction.status === PENDING
                   ? Progress.VARIANT.SECONDARY
-                  : Progress.VARIANT.SUCCESS
+                  : transaction.status === CONFIRMATION
+                    ? Progress.VARIANT.PRIMARY
+                    : transaction.status === FAIL || transaction.status === ERROR
+                      ? Progress.VARIANT.DANGER
+                      : Progress.VARIANT.SUCCESS
               }
             />
           </div>

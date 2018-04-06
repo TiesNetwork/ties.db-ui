@@ -16,7 +16,10 @@ import {
 
     /** types **/
     CONFIRMATION,
+    ERROR,
+    FAIL,
     PENDING,
+    SUCCESS,
 } from 'entities/models/transactions';
 
 /** Types **/
@@ -67,7 +70,11 @@ class TriggersItem extends Component {
                 variant={
                   transaction.status === PENDING
                     ? Progress.VARIANT.SECONDARY
-                    : Progress.VARIANT.SUCCESS
+                    : transaction.status === CONFIRMATION
+                      ? Progress.VARIANT.PRIMARY
+                      : transaction.status === FAIL || transaction.status === ERROR
+                        ? Progress.VARIANT.DANGER
+                        : Progress.VARIANT.SUCCESS
                 }
               />
             </div>
@@ -89,7 +96,10 @@ const mapStateToProps = ({ entities, services }, { hash }) => {
   const trigger = get(entities, `triggers.${hash}`, {});
   const transaction = getTransactionByLink(entities, `triggers.${hash}`);
 
-  return { ...trigger, transaction };
+  return {
+    ...trigger,
+    transaction: transaction && transaction.status !== SUCCESS ? transaction : null,
+  };
 }
 const mapDispatchToProps = (dispatch, { hash }) => ({
   handleClick: () => dispatch(openModal(TRIGGER_FORM_ID, { hash, title: 'Update a trigger' })),
