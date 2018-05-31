@@ -7,7 +7,7 @@ import {
 /** Types **/
 import {
   CONFIRMATION,
-  ERROR,
+  // ERROR,
   FAIL,
   PENDING,
   SUCCESS,

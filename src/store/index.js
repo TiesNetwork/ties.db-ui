@@ -4,8 +4,8 @@ import { applyMiddleware, createStore } from 'redux';
 import { Contract, schema } from 'api';
 
 /** Middleware **/
-import { routerMiddleware } from 'react-router-redux'
-import loggerMiddleware from 'redux-logger'
+import { routerMiddleware } from 'react-router-redux';
+// import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 
 import contractMiddleware from './middlewares/contract';
@@ -20,7 +20,7 @@ export default ({ account, history, web3 }) => {
 
   return createStore(reducer, applyMiddleware(
     routerMiddleware(history),
-    loggerMiddleware,
+    // loggerMiddleware,
     thunkMiddleware.withExtraArgument({ contract, schema }),
     contractMiddleware
   ));

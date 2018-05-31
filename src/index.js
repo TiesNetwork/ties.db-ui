@@ -11,11 +11,23 @@ import Metamask from 'views/Metamask';
 import createStore from './store';
 
 const web3 = new Web3(Web3.givenProvider);
+web3.eth.net.getId().then(console.log);
+Promise.all([
+  web3.eth.getAccounts(),
+  web3.eth.net.getId(),
+]).then(values => {
+    const accounts = values[0];
+    const network = values[1];
 
-web3.eth.getAccounts()
-  .then(accounts => {
+    if (network === 4) {
+      return accounts[0];
+    } else {
+      throw new Error('network');
+    }
+  })
+  .then(account => {
     const history = createHistory();
-    const store = createStore({ account: accounts[0], history, web3 });
+    const store = createStore({ account, history, web3 });
 
     ReactDOM.render(
       <Provider store={store}>
@@ -25,9 +37,8 @@ web3.eth.getAccounts()
       </Provider>,
       document.getElementById('root')
     );
-  }).catch(() => {
-    ReactDOM.render(
-      <Metamask />,
-      document.getElementById('root')
-    );
-  });
+  })
+  .catch(e => ReactDOM.render(
+    <Metamask incorrectNetwork={e.message === 'network'} />,
+    document.getElementById('root')
+  ))

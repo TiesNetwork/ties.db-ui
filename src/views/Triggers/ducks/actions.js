@@ -31,7 +31,7 @@ import {
 
   TRIGGER_FORM_ID,
 } from './types';
-import {deleteIndex as deleteIndexEntity} from "entities/models/indexes";
+// import {deleteIndex as deleteIndexEntity} from "entities/models/indexes";
 
 /**
  * @param {string} tableHash

@@ -13,8 +13,8 @@ export const matches = (regex, message = 'Incorrect value!') => value => ({
 export const required = (message = 'Field is required!') => value => ({
   message,
   isValid: value && (
-    Array.isArray(value) && value.length > 0 ||
-    typeof value === 'string' && value.trim() !== ''
+    (Array.isArray(value) && value.length > 0) ||
+    (typeof value === 'string' && value.trim()) !== ''
   ),
 });
 
