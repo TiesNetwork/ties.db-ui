@@ -1,0 +1,54 @@
+.Root {
+  border: 0;
+  border-radius: 16px;
+  display: flex;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &Dark {
+    background: #545d69;
+    flex-direction: row-reverse;
+
+    .Icon {
+      background-image: url(../assets/moon.svg);
+    }
+  }
+
+  &Light {
+    background: #939ea7;
+
+    .Icon {
+      background-image: url(../assets/sun.svg);
+    }
+  }
+}
+
+.Current {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  height: 28px;
+  justify-content: center;
+}
+
+.Icon {
+  background: no-repeat center center;
+  background-size: contain;
+  height: 16px;
+  width: 16px;
+}
+
+.Selector {
+  background: #fff;
+  border-radius: 12px;
+  flex: 0 0 24px;
+  height: 24px;
+  margin: 2px;
+  width: 24px;
+}

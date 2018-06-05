@@ -1,3 +1,5 @@
+@import "~styles/themes.scss";
+
 .Root {
   display: flex;
   flex-direction: column;
@@ -5,8 +7,7 @@
 }
 
 .Select {
-  background-color: transparent;
-  border: 1px solid #d0D7dd;
+  border: 1px solid;
   border-radius: 5px;
   box-shadow: none;
   height: 52px;
@@ -19,12 +20,20 @@
   -moz-appearance: none;
   appearance: none;
 
+  @include themify($themes) {
+    background: themed('inputBackground');
+    border-color: themed('inputBorderColor');
+    color: themed('inputColor');
+  }
+
   &:focus {
     outline: none;
 
     &:not(.SelectError) {
-      border-color: #dcdcdc;
-      box-shadow: 0 0 0 1px #dcdcdc;
+      @include themify($themes) {
+        border-color: themed('inputBorderColorFocused');
+        box-shadow: 0 0 0 1px themed('inputBorderColorFocused');
+      }
     }
   }
 
@@ -41,7 +50,9 @@
   }
 
   &ReadOnly {
-    border-color: #edeeee;
-    color: #dcdbdb;
+    @include themify($themes) {
+      border-color: themed('inputBorderColorDisabled');
+      color: themed('inputColorDisabled');
+    }
   }
 }

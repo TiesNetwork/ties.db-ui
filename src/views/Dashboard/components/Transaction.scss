@@ -1,8 +1,15 @@
+@import "~styles/themes.scss";
+
 .Root {
-  background-color: #fff;
-  border: 1px solid #e9eff4;
+  border: 1px solid;
   border-radius: 6px;
   overflow: hidden;
+  transition: background .2s, border-color .2s;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
 
   &:not(:first-child) {
     margin-top: 16px;
@@ -20,10 +27,15 @@
 
 .Confirmation {
   align-items: center;
-  background-color: #f9f9f9;
-  border-top: 1px solid #e9eff4;
+  border-top: 1px solid;
   display: flex;
   padding: 16px;
+  transition: background .2s, border-color .2s;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Container {

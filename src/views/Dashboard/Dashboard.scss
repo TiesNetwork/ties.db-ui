@@ -3,6 +3,7 @@
 .Root {
   display: flex;
   flex: 1 1 auto;
+  transition: background .2s;
 
   @include themify($themes) {
     background: themed('backgroundColor');
@@ -22,13 +23,34 @@
   flex-direction: column;
   padding: 16px;
   position: relative;
+  transition: background .2s;
   z-index: 2;
+
+  @include themify($themes) {
+    background: themed('tablespacesBackgroundColor');
+  }
+
+  &List {
+    align-items: center;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+}
+
+.Theme {
+  flex: 0 0 28px;
 }
 
 .Transactions {
-  border-left: 1px solid #e9eef4;
+  border-left: 1px solid;
   flex: 0 0 300px;
   max-width: 300px;
+  transition: border-color .2s;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
 
   &Container {
     padding: 16px;
@@ -36,10 +58,15 @@
 
   &Header {
     align-items: center;
-    border-bottom: 1px solid #e9eef4;
+    border-bottom: 1px solid;
     display: flex;
     font-size: 28px;
     height: 56px;
     padding: 0 16px;
+    transition: border-color .2s;
+
+    @include themify($themes) {
+      border-color: themed('blockBorderColor');
+    }
   }
 }

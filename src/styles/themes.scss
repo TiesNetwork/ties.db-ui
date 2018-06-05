@@ -2,14 +2,40 @@ $themes: (
   dark: (
     backgroundColor: #0c0e14,
     blockBackgroundColor: #131720,
-    blockBorderColor: #282d36,
+    blockBorderColor: #282d35,
+    headerBackgroundColor: #131720,
+    inputBackground: #0f131b,
+    inputBorderColor: #383e47,
+    inputBorderColorDisabled: #383e47,
+    inputBorderColorFocused: #ffffff,
+    inputBorderColorError: #ff4777,
+    inputColor: #ffffff,
+    inputColorDisabled: #989898,
+    multiSelectBackgroundColor: #282d35,
+    multiSelectBorderColor: #282d35,
+    tablespacesBackgroundColor: #101B24,
+    tablespacesItemColor: #313c47,
     textColor: #ffffff,
+    textColorSecondary: #545d69,
   ),
   light: (
     backgroundColor: #f4f7f9,
     blockBackgroundColor: #ffffff,
     blockBorderColor: #e9eff4,
+    headerBackgroundColor: #ffffff,
+    inputBackground: transparent,
+    inputBorderColor: #d0d7dd,
+    inputBorderColorDisabled: #edeeee,
+    inputBorderColorFocused: #dcdcdc,
+    inputBorderColorError: #ff6d4a,
+    inputColor: #313c47,
+    inputColorDisabled: #dcdbdb,
+    multiSelectBackgroundColor: #f4f7f9,
+    multiSelectBorderColor: #e9eff4,
+    tablespacesBackgroundColor: #313c47,
+    tablespacesItemColor: #313c47,
     textColor: #313c47,
+    textColorSecondary: #989898,
   ),
 );
 
@@ -19,7 +45,7 @@ $themes: (
 
 @mixin themify($themes: $themes) {
   @each $theme, $map in $themes {
-    div[id=app][theme=#{$theme}] & {
+    body[theme=#{$theme}] & {
       $theme-map: () !global;
       @each $key, $submap in $map {
         $value: map-get(map-get($themes, $theme), '#{$key}');

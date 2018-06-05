@@ -3,6 +3,7 @@
 .Root {
   border-top: 1px solid #e9eff4;
   height: 60px;
+  transition: border-color .2s;
 
   @include themify($themes) {
     border-color: themed('blockBorderColor');

@@ -4,6 +4,7 @@
   border-top: 1px solid;
   display: flex;
   height: 60px;
+  transition: border-color .2s;
 
   @include themify($themes) {
     border-color: themed('blockBorderColor');

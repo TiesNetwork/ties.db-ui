@@ -1,5 +1,6 @@
+@import "~styles/themes.scss";
+
 .Root {
-  background-color: #fff;
   display: flex;
   justify-content: center;
   left: 0;
@@ -8,6 +9,10 @@
   top: 0;
   width: 100%;
   z-index: 10;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+  }
 }
 
 .Close {
@@ -53,4 +58,8 @@
 
 .Title {
   font-size: 42px;
+
+  @include themify($themes) {
+    color: themed('textColor');
+  }
 }

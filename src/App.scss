@@ -40,6 +40,10 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+
+  @include themify($themes) {
+    color: themed('textColor');
+  }
 }
 
 .Container {
@@ -49,11 +53,17 @@
 
 .Header {
   align-items: center;
-  border-bottom: 1px solid #e9eef4;
+  border-bottom: 1px solid;
   display: flex;
   height: 60px;
   justify-content: space-between;
   padding: 0 16px;
+  transition: background .2s, border-color .2s;
+
+  @include themify($themes) {
+    background: themed('headerBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Logo {
@@ -67,12 +77,30 @@
 }
 
 .Theme {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
+  &Dark {
+    .ThemeToggle {
+      background-image: url(./assets/moon.svg);
+    }
+  }
 
-  @include themify($themes) {
-    color: themed('textColor');
+  &Light {
+    .ThemeToggle {
+      background-image: url(./assets/sun.svg);
+    }
+  }
+
+  &Toggle {
+    background: no-repeat center center;
+    background-size: contain;
+    border: 0;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    width: 24px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

@@ -16,6 +16,7 @@ import Modal from 'components/Modal';
 import TablespaceForm from './components/TablespaceForm';
 import TablespaceSelector from './components/TablespaceSelector/TablespaceSelector';
 import TablespaceTrigger from './components/TablespaceTrigger';
+import ThemeToggle from './components/ThemeToggle';
 import Transaction from './components/Transaction';
 
 /** Types **/
@@ -46,8 +47,15 @@ class Dashboard extends Component {
     return (
       <div className={styles.Root}>
         <div className={styles.Tablespaces}>
-          {tablespaces.map(hash => <TablespaceSelector hash={hash} key={hash} />)}
-          <TablespaceTrigger />
+          <div className={styles.TablespacesList}>
+            {tablespaces.map(hash => <TablespaceSelector hash={hash} key={hash} />)}
+            <TablespaceTrigger />
+          </div>
+
+
+          <div className={styles.Theme}>
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className={styles.Container}>

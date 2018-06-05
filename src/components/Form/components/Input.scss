@@ -1,3 +1,5 @@
+@import "~styles/themes.scss";
+
 .Root {
   display: flex;
   flex-direction: column;
@@ -5,8 +7,8 @@
 }
 
 .Input {
-  background-color: transparent;
-  border: 1px solid #d0D7dd;
+  background: inherit;
+  border: 1px solid;
   border-radius: 5px;
   box-shadow: none;
   height: 50px;
@@ -15,17 +17,27 @@
   padding: 0 16px;
   transition: all .2s ease;
 
+  @include themify($themes) {
+    background: themed('inputBackground');
+    border-color: themed('inputBorderColor');
+    color: themed('inputColor');
+  }
+
   &:focus {
     outline: none;
 
     &:not(.InputError) {
-      border-color: #dcdcdc;
-      box-shadow: 0 0 0 1px #dcdcdc;
+      @include themify($themes) {
+        border-color: themed('inputBorderColorFocused');
+        box-shadow: 0 0 0 1px themed('inputBorderColorFocused');
+      }
     }
   }
 
   &Error {
-    border-color: #ff6d4a;
+    @include themify($themes) {
+      border-color: themed('inputBorderColorError');
+    }
   }
 
   &HasValue {
@@ -33,7 +45,9 @@
   }
 
   &ReadOnly {
-    border-color: #edeeee;
-    color: #dcdbdb;
+    @include themify($themes) {
+      border-color: themed('inputBorderColorDisabled');
+      color: themed('inputColorDisabled');
+    }
   }
 }

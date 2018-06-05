@@ -30,6 +30,7 @@
   height: 56px;
   justify-content: space-between;
   padding: 0 16px;
+  transition: border-color .2s;
 
   @include themify($themes) {
     border-color: themed('blockBorderColor');

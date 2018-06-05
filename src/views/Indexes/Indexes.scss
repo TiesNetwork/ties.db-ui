@@ -4,6 +4,7 @@
   border: 1px solid;
   border-radius: 6px;
   overflow: hidden;
+  transition: background .2s, border-color .2s;
 
   @include themify($themes) {
     background: themed('blockBackgroundColor');
