@@ -18,7 +18,7 @@ class Metamask extends Component {
   }
 
   render() {
-    const { incorrectNetwork } = this.props;
+    const { incorrectNetwork, notAuthorized } = this.props;
 
     return (
       <div className={styles.Root}>
@@ -33,19 +33,26 @@ class Metamask extends Component {
 
         <div className={styles.Roadmap}>
           <div className={classNames(styles.RoadmapPoint, {
-            [styles.RoadmapPointCompleted]: incorrectNetwork,
+            [styles.RoadmapPointCompleted]: incorrectNetwork || notAuthorized,
           })}>
             1. Install the <a className={styles.Link} href="https://metamask.io" rel="noopener noreferrer" target="_blank">Metamask</a> browser extension
           </div>
 
           <div className={classNames(styles.RoadmapPoint, {
-            [styles.RoadmapPointDisabled]: !incorrectNetwork,
+            [styles.RoadmapPointCompleted]: !notAuthorized && incorrectNetwork,
+            [styles.RoadmapPointDisabled]: !notAuthorized && !incorrectNetwork,
           })}>
-            2. Choose the «Rinkeby Test network»
+            2. Log in to the extension
+          </div>
+
+          <div className={classNames(styles.RoadmapPoint, {
+            [styles.RoadmapPointDisabled]: notAuthorized,
+          })}>
+            3. Choose the «Rinkeby Test network»
           </div>
 
           <div className={classNames(styles.RoadmapPoint, styles.RoadmapPointDisabled)}>
-            3. Enjoy!
+            4. Enjoy!
           </div>
         </div>
       </div>

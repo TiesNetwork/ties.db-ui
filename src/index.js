@@ -19,10 +19,13 @@ Promise.all([
     const accounts = values[0];
     const network = values[1];
 
-    if (network === 4) {
+    if (accounts.length > 0 && network === 4) {
       return accounts[0];
     } else {
-      throw new Error('network');
+      throw new Error(JSON.stringify({
+        incorrectNetwork: network !== 4,
+        notAuthorized: accounts.length === 0,
+      }));
     }
   })
   .then(account => {
@@ -39,6 +42,6 @@ Promise.all([
     );
   })
   .catch(e => ReactDOM.render(
-    <Metamask incorrectNetwork={e.message === 'network'} />,
+    <Metamask {...JSON.parse(e.message)} />,
     document.getElementById('root')
   ))
