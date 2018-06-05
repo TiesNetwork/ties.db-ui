@@ -31,6 +31,7 @@ const TablespaceForm = ({
         info="Names must be lowercase, bla-bla-bla"
         label="Name"
         name="name"
+        readOnly={!!hash}
       />
 
       <Actions>

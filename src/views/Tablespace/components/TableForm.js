@@ -30,7 +30,7 @@ const TableForm = ({
   initialValues: { hash },
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Input label="Name" name="name" />
+    <Input label="Name" name="name" readOnly={!!hash} />
     <Input name="tablespaceId" type="hidden" />
 
     <Actions className={styles.Actions}>

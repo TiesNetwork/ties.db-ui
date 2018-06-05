@@ -29,7 +29,7 @@ class FormMultiSelect extends Component {
   }
 
   render() {
-    const { children, error, name, value: values } = this.props;
+    const { children, error, name, readOnly, value: values } = this.props;
     const { isFocused } = this.state;
 
     const containerClassName = classNames(styles.Container, {
@@ -64,6 +64,7 @@ class FormMultiSelect extends Component {
             name={name}
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}
+            readOnly={readOnly}
             type="text"
           />
         </div>

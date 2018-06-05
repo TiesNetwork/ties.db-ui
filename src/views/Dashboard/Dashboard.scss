@@ -6,6 +6,8 @@
 .Container {
   display: flex;
   flex: 1 1 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .Tablespaces {
@@ -14,6 +16,8 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 .Transactions {

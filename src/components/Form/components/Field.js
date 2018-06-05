@@ -11,11 +11,12 @@ class FormField extends Component {
   state = { id: uniqueId('field_') };
 
   render() {
-    const { children, type } = this.props;
+    const { children, readOnly, type } = this.props;
     const { id } = this.state;
 
     const className = classNames(styles.Root, {
       [styles.RootHidden]: type === 'hidden',
+      [styles.RootReadOnly]: !!readOnly,
     });
 
     return (
@@ -26,6 +27,7 @@ class FormField extends Component {
               {label}
 
               {error && (<span className={styles.Error}>{error}</span>)}
+              {readOnly && (<span className={styles.ReadOnly}>READ ONLY</span>)}
             </label>
 
             <div className={styles.Control}>

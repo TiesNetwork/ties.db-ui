@@ -6,9 +6,10 @@
 
 .Input {
   background-color: transparent;
-  border: 1px solid #e9eff4;
+  border: 1px solid #d0D7dd;
   border-radius: 5px;
   box-shadow: none;
+  color: #989898;
   height: 50px;
   font-family: inherit;
   font-size: 16px;
@@ -18,13 +19,19 @@
   &:focus {
     outline: none;
 
-    &:not(&Error) {
+    &:not(.InputError) {
       border-color: #dcdcdc;
       box-shadow: 0 0 0 1px #dcdcdc;
+      color: #323c47;
     }
   }
 
   &Error {
     border-color: #ff6d4a;
+  }
+
+  &ReadOnly {
+    border-color: #edeeee;
+    color: #dcdbdb;
   }
 }

@@ -11,7 +11,7 @@ import Metamask from 'views/Metamask';
 import createStore from './store';
 
 const web3 = new Web3(Web3.givenProvider);
-web3.eth.net.getId().then(console.log);
+
 Promise.all([
   web3.eth.getAccounts(),
   web3.eth.net.getId(),

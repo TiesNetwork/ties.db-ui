@@ -6,6 +6,17 @@
   &Hidden {
     display: none;
   }
+
+  &ReadOnly {
+    .Control {
+      cursor: not-allowed;
+      pointer-events: none;
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 
 .Control {
@@ -29,4 +40,9 @@
   font-size: 12px;
   margin-bottom: 8px;
   text-transform: uppercase;
+}
+
+.ReadOnly {
+  color: #ffd012;
+  margin-left: 8px;
 }

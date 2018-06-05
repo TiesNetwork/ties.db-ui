@@ -28,15 +28,15 @@ const IndexesForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input label="Name" name="name" />
+      <Input label="Name" name="name" readOnly={hash} />
 
-      <Select label="Type" name="type">
+      <Select label="Type" name="type" readOnly={hash}>
         <option value="0x1">Primary</option>
         <option value="0x2">Internal</option>
         <option value="0x4">External</option>
       </Select>
 
-      <MultiSelect label="Fields" name="fields">
+      <MultiSelect label="Fields" name="fields" readOnly={hash}>
         {fields && fields.length > 0 && fields.map(({ hash, name }) => (
           <MultiSelectItem
             key={hash}

@@ -13,10 +13,12 @@ const FormSelect = ({
   id,
   name,
   onChange,
+  readOnly,
   value,
 }) => {
   const selectClassName = classNames(styles.Select, {
     [styles.SelectError]: !!error,
+    [styles.SelectReadOnly]: readOnly,
   });
 
   return (
@@ -27,6 +29,7 @@ const FormSelect = ({
         id={id}
         name={name}
         onChange={onChange}
+        readOnly={readOnly}
         value={value}
       >
         {children}

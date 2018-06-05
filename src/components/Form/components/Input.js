@@ -14,11 +14,13 @@ const FormInput = ({
   name,
   onChange,
   placeholder,
+  readOnly,
   type,
   value,
 }) => {
   const inputClassName = classNames(styles.Input, {
     [styles.InputError]: !!error,
+    [styles.InputReadOnly]: !!readOnly,
   });
 
   return (
@@ -31,6 +33,7 @@ const FormInput = ({
         name={name}
         onChange={onChange}
         placeholder={placeholder}
+        readOnly={readOnly}
         type={type}
         value={value}
       />

@@ -27,8 +27,8 @@ const TriggersForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input label="Name" name="name" />
-      <Input label="Payload" name="payload" />
+      <Input label="Name" name="name" readOnly={hash} />
+      <Input label="Payload" name="payload" readOnly={hash} />
 
       <Input name="hash" type="hidden" />
 

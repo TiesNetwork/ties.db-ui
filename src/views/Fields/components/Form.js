@@ -27,9 +27,9 @@ const FieldsForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input label="Name" name="name" />
+      <Input label="Name" name="name" readOnly={hash} />
 
-      <Select label="Type" name="type">
+      <Select label="Type" name="type" readOnly={hash}>
         <optgroup label="Primitive">
           <option value="Boolean">Boolean</option>
           <option value="Integer">Integer</option>
@@ -54,8 +54,7 @@ const FieldsForm = ({
         </optgroup>
       </Select>
 
-      <Input label="Default value" name="defaultValue" />
-
+      <Input label="Default value" name="defaultValue" readOnly={hash} />
       <Input name="hash" type="hidden" />
 
       <Actions>
