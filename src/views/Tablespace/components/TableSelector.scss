@@ -1,6 +1,7 @@
+@import "~styles/themes.scss";
+
 .Root {
-  background-color: #fff;
-  border: 1px solid #e9eff4;
+  border: 1px solid;
   border-radius: 6px;
   box-shadow: 0 0 0;
   color: inherit;
@@ -9,6 +10,11 @@
   position: relative;
   transition: all .2s ease;
   text-decoration: none;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
 
   &:hover:not(&Loading) {
     box-shadow: 0 0 0 2px #4da1ff;

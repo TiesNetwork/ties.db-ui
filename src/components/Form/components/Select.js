@@ -18,6 +18,7 @@ const FormSelect = ({
 }) => {
   const selectClassName = classNames(styles.Select, {
     [styles.SelectError]: !!error,
+    [styles.SelectHasValue]: !!value,
     [styles.SelectReadOnly]: readOnly,
   });
 

@@ -1,8 +1,14 @@
+@import "~styles/themes.scss";
+
 .Root {
-  background-color: #fff;
-  border: 1px solid #e9eff4;
+  border: 1px solid;
   border-radius: 6px;
   overflow: hidden;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Header {

@@ -1,6 +1,12 @@
+@import "~styles/themes.scss";
+
 .Root {
   display: flex;
   flex: 1 1 auto;
+
+  @include themify($themes) {
+    background: themed('backgroundColor');
+  }
 }
 
 .Container {
@@ -12,7 +18,6 @@
 
 .Tablespaces {
   align-items: center;
-  background-color: #313c47;
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -21,7 +26,6 @@
 }
 
 .Transactions {
-  background-color: #f4f7f9;
   border-left: 1px solid #e9eef4;
   flex: 0 0 300px;
   max-width: 300px;

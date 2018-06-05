@@ -20,6 +20,7 @@ const FormInput = ({
 }) => {
   const inputClassName = classNames(styles.Input, {
     [styles.InputError]: !!error,
+    [styles.InputHasValue]: !!value,
     [styles.InputReadOnly]: !!readOnly,
   });
 

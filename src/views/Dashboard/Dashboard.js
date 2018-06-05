@@ -1,4 +1,4 @@
-import { get, values } from 'lodash';
+import { get, reverse, values } from 'lodash';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -56,7 +56,6 @@ class Dashboard extends Component {
           </Switch>
         </div>
 
-
         {transactions && transactions.length > 0 && (
           <div className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>
@@ -64,7 +63,7 @@ class Dashboard extends Component {
             </div>
 
             <div className={styles.TransactionsContainer}>
-              {transactions.map(transaction => (
+              {reverse(transactions).map(transaction => (
                 <Transaction {...transaction} key={transaction.hash} />
               ))}
             </div>
@@ -89,7 +88,7 @@ class Dashboard extends Component {
 const mapStateToProps = ({ entities, views }) => {
   const transactions = values(get(entities, 'transactions', {}));
   const view = get(views, 'dashboard', {});
-  
+
   return { ...view, transactions };
 }
 

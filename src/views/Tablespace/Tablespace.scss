@@ -1,3 +1,5 @@
+@import "~styles/themes.scss";
+
 .Root {
   display: flex;
   flex: 1 1 auto;
@@ -23,30 +25,36 @@
 }
 
 .Content {
-  background-color: #f4f7f9;
   display: flex;
   flex: 1 1 auto;
 }
 
 .Header {
   align-items: center;
-  background-color: #f4f7f9;
-  border-bottom: 1px solid #e9eef4;
+  border-bottom: 1px solid;
   display: flex;
   height: 56px;
   justify-content: space-between;
   padding: 0 16px;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Left {
   align-items: center;
-  border-right: 1px solid #e9eef4;
+  border-right: 1px solid;
   box-sizing: border-box;
   display: flex;
   flex: 0 0 260px;
   height: 100%;
   max-width: 260px;
   padding: 0 16px;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Name {
@@ -66,14 +74,17 @@
 }
 
 .Sidebar {
-  background-color: #f4f7f9;
-  border-right: 1px solid #e9eef4;
+  border-right: 1px solid;
   box-sizing: border-box;
   display: flex;
   flex: 0 0 260px;
   flex-direction: column;
   justify-content: flex-end;
   width: 260px;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Tables {

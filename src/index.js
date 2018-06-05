@@ -41,7 +41,15 @@ Promise.all([
       document.getElementById('root')
     );
   })
-  .catch(e => ReactDOM.render(
-    <Metamask {...JSON.parse(e.message)} />,
-    document.getElementById('root')
-  ))
+  .catch(e => {
+    let props = {};
+
+    try {
+      props = JSON.parse(e.message);
+    } catch(e) {}
+
+    ReactDOM.render(
+      <Metamask {...props} />,
+      document.getElementById('root')
+    );
+  });

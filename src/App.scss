@@ -1,3 +1,5 @@
+@import "~styles/themes.scss";
+
 :global html {
   display: flex;
   flex-direction: column;
@@ -9,11 +11,11 @@
 }
 
 :global body {
-  color: #313c47;
   display: flex;
   flex: 1 1 auto;
   font-family: Roboto, sans-serif;
   font-size: 14px;
+  font-weight: 500;
   margin: 0;
   padding: 0;
 }
@@ -64,6 +66,16 @@
   color: #4da1ff;
 }
 
+.Theme {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  @include themify($themes) {
+    color: themed('textColor');
+  }
+}
+
 .Title {
   font-size: 28px;
 }
@@ -75,4 +87,3 @@
   margin-left: 12px;
   padding-left: 12px;
 }
-

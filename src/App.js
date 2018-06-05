@@ -8,24 +8,25 @@ import styles from './App.scss'
 import 'react-table/react-table.css'
 
 const App = () => (
-  <div className={styles.Root}>
-    <div className={styles.Header}>
-      <div className={styles.Logo}>
-        <div className={styles.Title}>
-          Ties.DB
-        </div>
+  <div className={styles.Root} id="app" theme="dark">
+    <div className={styles.Theme}>
+      <div className={styles.Header}>
+        <div className={styles.Logo}>
+          <div className={styles.Title}>
+            Ties.DB
+          </div>
 
-        <div className={styles.SubTitle}>
-          Schema Designer
+          <div className={styles.SubTitle}>
+            Schema Designer
+          </div>
         </div>
       </div>
-    </div>
 
-    <div className={styles.Container}>
-      <Route path="/" component={Dashboard} />
+      <div className={styles.Container}>
+        <Route path="/" component={Dashboard} />
+      </div>
     </div>
   </div>
 );
 
 export default App;
-

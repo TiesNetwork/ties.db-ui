@@ -46,7 +46,7 @@ class Metamask extends Component {
           </div>
 
           <div className={classNames(styles.RoadmapPoint, {
-            [styles.RoadmapPointDisabled]: notAuthorized,
+            [styles.RoadmapPointDisabled]: notAuthorized || !incorrectNetwork,
           })}>
             3. Choose the «Rinkeby Test network»
           </div>

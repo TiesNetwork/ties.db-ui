@@ -1,5 +1,6 @@
+@import "~styles/themes.scss";
+
 .Root {
-  background-color: #f4f7f9;
   flex: 1 1 auto;
 
   &Empty {
@@ -24,11 +25,15 @@
 
 .Header {
   align-items: center;
-  border-bottom: 1px solid #e9eef4;
+  border-bottom: 1px solid;
   display: flex;
   height: 56px;
   justify-content: space-between;
   padding: 0 16px;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
 }
 
 .Indexes {

@@ -6,7 +6,7 @@
 
 .Select {
   background-color: transparent;
-  border: 1px solid #e9eff4;
+  border: 1px solid #d0D7dd;
   border-radius: 5px;
   box-shadow: none;
   height: 52px;
@@ -22,7 +22,7 @@
   &:focus {
     outline: none;
 
-    &:not(&Error) {
+    &:not(.SelectError) {
       border-color: #dcdcdc;
       box-shadow: 0 0 0 1px #dcdcdc;
     }
@@ -34,6 +34,10 @@
 
   &Error {
     border-color: #ff6d4a;
+  }
+
+  &HasValue {
+    font-weight: 500;
   }
 
   &ReadOnly {

@@ -1,11 +1,20 @@
+@import "~styles/themes.scss";
+
 .Root {
-  border-top: 1px solid #e9eff4;
+  border-top: 1px solid;
   display: flex;
   height: 60px;
 
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
+
   &:hover:not(&Empty) {
-    background-color: #f4f7f9;
     cursor: pointer;
+
+    @include themify($themes) {
+      background: themed('backgroundColor');
+    }
   }
 
   &Empty {
