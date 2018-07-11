@@ -33,6 +33,7 @@ const FieldsForm = ({
         <optgroup label="Primitive">
           <option value="Boolean">Boolean</option>
           <option value="Integer">Integer</option>
+          <option value="BigInt">BigInt</option>
           <option value="Long">Long</option>
           <option value="Float">Float</option>
           <option value="Double">Double</option>
@@ -41,16 +42,17 @@ const FieldsForm = ({
           <option value="Binary">Binary</option>
           <option value="Time">Time</option>
           <option value="Duration">Duration</option>
+          <option value="Uuid">Uuid</option>
         </optgroup>
 
         <optgroup label="Collections">
-          <option value="List">List</option>
-          <option value="Bag">Bag</option>
-          <option value="Map">Map</option>
+          <option disabled value="List">List</option>
+          <option disabled value="Bag">Bag</option>
+          <option disabled value="Map">Map</option>
         </optgroup>
 
         <optgroup label="Compound">
-          <option value="Structure">Structure</option>
+          <option disabled value="Structure">Structure</option>
         </optgroup>
       </Select>
 
