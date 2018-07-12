@@ -19,7 +19,7 @@ Promise.all([
     const accounts = values[0];
     const network = values[1];
 
-    if (accounts.length > 0 && network === 4) {
+    if (network === 4) {
       return accounts[0];
     } else {
       throw new Error(JSON.stringify({

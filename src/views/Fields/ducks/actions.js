@@ -44,7 +44,7 @@ import { updateField } from 'entities/models/fields';
 export const createField = (tableHash, { defaultValue, name, type }) => (dispatch, getState, { contract }) => {
   const hash = Web3.utils.sha3(name);
 
-  dispatch({
+  return dispatch({
     types: [CREATE_FIELD_REQUEST, CREATE_FIELD_SUCCESS, CREATE_FIELD_FAILURE],
     contract: contract.sendMethod('createField', tableHash, name, type, defaultValue),
     transaction: {

@@ -1,3 +1,5 @@
+import { SubmissionError } from 'redux-form';
+
 /** Actions **/
 import {
   createTransaction,
@@ -8,6 +10,7 @@ import {
 import {
   CONFIRMATION,
   // ERROR,
+  ERROR_TYPE,
   FAIL,
   PENDING,
   SUCCESS,
@@ -48,8 +51,7 @@ const contractMiddleware = store => next => action => {
               : onSuccess && onSuccess(hash);
           }
         })
-        .on('error', (message, res) => {
-          console.info(message[0], res);
+        .on('error', error => {
           onError && onError();
           // @todo - wtf, res undefined
           // next(updateTransaction(hash, { status: ERROR }));
@@ -72,8 +74,17 @@ const contractMiddleware = store => next => action => {
       .then(res => {
         next({ ...action, type: RESOLVED });
       })
-      .catch(err => {
-        console.error(err);
+      .catch(error => {
+        const { message } = error;
+
+        switch (message) {
+          case ERROR_TYPE.NO_ADDRESS:
+            throw new SubmissionError({ _error: 'Log in to the Metamask' });
+          default:
+            console.error(error);
+            break;
+        }
+
         next({ ...action, type: REJECTED });
       });
   } else {

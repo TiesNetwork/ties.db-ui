@@ -8,3 +8,7 @@ export const ERROR = 'ERROR';
 export const FAIL = 'FAIL';
 export const PENDING = 'PENDING';
 export const SUCCESS = 'SUCCESS';
+
+export const ERROR_TYPE = {
+  NO_ADDRESS: 'No "from" address specified in neither the given options, nor the default options.'
+};

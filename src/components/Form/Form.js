@@ -4,7 +4,12 @@ import React from 'react';
 
 import styles from './Form.scss';
 
-const Form = ({ children, className: classNameProp, onSubmit }) => {
+const Form = ({
+  children,
+  className: classNameProp,
+  error,
+  onSubmit,
+}) => {
   const className = classNames(classNameProp, styles.Root);
 
   return (
@@ -12,7 +17,15 @@ const Form = ({ children, className: classNameProp, onSubmit }) => {
       className={className}
       onSubmit={onSubmit}
     >
-      {children}
+      {error && (
+        <div className={styles.Error}>
+          <strong>Oops!</strong> {error}
+        </div>
+      )}
+
+      <div className={styles.Container}>
+        {children}
+      </div>
     </form>
   );
 };

@@ -18,6 +18,7 @@ import { FIELD_FORM_ID } from '../ducks/types';
 import validate, { matches, required } from 'utils/validate';
 
 const FieldsForm = ({
+  error,
   handleCancelClick,
   handleSubmit,
   initialValues: { hash },
@@ -26,7 +27,10 @@ const FieldsForm = ({
   const handleDeleteClick = () => hash && onDelete && onDelete(hash);
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      error={error}
+      onSubmit={handleSubmit}
+    >
       <Input label="Name" name="name" readOnly={hash} />
 
       <Select label="Type" name="type" readOnly={hash}>

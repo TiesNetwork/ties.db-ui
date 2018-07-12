@@ -1,5 +1,7 @@
 $themes: (
   dark: (
+    alertBackgroundColor: #2b1f24,
+    alertTextColor: #ff6d4a,
     backgroundColor: #0c0e14,
     blockBackgroundColor: #131720,
     blockBorderColor: #282d35,
@@ -19,6 +21,8 @@ $themes: (
     textColorSecondary: #545d69,
   ),
   light: (
+    alertBackgroundColor: #fff0ed,
+    alertTextColor: #ff6d4a,
     backgroundColor: #f4f7f9,
     blockBackgroundColor: #ffffff,
     blockBorderColor: #e9eff4,
