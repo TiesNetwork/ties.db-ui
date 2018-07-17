@@ -27,7 +27,7 @@ const TableForm = ({
   handleDeleteClick,
   handleDistributeClick,
   handleSubmit,
-  initialValues: { hash },
+  initialValues: { distributed, hash },
 }) => (
   <Form onSubmit={handleSubmit}>
     <Input label="Name" name="name" readOnly={!!hash} />
@@ -35,7 +35,7 @@ const TableForm = ({
 
     <Actions className={styles.Actions}>
       <div>
-        {hash && (
+        {!distributed && hash && (
           <Button
             onClick={() => handleDistributeClick(hash)}
             size={Button.SIZE.LARGE}
@@ -85,7 +85,7 @@ const mapStateToProps = ({ entities, services }, { tablespaceHash }) => {
     ? { ...get(entities, `tables.${hash}`, {}), hash }
     : {};
   const tablespace = get(entities, `tablespaces.${tablespaceHash}`);
-  console.log(get(entities, `tables.${hash}`));
+
   return {
     initialValues,
     hasTable: tableName =>
