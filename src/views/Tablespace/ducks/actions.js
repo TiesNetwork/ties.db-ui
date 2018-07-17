@@ -119,5 +119,15 @@ export const distributeTable = ({ hash, nodes, replicas }) => (dispatch, getStat
 export const fetchTable = tableHash => (dispatch, getState, { contract }) => ({
   types: [FETCH_TABLE_REQUEST, FETCH_TABLE_SUCCESS, FETCH_TABLE_FAILURE],
   contract: contract.callMethod('getTable', tableHash)
-    .then(({ fields, name, indexes, triggers, ...props }) => dispatch(updateTable(tableHash, { fields, indexes, name, triggers })))
+    .then(({ 
+      fields, 
+      name, 
+      indexes, 
+      ranges,
+      replicas,
+      triggers,
+    }) => dispatch(updateTable(tableHash, {
+      fields, indexes, name, triggers, ranges, replicas,
+      distributed: ranges > 0 || replicas > 0,
+    })))
 });

@@ -85,7 +85,7 @@ const mapStateToProps = ({ entities, services }, { tablespaceHash }) => {
     ? { ...get(entities, `tables.${hash}`, {}), hash }
     : {};
   const tablespace = get(entities, `tablespaces.${tablespaceHash}`);
-
+  console.log(get(entities, `tables.${hash}`));
   return {
     initialValues,
     hasTable: tableName =>

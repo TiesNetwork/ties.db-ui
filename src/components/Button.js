@@ -22,11 +22,14 @@ const Button = (props) => {
   const {
     className: classNameProp,
     children,
+    disabled,
     size = SIZE.NORMAL,
     variant = VARIANT.PRIMARY,
   } = props;
 
   const className = classNames(classNameProp, styles.Root, {
+    [styles.RootDisabled]: !!disabled,
+
     [styles.RootSizeIcon]: size === SIZE.ICON,
     [styles.RootSizeLarge]: size === SIZE.LARGE,
     [styles.RootSizeNormal]: size === SIZE.NORMAL,
@@ -39,7 +42,10 @@ const Button = (props) => {
   });
 
   return (
-    <button {...props} className={className}>
+    <button {...props} 
+      className={className}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

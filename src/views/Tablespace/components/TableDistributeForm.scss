@@ -1,0 +1,16 @@
+@import "~styles/themes.scss";
+
+.Error {
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: normal; // FIX
+  margin-bottom: 16px;
+  padding: 16px 24px;
+  width: 100%;
+
+  @include themify($themes) {
+    background-color: themed('alertBackgroundColor');
+    color: themed('alertTextColor');
+  }
+}

@@ -29,8 +29,9 @@ const Triggers = ({
   handleDelete,
   handleFetch,
   handleSubmit,
-  tableIsLoading,
   tableHash,
+  tableIsDistributed,
+  tableIsLoading,
   triggers,
 }) => (
   <div className={styles.Root}>
@@ -40,7 +41,7 @@ const Triggers = ({
       </div>
 
       <div className={styles.Actions}>
-        {!tableIsLoading && (
+        {!tableIsDistributed && !tableIsLoading && (
           <Button
             onClick={handleClick}
             variant={Button.VARIANT.PRIMARY}
@@ -60,7 +61,7 @@ const Triggers = ({
               hash={hash}
               key={hash}
               onFetch={handleFetch}
-              readOnly={tableIsLoading}
+              readOnly={tableIsDistributed || tableIsLoading}
             />
           ))}
         </div>
@@ -79,11 +80,13 @@ const Triggers = ({
 
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
+  const table = get(entities, `tables.${tableHash}`, {});
+  const tableIsDistributed = table.distributed;
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableIsLoading, tableHash,
-    triggers: get(entities, `tables.${tableHash}`, {}).triggers,
+    tableIsDistributed, tableIsLoading, tableHash,
+    triggers: table.triggers,
   };
 };
 

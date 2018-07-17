@@ -14,16 +14,28 @@ import Form, { Actions, Input } from 'components/Form';
 import { TABLE_DISTRIBUTE_FORM_ID } from '../ducks/types';
 
 /** Utils **/
-import validate, { required } from 'utils/validate';
+import validate, { min, required } from 'utils/validate';
+
+import styles from './TableDistributeForm.scss';
 
 const TableDistributeForm = ({
+  canDistribute,
   handleCancelClick,
   handleSubmit,
   initialValues: { hash },
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Input label="Nodes" min="1" name="nodes" type="number" />
-    <Input label="Replicas" min="1" name="replicas" type="number" />
+    {!canDistribute && (
+      <div className={styles.Error}>
+        <strong>Table must contain:</strong>
+        <br />
+        - One or more fields<br />
+        - Primary index
+      </div>
+    )}
+
+    <Input label="Ranges" min="1" name="nodes" type="number" />
+    <Input label="Replicas" min="3" name="replicas" type="number" />
     <Input name="hash" type="hidden" />
 
     <Actions>
@@ -37,6 +49,7 @@ const TableDistributeForm = ({
 
       {hash && (
         <Button
+          disabled={!canDistribute}
           size={Button.SIZE.LARGE}
           type="submit"
           variant={Button.VARIANT.SUCCESS}
@@ -50,7 +63,25 @@ const TableDistributeForm = ({
 
 const mapStateToProps = ({ entities, services }, { tablespaceHash }) => {
   const hash = get(services, `modals.${TABLE_DISTRIBUTE_FORM_ID}`, {}).hash;
-  return { initialValues: { hash }};
+  const table = get(entities, `tables.${hash}`);
+  let hasField, hasPrimary;
+
+  if (table) {
+    hasField = table.fields.length > 0;
+
+    table.indexes.forEach(hash => {
+      const index = get(entities, `indexes.${hash}`);
+
+      if (index && index.type === '0' && !hasPrimary) {
+        hasPrimary = true;
+      }
+    });
+  }
+
+  return { 
+    canDistribute: hasField && hasPrimary,
+    initialValues: { hash }
+  };
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -60,7 +91,7 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: TABLE_DISTRIBUTE_FORM_ID,
   validate: validate({
-    nodes: [required()],
-    replicas: [required()],
+    nodes: [required(), min(1)],
+    replicas: [required(), min(3)],
   }),
 })(TableDistributeForm));

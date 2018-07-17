@@ -35,6 +35,7 @@ const Indexes = ({
   handleSubmit,
   indexes,
   tableHash,
+  tableIsDistributed,
   tableIsLoading,
 }) => (
   <div className={styles.Root}>
@@ -44,7 +45,7 @@ const Indexes = ({
       </div>
 
       <div className={styles.Actions}>
-        {!tableIsLoading && (
+        {!tableIsDistributed && !tableIsLoading && (
           <Button
             onClick={handleClick}
             variant={Button.VARIANT.PRIMARY}
@@ -63,7 +64,7 @@ const Indexes = ({
               hash={hash}
               key={hash}
               onFetch={handleFetch}
-              readOnly={tableIsLoading}
+              readOnly={tableIsDistributed || tableIsLoading}
             />
           ))}
         </div>
@@ -82,11 +83,13 @@ const Indexes = ({
 
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
+  const table = get(entities, `tables.${tableHash}`, {});
+  const tableIsDistributed = table.distributed;
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableHash, tableIsLoading,
-    indexes: get(entities, `tables.${tableHash}`, {}).indexes,
+    tableIsDistributed, tableHash, tableIsLoading,
+    indexes: table.indexes,
   };
 };
 

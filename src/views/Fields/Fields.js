@@ -34,6 +34,7 @@ const Fields = ({
   handleDelete,
   handleFetch,
   handleSubmit,
+  tableIsDistributed,
   tableIsLoading,
   tableHash,
 }) => (
@@ -44,7 +45,7 @@ const Fields = ({
       </div>
 
       <div className={styles.Actions}>
-        {!tableIsLoading && (
+        {!tableIsDistributed && !tableIsLoading && (
           <Button
             onClick={handleClick}
             variant={Button.VARIANT.PRIMARY}
@@ -63,7 +64,7 @@ const Fields = ({
               hash={hash}
               key={hash}
               onFetch={handleFetch}
-              readOnly={tableIsLoading}
+              readOnly={tableIsDistributed || tableIsLoading}
             />
           ))}
         </div>
@@ -82,11 +83,13 @@ const Fields = ({
 
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
+  const table = get(entities, `tables.${tableHash}`, {});
+  const tableIsDistributed = table.distributed;
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableIsLoading, tableHash,
-    fields: get(entities, `tables.${tableHash}`, {}).fields,
+    tableIsDistributed, tableIsLoading, tableHash,
+    fields: table.fields,
   };
 };
 
