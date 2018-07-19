@@ -30,7 +30,6 @@ const Triggers = ({
   handleFetch,
   handleSubmit,
   tableHash,
-  tableIsDistributed,
   tableIsLoading,
   triggers,
 }) => (
@@ -41,7 +40,7 @@ const Triggers = ({
       </div>
 
       <div className={styles.Actions}>
-        {!tableIsDistributed && !tableIsLoading && (
+        {!tableIsLoading && (
           <Button
             onClick={handleClick}
             variant={Button.VARIANT.PRIMARY}
@@ -61,7 +60,7 @@ const Triggers = ({
               hash={hash}
               key={hash}
               onFetch={handleFetch}
-              readOnly={tableIsDistributed || tableIsLoading}
+              readOnly={tableIsLoading}
             />
           ))}
         </div>
@@ -81,11 +80,10 @@ const Triggers = ({
 const mapStateToProps = ({ entities }, { match }) => {
   const tableHash = get(match, 'params.tableHash', '');
   const table = get(entities, `tables.${tableHash}`, {});
-  const tableIsDistributed = table.distributed;
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableIsDistributed, tableIsLoading, tableHash,
+    tableIsLoading, tableHash,
     triggers: table.triggers,
   };
 };

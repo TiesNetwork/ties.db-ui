@@ -1,3 +1,5 @@
+@import "~styles/themes.scss";
+
 .Root {
   border: 1px solid;
   border-radius: 6px;
@@ -59,8 +61,11 @@
     }
 
     &Secondary {
-      background-color: transparent;
-      border-color: #d0d7dd;
+      @include themify($themes) {
+        background-color: themed('buttonSecondaryBackgroundColor');
+        border-color: themed('buttonSecondaryBorderColor');
+        color: themed('buttonSecondaryTextColor');
+      }
 
       &:hover {
         color: #4da1ff;

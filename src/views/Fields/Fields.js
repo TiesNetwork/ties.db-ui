@@ -45,7 +45,7 @@ const Fields = ({
       </div>
 
       <div className={styles.Actions}>
-        {!tableIsDistributed && !tableIsLoading && (
+        {!tableIsLoading && (
           <Button
             onClick={handleClick}
             variant={Button.VARIANT.PRIMARY}
@@ -88,7 +88,10 @@ const mapStateToProps = ({ entities }, { match }) => {
   const tableIsLoading = !!getTransactionByLink(entities, `tables.${tableHash}`);
 
   return {
-    tableIsDistributed, tableIsLoading, tableHash,
+    tableIsDistributed, 
+    tableIsLoading, 
+    tableHash,
+
     fields: table.fields,
   };
 };

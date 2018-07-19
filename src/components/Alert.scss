@@ -1,0 +1,28 @@
+@import "~styles/themes.scss";
+
+.Root {
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: normal; // FIX
+  margin-bottom: 16px;
+  padding: 16px 24px;
+  width: 100%;
+
+  &Variant {
+    &Danger {
+      @include themify($themes) {
+        background-color: themed('alertDangerBackgroundColor');
+        color: themed('alertDangerTextColor');
+      }
+    }
+
+    &Warning {
+      @include themify($themes) {
+        background-color: themed('alertWarningBackgroundColor');
+        color: themed('alertWarningTextColor');
+      }
+    }
+  }
+}
+  

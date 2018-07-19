@@ -31,7 +31,14 @@ class TablespacesTableSelector extends Component {
   }
 
   render() {
-    const { hash, name, selected, to, transaction } = this.props;
+    const { 
+      distributed,
+      hash,
+      name,
+      selected,
+      to,
+      transaction,
+    } = this.props;
 
     const className = classNames(styles.Root, {
       [styles.RootEmpty]: !name,
@@ -43,6 +50,12 @@ class TablespacesTableSelector extends Component {
 
     return (
       <Link className={className} to={to}>
+        {distributed && (
+          <div className={styles.Distributed}>
+            Distributed
+          </div>
+        )}
+
         <div className={styles.Name}>
           {name}
         </div>

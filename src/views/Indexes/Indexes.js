@@ -45,7 +45,7 @@ const Indexes = ({
       </div>
 
       <div className={styles.Actions}>
-        {!tableIsDistributed && !tableIsLoading && (
+        {!tableIsLoading && (
           <Button
             onClick={handleClick}
             variant={Button.VARIANT.PRIMARY}
@@ -59,12 +59,12 @@ const Indexes = ({
     <div className={styles.Container}>
       {indexes && indexes.length > 0 && (
         <div className={styles.Indexes}>
-          {indexes.map(hash => (
+          {indexes.map(({ hash, type }) => (
             <Index
               hash={hash}
               key={hash}
               onFetch={handleFetch}
-              readOnly={tableIsDistributed || tableIsLoading}
+              readOnly={(tableIsDistributed && type === '1') || tableIsLoading}
             />
           ))}
         </div>
@@ -89,7 +89,10 @@ const mapStateToProps = ({ entities }, { match }) => {
 
   return {
     tableIsDistributed, tableHash, tableIsLoading,
-    indexes: table.indexes,
+    indexes: (table.indexes || []).map(hash => ({
+      hash, 
+      type: get(entities, `indexes.${hash}`, {}).type
+    })),
   };
 };
 

@@ -1,7 +1,16 @@
 $themes: (
   dark: (
-    alertBackgroundColor: #2b1f24,
-    alertTextColor: #ff6d4a,
+    // Alerts
+    alertDangerBackgroundColor: #2b1f24,
+    alertDangerTextColor: #ff6d4a,
+    alertWarningBackgroundColor: #2b2920,
+    alertWarningTextColor: #f7cb18,
+
+    // Buttons
+    buttonSecondaryBackgroundColor: #0f131b,
+    buttonSecondaryBorderColor: #282d36,
+    buttonSecondaryTextColor: #ffffff,
+
     backgroundColor: #0c0e14,
     blockBackgroundColor: #131720,
     blockBorderColor: #282d35,
@@ -21,8 +30,17 @@ $themes: (
     textColorSecondary: #545d69,
   ),
   light: (
-    alertBackgroundColor: #fff0ed,
-    alertTextColor: #ff6d4a,
+    // Alerts
+    alertDangerBackgroundColor: #fff0ed,
+    alertDangerTextColor: #ff6d4a,
+    alertWarningBackgroundColor: #fff9e2,
+    alertWarningTextColor: #f7cb18,
+
+    // Buttons
+    buttonSecondaryBackgroundColor: transparent,
+    buttonSecondaryBorderColor: #d0d7dd,
+    buttonSecondaryTextColor: #323c47,
+
     backgroundColor: #f4f7f9,
     blockBackgroundColor: #ffffff,
     blockBorderColor: #e9eff4,
