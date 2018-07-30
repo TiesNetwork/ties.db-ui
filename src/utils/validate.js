@@ -7,8 +7,8 @@ export const matches = (regex, message = 'Incorrect value!') => value => ({
   isValid: value && regex.test(value),
 });
 
-export const min = (min, message = 'Min value: %d') => value => ({
-  message,
+export const min = (min, message = 'Min value: %d!') => value => ({
+  message: message.replace('%d', min),
   isValid: parseInt(value, 10) >= min,
 });
 
