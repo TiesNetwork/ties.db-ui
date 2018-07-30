@@ -22,6 +22,6 @@ export default ({ account, history, web3 }) => {
     routerMiddleware(history),
     // loggerMiddleware,
     thunkMiddleware.withExtraArgument({ contract, schema }),
-    contractMiddleware
+    contractMiddleware,
   ));
 };

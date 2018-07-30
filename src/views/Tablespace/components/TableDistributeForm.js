@@ -72,7 +72,7 @@ const mapStateToProps = ({ entities, services }, { tablespaceHash }) => {
     table.indexes.forEach(hash => {
       const index = get(entities, `indexes.${hash}`);
 
-      if (index && index.type === '0' && !hasPrimary) {
+      if (index && index.type === '1' && !hasPrimary) {
         hasPrimary = true;
       }
     });
