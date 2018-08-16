@@ -100,7 +100,7 @@ const mapStateToProps = ({ entities, router, services }, { hash }) => {
   const table = get(entities, `tables.${hash}`, {});
   const transaction = getTransactionByLink(entities, `tables.${hash}`);
 
-  const match = matchPath(pathname, '/:tablespaceHash/:tableHash?');
+  const match = matchPath(pathname, '/schemas/:tablespaceHash/:tableHash?');
 
   const tableHash = get(match, 'params.tableHash', '');
   const tablespaceHash = get(match, 'params.tablespaceHash', '');
@@ -108,7 +108,7 @@ const mapStateToProps = ({ entities, router, services }, { hash }) => {
   return {
     ...table, progress, transaction,
     selected: tableHash === hash,
-    to: `/${tablespaceHash}/${hash}`,
+    to: `/schemas/${tablespaceHash}/${hash}`,
   };
 };
 

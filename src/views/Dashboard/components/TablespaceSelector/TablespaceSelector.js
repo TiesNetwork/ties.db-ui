@@ -31,7 +31,7 @@ class DashboardTablespaceSelector extends Component {
     });
 
     return (
-      <Link className={className} to={`/${hash}`}>
+      <Link className={className} to={`/schemas/${hash}`}>
         <div className={styles.Name}>
           {(name || '?').substr(0, 1)}
         </div>
@@ -55,7 +55,7 @@ const mapStateToProps = ({ entities, router, services }, { hash }) => {
   const pathname = get(router, 'location.pathname', '');
   const tablespace = get(entities, `tablespaces.${hash}`, {});
 
-  const match = matchPath(pathname, '/:tablespaceHash');
+  const match = matchPath(pathname, '/schemas/:tablespaceHash');
   const tablespaceHash = get(match, 'params.tablespaceHash', '');
 
   return {

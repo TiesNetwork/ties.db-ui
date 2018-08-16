@@ -1,4 +1,4 @@
-import { remove } from 'lodash';
+import { remove, uniq } from 'lodash';
 
 /** Types **/
 import {
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
     case UPDATE_TABLESPACES:
       return {
         ...state,
-        tablespaces: [...state.tablespaces, ...action.payload],
+        tablespaces: uniq([...state.tablespaces, ...action.payload]),
       };
     default:
       return state;

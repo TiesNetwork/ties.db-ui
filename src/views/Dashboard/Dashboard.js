@@ -1,7 +1,8 @@
 import { get, reverse, values } from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { compose, lifecycle } from 'recompose';
 
 /** Actions **/
 import {
@@ -29,69 +30,58 @@ import Tablespace from '../Tablespace';
 
 import styles from './Dashboard.scss';
 
-class Dashboard extends Component {
-  componentDidMount() {
-    const { fetchTablespaces } = this.props;
-    fetchTablespaces();
-  }
-
-  render() {
-    const {
-      handleDelete,
-      handleSubmit,
-      match,
-      tablespaces,
-      transactions,
-    } = this.props;
-
-    return (
-      <div className={styles.Root}>
-        <div className={styles.Tablespaces}>
-          <div className={styles.TablespacesList}>
-            {tablespaces.map(hash => <TablespaceSelector hash={hash} key={hash} />)}
-            <TablespaceTrigger />
-          </div>
-
-
-          <div className={styles.Theme}>
-            <ThemeToggle />
-          </div>
-        </div>
-
-        <div className={styles.Container}>
-          <Switch>
-            <Route path={`${match.url}:tablespaceHash`} component={Tablespace}/>
-          </Switch>
-        </div>
-
-        {transactions && transactions.length > 0 && (
-          <div className={styles.Transactions}>
-            <div className={styles.TransactionsHeader}>
-              Transactions
-            </div>
-
-            <div className={styles.TransactionsContainer}>
-              {reverse(transactions).map(transaction => (
-                <Transaction {...transaction} key={transaction.hash} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        <Modal
-          description="Tablespace where you create the tables"
-          id={TABLESPACE_FORM_ID}
-          title="Create a tablespace"
-        >
-          <TablespaceForm
-            onDelete={handleDelete}
-            onSubmit={handleSubmit}
-          />
-        </Modal>
+const Dashboard = ({
+  handleDelete,
+  handleSubmit,
+  match,
+  tablespaces,
+  transactions,
+}) => (
+  <div className={styles.Root}>
+    <div className={styles.Tablespaces}>
+      <div className={styles.TablespacesList}>
+        {tablespaces.map(hash => <TablespaceSelector hash={hash} key={hash} />)}
+        <TablespaceTrigger />
       </div>
-    );
-  }
-}
+
+
+      <div className={styles.Theme}>
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <div className={styles.Container}>
+      <Switch>
+        <Route path={`${match.url}/:tablespaceHash`} component={Tablespace}/>
+      </Switch>
+    </div>
+
+    {transactions && transactions.length > 0 && (
+      <div className={styles.Transactions}>
+        <div className={styles.TransactionsHeader}>
+          Transactions
+        </div>
+
+        <div className={styles.TransactionsContainer}>
+          {reverse(transactions).map(transaction => (
+            <Transaction {...transaction} key={transaction.hash} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    <Modal
+      description="Tablespace where you create the tables"
+      id={TABLESPACE_FORM_ID}
+      title="Create a tablespace"
+    >
+      <TablespaceForm
+        onDelete={handleDelete}
+        onSubmit={handleSubmit}
+      />
+    </Modal>
+  </div>
+);
 
 const mapStateToProps = ({ entities, views }) => {
   const transactions = values(get(entities, 'transactions', {}));
@@ -104,6 +94,13 @@ const mapDispatchToProps = dispatch => ({
   fetchTablespaces: () => dispatch(fetchTablespaces()),
   handleDelete: hash => dispatch(deleteTablespace(hash)),
   handleSubmit: values => dispatch(createTablespace(values)),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchTablespaces();
+    },
+  })
+)(Dashboard);

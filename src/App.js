@@ -1,13 +1,18 @@
+import { get } from 'lodash';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import { compose, lifecycle, withHandlers } from 'recompose';
 
 /** Views **/
 import Dashboard from './views/Dashboard';
+import Query from './views/Query';
+import Settings from './views/Settings';
 
 import styles from './App.scss';
 import 'react-table/react-table.css';
 
-const App = ({ handleChangeTheme, theme }) => (
+const App = () => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Logo}>
@@ -19,12 +24,57 @@ const App = ({ handleChangeTheme, theme }) => (
           Schema Designer
         </div>
       </div>
+
+      <div className={styles.Nav}>
+        <NavLink 
+          activeClassName={styles.NavItemCurrent} 
+          className={styles.NavItem} 
+          to="/schemas"
+        >
+          Schemas
+        </NavLink>
+
+        <NavLink
+          activeClassName={styles.NavItemCurrent}
+          className={styles.NavItem}
+          to="/query"
+        >
+          Query
+        </NavLink>
+
+        <NavLink
+          activeClassName={styles.NavItemCurrent}
+          className={styles.NavItem} 
+          to="/settings"
+        >
+          Settings
+        </NavLink>
+      </div>
     </div>
 
     <div className={styles.Container}>
-      <Route path="/" component={Dashboard} />
+      <Switch>
+        <Route path="/query" component={Query} />
+        <Route path="/schemas" component={Dashboard} />
+        <Route path="/settings" component={Settings} />
+      </Switch>
     </div>
   </div>
 );
 
-export default App;
+const mapStateToProps = ({ services }) => get(services, 'env', {});
+
+export default compose(
+  connect(mapStateToProps, null, null, { pure: false }),
+  withHandlers({
+    setTheme: ({ theme }) => () => { document.body.setAttribute('theme', theme) },
+  }),
+  lifecycle({
+    componentDidMount() {
+      this.props.setTheme();
+    },
+    componentDidUpdate() {
+      this.props.setTheme();
+    },
+  })
+)(App);

@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { get } from 'lodash';
 import React from 'react';
-import { compose, lifecycle, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
 /** Actions **/
@@ -45,20 +44,4 @@ const mapDispatchToProps = dispatch => ({
   onClick: theme => dispatch(setTheme(theme)),
 })
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withHandlers({
-    setTheme: ({ theme }) => () => {
-      localStorage.setItem('theme', theme);
-      document.body.setAttribute('theme', theme);
-    },
-  }),
-  lifecycle({
-    componentDidMount() {
-      this.props.setTheme();
-    },
-    componentDidUpdate() {
-      this.props.setTheme();
-    },
-  })
-)(DashboardThemeToggle);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardThemeToggle);

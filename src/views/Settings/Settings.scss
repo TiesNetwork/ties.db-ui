@@ -1,0 +1,44 @@
+@import "~styles/themes.scss";
+
+.Root {
+  flex: 1 1 auto;
+  transition: background .2s;
+
+  @include themify($themes) {
+    background: themed('backgroundColor');
+  }
+}
+
+.Card {
+  border: 1px solid;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: background .2s, border-color .2s;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
+
+  &Content {
+    border-top: 1px solid;
+    padding: 16px;
+    transition: border-color .2s;
+
+    @include themify($themes) {
+      border-color: themed('blockBorderColor');
+    }
+  }
+
+  &Title {
+    align-items: center;
+    display: flex;
+    font-size: 30px;
+    height: 80px;
+    padding: 0 16px;
+  }
+}
+
+.Container {
+  padding: 24px 16px;
+}
