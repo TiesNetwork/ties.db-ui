@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import { compose, lifecycle, withHandlers } from 'recompose';
 
 /** Views **/
@@ -26,9 +26,9 @@ const App = () => (
       </div>
 
       <div className={styles.Nav}>
-        <NavLink 
-          activeClassName={styles.NavItemCurrent} 
-          className={styles.NavItem} 
+        <NavLink
+          activeClassName={styles.NavItemCurrent}
+          className={styles.NavItem}
           to="/schemas"
         >
           Schemas
@@ -44,7 +44,7 @@ const App = () => (
 
         <NavLink
           activeClassName={styles.NavItemCurrent}
-          className={styles.NavItem} 
+          className={styles.NavItem}
           to="/settings"
         >
           Settings
@@ -57,6 +57,7 @@ const App = () => (
         <Route path="/query" component={Query} />
         <Route path="/schemas" component={Dashboard} />
         <Route path="/settings" component={Settings} />
+        <Route path="*" render={() => <Redirect to="/schemas" />} />
       </Switch>
     </div>
   </div>

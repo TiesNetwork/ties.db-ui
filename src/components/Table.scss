@@ -1,0 +1,95 @@
+@import '~styles/themes.scss';
+
+.Root {
+  border: 1px solid;
+  border-radius: 6px;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
+
+  :global .ReactTable {
+    border: 0;
+    font-size: 14px;
+    font-weight: 500;
+
+    .rt-tbody {
+      .rt-td {
+        height: 56px;
+        line-height: 56px;
+        padding: 0 20px;
+        white-space: nowrap;
+
+        @include themify($themes) {
+          border-color: themed('blockBorderColor');
+        }
+      }
+
+      .rt-tr {
+        align-items: center;
+        display: flex;
+        height: 56px;
+      }
+
+      .rt-tr-group {
+        @include themify($themes) {
+          border-color: themed('blockBorderColor');
+        }
+      }
+    }
+
+    .rt-thead {
+      background: #F4F7F9;
+      border-bottom: 1px solid;
+
+      @include themify($themes) {
+        border-color: themed('blockBorderColor');
+      }
+
+      &.-header {
+        box-shadow: none;
+      }
+
+      .rt-th {
+        align-items: center;
+        display: flex;
+        font-size: 16px;
+        height: 56px;
+        padding: 0 20px;
+
+        @include themify($themes) {
+          border-color: themed('blockBorderColor');
+        }
+
+        &:after {
+          display: block;
+          font-size: 14px;
+          margin: 0 0 0 8px;
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &.-sort-asc {
+          box-shadow: none;
+
+          &:after {
+            content: '▲';
+          }
+        }
+
+        &.-sort-desc {
+          box-shadow: none;
+
+          &:after {
+            content: '▼';
+            position: relative;
+            top: 2px;
+          }
+        }
+      }
+    }
+  }
+}

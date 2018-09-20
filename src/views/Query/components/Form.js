@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 
 /** Components **/
 import Button from 'components/Button';
-import Form, { Actions, Input } from 'components/Form';
+import Form, { Actions, Textarea } from 'components/Form';
 
 /** Types **/
 import {
@@ -18,7 +18,7 @@ const QueryForm = ({
   handleSubmit,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Input label="TiQL" name="query" />
+    <Textarea label="TiQL" name="query" />
 
     <Actions>
       <Button type="submit">

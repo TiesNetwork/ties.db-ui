@@ -1,0 +1,54 @@
+@import "~styles/themes.scss";
+
+.Root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.Textarea {
+  background: inherit;
+  border: 1px solid;
+  border-radius: 5px;
+  box-shadow: none;
+  height: 50px;
+  font-family: inherit;
+  font-size: 16px;
+  padding: 16px;
+  resize: vertical;
+  transition: all .2s ease;
+
+  @include themify($themes) {
+    background: themed('inputBackground');
+    border-color: themed('inputBorderColor');
+    color: themed('inputColor');
+  }
+
+  &:focus {
+    outline: none;
+
+    &:not(.InputError) {
+      @include themify($themes) {
+        border-color: themed('inputBorderColorFocused');
+        box-shadow: 0 0 0 1px themed('inputBorderColorFocused');
+      }
+    }
+  }
+
+  &Error {
+    @include themify($themes) {
+      border-color: themed('inputBorderColorError');
+    }
+  }
+
+  &HasValue {
+    font-weight: 500;
+  }
+
+  &ReadOnly {
+    @include themify($themes) {
+      border-color: themed('inputBorderColorDisabled');
+      color: themed('inputColorDisabled');
+    }
+  }
+}
