@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import Web3 from 'web3';
 
 /** Actions **/
 import {
@@ -39,7 +38,7 @@ import {
  * @param {string} name
  */
 export const createTablespace = ({ name }) => (dispatch, getState, { contract }) => {
-  const hash = Web3.utils.sha3(name);
+  const hash = Web3.utils.sha3(name); // eslint-disable-line
 
   dispatch({
     types: [CREATE_TABLESPACE_REQUEST, CREATE_TABLESPACE_SUCCESS, CREATE_TABLESPACE_FAILURE],

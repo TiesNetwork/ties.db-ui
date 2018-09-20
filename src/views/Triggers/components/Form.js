@@ -2,7 +2,6 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -74,7 +73,7 @@ const mapStateToProps = ({ entities, services }, { tableHash }) => {
     initialValues,
     hasTrigger: triggerName =>
       table &&
-      table.triggers.indexOf(Web3.utils.sha3(triggerName)) > -1,
+      table.triggers.indexOf(Web3.utils.sha3(triggerName)) > -1, // eslint-disable-line
   };
 };
 

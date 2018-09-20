@@ -2,7 +2,6 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal, openModal } from 'services/modals';
@@ -90,7 +89,7 @@ const mapStateToProps = ({ entities, services }, { tablespaceHash }) => {
     initialValues,
     hasTable: tableName =>
       tablespace &&
-      tablespace.tables.indexOf(Web3.utils.sha3(`${tablespace.name}#${tableName}`)) > -1,
+      tablespace.tables.indexOf(Web3.utils.sha3(`${tablespace.name}#${tableName}`)) > -1, // eslint-disable-line
   };
 };
 

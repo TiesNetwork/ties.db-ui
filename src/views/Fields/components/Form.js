@@ -2,7 +2,6 @@ import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -39,7 +38,7 @@ const FieldsForm = ({
             <strong>Attention!</strong> The table is already distributed and live on the network. <br />
             You can not delete fields, so please be very careful creating new fields.
           </p>
-          
+
           <p>
             Once you create this field it cannot be deleted or modified. Are you sure?
           </p>
@@ -120,7 +119,7 @@ const mapStateToProps = ({ entities, services }, { tableHash }) => {
     initialValues,
     hasField: fieldName =>
       table &&
-      table.fields.indexOf(Web3.utils.sha3(fieldName)) > -1,
+      table.fields.indexOf(Web3.utils.sha3(fieldName)) > -1,  // eslint-disable-line
     tableIsDistributed: table.distributed,
   };
 };

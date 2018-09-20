@@ -26,6 +26,9 @@ const env = getClientEnvironment(publicUrl);
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
+  externals: {
+    'Web3': 'web3',
+  },
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -53,6 +56,7 @@ module.exports = {
     // changing JS code would still trigger a refresh.
   ],
   output: {
+    libraryTarget: 'commonjs2',
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
@@ -116,6 +120,7 @@ module.exports = {
       {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
+        exclude: /node_modules/,
         use: [
           {
             options: {
@@ -148,6 +153,7 @@ module.exports = {
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
+            exclude: /node_modules/,
             loader: require.resolve('babel-loader'),
             options: {
 
@@ -210,6 +216,10 @@ module.exports = {
               require.resolve('sass-loader'),
             ],
           },
+          {
+            test: /\.node$/,
+            loader: require.resolve('node-loader'),
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -233,6 +243,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Web3: 'Web3',
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -281,4 +294,5 @@ module.exports = {
   performance: {
     hints: false,
   },
+  target: 'electron-renderer',
 };

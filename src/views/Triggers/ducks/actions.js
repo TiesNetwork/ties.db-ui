@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import Web3 from 'web3';
 
 /** Actions **/
 import {
@@ -40,7 +39,7 @@ import {
  * @param {string} payload
  */
 export const createTrigger = (tableHash, { name, payload }) => (dispatch, getState, { contract }) => {
-  const hash = Web3.utils.sha3(name);
+  const hash = Web3.utils.sha3(name); // eslint-disable-line
 
   dispatch({
     types: [CREATE_TRIGGER_REQUEST, CREATE_TRIGGER_SUCCESS, CREATE_TRIGGER_FAILURE],

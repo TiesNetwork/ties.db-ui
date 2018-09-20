@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import Web3 from 'web3';
 
 /** Actions **/
 import {
@@ -45,7 +44,7 @@ import {
 export const createTable = (tablespaceHash, { name }) => (dispatch, getState, { contract }) => {
   const { entities } = getState();
   const tableSpaceName = get(entities, `tablespaces.${tablespaceHash}`, {}).name;
-  const hash = Web3.utils.sha3(`${tableSpaceName}#${name}`);
+  const hash = Web3.utils.sha3(`${tableSpaceName}#${name}`);  // eslint-disable-line
 
   dispatch({
     types: [CREATE_TABLE_REQUEST, CREATE_TABLE_SUCCESS, CREATE_TABLE_FAILURE],
@@ -119,10 +118,10 @@ export const distributeTable = ({ hash, nodes, replicas }) => (dispatch, getStat
 export const fetchTable = tableHash => (dispatch, getState, { contract }) => ({
   types: [FETCH_TABLE_REQUEST, FETCH_TABLE_SUCCESS, FETCH_TABLE_FAILURE],
   contract: contract.callMethod('getTable', tableHash)
-    .then(({ 
-      fields, 
-      name, 
-      indexes, 
+    .then(({
+      fields,
+      name,
+      indexes,
       ranges,
       replicas,
       triggers,

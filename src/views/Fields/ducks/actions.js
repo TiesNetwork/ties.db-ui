@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -42,7 +41,7 @@ import { updateField } from 'entities/models/fields';
  * @param {string} type
  */
 export const createField = (tableHash, { defaultValue, name, type }) => (dispatch, getState, { contract }) => {
-  const hash = Web3.utils.sha3(name);
+  const hash = Web3.utils.sha3(name);  // eslint-disable-line
 
   return dispatch({
     types: [CREATE_FIELD_REQUEST, CREATE_FIELD_SUCCESS, CREATE_FIELD_FAILURE],

@@ -1,5 +1,4 @@
 import { get } from 'lodash';
-import Web3 from 'web3';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -41,7 +40,7 @@ import {
  * @param {string} type
  */
 export const createIndex = (tableHash, { fields, name, type }) => (dispatch, getState, { contract }) => {
-  const hash = Web3.utils.sha3(name);
+  const hash = Web3.utils.sha3(name);  // eslint-disable-line
 
   dispatch({
     types: [CREATE_INDEX_REQUEST, CREATE_INDEX_SUCCESS, CREATE_INDEX_FAILURE],
