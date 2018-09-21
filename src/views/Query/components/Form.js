@@ -21,7 +21,7 @@ const QueryForm = ({
     <Textarea label="TiQL" name="query" />
 
     <Actions>
-      <Button type="submit">
+      <Button size={Button.SIZE.LARGE} type="submit">
         Send
       </Button>
     </Actions>

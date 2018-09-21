@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import { compose, lifecycle, withHandlers } from 'recompose';
 
+// Components
+import Prompt from 'views/Prompt';
+
 /** Views **/
 import Dashboard from './views/Dashboard';
 import Query from './views/Query';
@@ -60,6 +63,8 @@ const App = () => (
         <Route path="*" render={() => <Redirect to="/schemas" />} />
       </Switch>
     </div>
+
+    <Prompt />
   </div>
 );
 

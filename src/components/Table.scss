@@ -40,10 +40,10 @@
     }
 
     .rt-thead {
-      background: #F4F7F9;
       border-bottom: 1px solid;
 
       @include themify($themes) {
+        background: themed('queryBackgroundColor');
         border-color: themed('blockBorderColor');
       }
 

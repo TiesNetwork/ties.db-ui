@@ -15,6 +15,8 @@ $themes: (
     blockBackgroundColor: #131720,
     blockBorderColor: #282d35,
     headerBackgroundColor: #131720,
+
+    // Input
     inputBackground: #0f131b,
     inputBorderColor: #383e47,
     inputBorderColorDisabled: #383e47,
@@ -22,8 +24,14 @@ $themes: (
     inputBorderColorError: #ff4777,
     inputColor: #ffffff,
     inputColorDisabled: #989898,
+
+    // Multiselect
     multiSelectBackgroundColor: #282d35,
     multiSelectBorderColor: #282d35,
+
+    // Query
+    queryBackgroundColor: #131720,
+
     tablespacesBackgroundColor: #101B24,
     tablespacesItemColor: #313c47,
     textColor: #ffffff,
@@ -45,15 +53,23 @@ $themes: (
     blockBackgroundColor: #ffffff,
     blockBorderColor: #e9eff4,
     headerBackgroundColor: #ffffff,
-    inputBackground: transparent,
+
+    // Input
+    inputBackground: #ffffff,
     inputBorderColor: #d0d7dd,
     inputBorderColorDisabled: #edeeee,
     inputBorderColorFocused: #dcdcdc,
     inputBorderColorError: #ff6d4a,
     inputColor: #313c47,
     inputColorDisabled: #dcdbdb,
+
+    // Multiselect
     multiSelectBackgroundColor: #f4f7f9,
     multiSelectBorderColor: #e9eff4,
+
+    // Query
+    queryBackgroundColor: #fafbfb,
+
     tablespacesBackgroundColor: #313c47,
     tablespacesItemColor: #313c47,
     textColor: #313c47,

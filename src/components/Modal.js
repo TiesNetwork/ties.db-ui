@@ -12,7 +12,14 @@ import Icon from './Icon';
 
 import styles from './Modal.scss';
 
-const Modal = ({ children, description, handleClose, isOpened, title }) => isOpened && (
+const Modal = ({
+  children,
+  description,
+  handleClose,
+  isOpened,
+  props,
+  title,
+}) => isOpened && (
   <Portal onClose={handleClose}>
     <div className={styles.Root}>
       <button
@@ -41,7 +48,7 @@ const Modal = ({ children, description, handleClose, isOpened, title }) => isOpe
         </div>
 
         <div className={styles.Content}>
-          {children}
+          {typeof children === 'function' ? children(props) : children}
         </div>
       </div>
     </div>
@@ -49,7 +56,10 @@ const Modal = ({ children, description, handleClose, isOpened, title }) => isOpe
 );
 
 Modal.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   description: PropTypes.string,
   title: PropTypes.string,
 };
