@@ -10,6 +10,7 @@ import Dashboard from './views/Dashboard';
 import Modals from './views/Modals';
 import Query from './views/Query';
 import Settings from './views/Settings';
+import Transaction from './views/Transaction';
 
 import styles from './App.scss';
 import 'react-table/react-table.css';
@@ -75,6 +76,7 @@ const App = ({
     </div>
 
     <Modals />
+    <Transaction />
   </div>
 );
 

@@ -112,7 +112,7 @@ const mapStateToProps = ({ entities, services }, { tableHash }) => {
   const hash = get(services, `modals.${FIELD_FORM_ID}`, {}).hash;
   const initialValues = hash
     ? { ...get(entities, `fields.${hash}`, {}), hash }
-    : { defaultValue: '0x00', type: 'Integer' };
+    : { type: 'Integer' };
   const table = get(entities, `tables.${tableHash}`);
 
   return {

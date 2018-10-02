@@ -1,0 +1,22 @@
+@import '~styles/themes.scss';
+
+.Root {
+  border-radius: 4px;
+  bottom: 24px;
+  box-shadow: 0 0 1px rgba(10, 31, 68, .08), 0 8px 10px rgba(10, 31, 68, .1);
+  padding: 24px;
+  position: fixed;
+  right: 24px;
+  transition: background .2s;
+  width: 420px;
+  z-index: 10;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+  }
+}
+
+.Title {
+  font-size: 30px;
+  height: 64px;
+}

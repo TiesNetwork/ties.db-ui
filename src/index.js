@@ -9,7 +9,8 @@ import SignerProvider from 'ethjs-provider-signer';
 import { sign } from 'ethjs-signer';
 
 // Actions
-import { closeModal, openModal } from 'services/modals';
+import { createConfirm } from 'services/confirm';
+import { closeModal, closeModals, openModal } from 'services/modals';
 
 // Views
 import App from './App';
@@ -52,42 +53,46 @@ Promise.all([
     provider.options.signTransaction = (rawTx, cb) => {
       const state = store.getState();
 
-      const currentAccount = get(state, 'services.session.currentAccount');
-      const session = JSON.parse(sessionStorage.getItem('session'));
+      web3.eth.estimateGas(rawTx).then(gas => {
+        rawTx.gas = gas;
+        rawTx.gasPrice = web3.utils.toWei('10', 'gwei');
 
-      const sendTransaction = key => {
-        web3.eth.estimateGas(rawTx).then(gas => {
-          rawTx.gas = gas;
-          rawTx.gasPrice = web3.utils.toWei('10', 'gwei');
+        const currentAccount = get(state, 'services.session.currentAccount');
+        const session = JSON.parse(sessionStorage.getItem('session'));
 
+        const sendTransaction = key => {
           key && cb(null, sign(rawTx, key));
           store.dispatch(closeModal('transactionForm'));
-        });
-      };
+        };
 
-      if (!session || session.address !== currentAccount) {
-        store.dispatch(openModal('transactionForm', {
-          props: {
-            label: 'Password',
-            onSubmit: ({ account, password }) => {
-              ipcRenderer.send('recover', { account, password });
-              ipcRenderer.on('recover', (event, key) => {
-                if (key) {
-                  sessionStorage.setItem('session', JSON.stringify({
-                    address: account.address,
-                    privateKey: key,
-                  }));
+        if (!session || session.address !== currentAccount) {
+          store.dispatch(openModal('transactionForm', {
+            props: {
+              label: 'Password',
+              onSubmit: ({ account, password }) => {
+                ipcRenderer.send('recover', { account, password });
+                ipcRenderer.on('recover', (event, key) => {
+                  if (key) {
+                    sessionStorage.setItem('session', JSON.stringify({
+                      address: account.address,
+                      privateKey: key,
+                    }));
 
-                  sendTransaction(key);
-                }
-              });
+                    sendTransaction(key);
+                  }
+                });
+              },
             },
-          },
-          title: 'Confirm transaction',
-        }));
-      } else {
-        sendTransaction(session.privateKey);
-      }
+            title: 'Confirm transaction',
+          }));
+        } else {
+          store.dispatch(closeModals());
+          store.dispatch(createConfirm({
+            ...rawTx,
+            onResolve: () => sendTransaction(session.privateKey),
+          }));
+        }
+      });
     };
 
     ReactDOM.render(
