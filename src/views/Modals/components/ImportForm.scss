@@ -1,0 +1,32 @@
+.Actions {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+
+  &Right {
+    display: flex;
+
+    & > * {
+      &:not(:first-child) {
+        margin: 0 0 0 16px;
+      }
+    }
+  }
+}
+
+.Import {
+  position: relative;
+
+  &File {
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

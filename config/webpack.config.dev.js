@@ -27,6 +27,7 @@ const env = getClientEnvironment(publicUrl);
 // The production configuration is different and lives in a separate file.
 module.exports = {
   externals: {
+    'fs': 'fs',
     'Web3': 'web3',
   },
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
@@ -244,6 +245,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
+      fs: 'fs',
       Web3: 'Web3',
     }),
     // Makes some environment variables available in index.html.

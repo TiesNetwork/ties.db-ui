@@ -1,21 +1,22 @@
 import { get } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
+import { Link, NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import { compose, lifecycle, withHandlers } from 'recompose';
+import stringToColor from 'string-to-color';
 
-// Components
-import Prompt from 'views/Prompt';
-
-/** Views **/
+// Views
 import Dashboard from './views/Dashboard';
+import Modals from './views/Modals';
 import Query from './views/Query';
 import Settings from './views/Settings';
 
 import styles from './App.scss';
 import 'react-table/react-table.css';
 
-const App = () => (
+const App = ({
+  currentAccount,
+}) => (
   <div className={styles.Root}>
     <div className={styles.Header}>
       <div className={styles.Logo}>
@@ -53,6 +54,15 @@ const App = () => (
           Settings
         </NavLink>
       </div>
+
+      <div className={styles.Account}>
+        <Link to="/settings">
+          <div
+            className={styles.AccountAvatar}
+            style={currentAccount && { backgroundColor: stringToColor(currentAccount) }}
+          />
+        </Link>
+      </div>
     </div>
 
     <div className={styles.Container}>
@@ -64,11 +74,14 @@ const App = () => (
       </Switch>
     </div>
 
-    <Prompt />
+    <Modals />
   </div>
 );
 
-const mapStateToProps = ({ services }) => get(services, 'env', {});
+const mapStateToProps = ({ services }) => ({
+  ...get(services, 'env', {}),
+  currentAccount: get(services, 'session.currentAccount'),
+});
 
 export default compose(
   connect(mapStateToProps, null, null, { pure: false }),

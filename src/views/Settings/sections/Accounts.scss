@@ -1,0 +1,40 @@
+@import "~styles/themes.scss";
+
+.Root {
+  border: 1px solid;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: background .2s, border-color .2s;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
+}
+
+.Container {
+  border-top: 1px solid;
+  padding: 16px;
+  transition: border-color .2s;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
+}
+
+.Header {
+  align-items: center;
+  display: flex;
+  height: 80px;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.List {
+  display: grid;
+  grid-row-gap: 16px;
+}
+
+.Title {
+  font-size: 30px;
+}

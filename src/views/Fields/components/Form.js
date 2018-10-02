@@ -133,7 +133,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   validate: validate({
     defaultValue: [
       required(),
-      matches(new RegExp('^0x[0-9abcdef]{2,}$')),
+      // matches(new RegExp('^0x[0-9abcdef]{2,}$')),
     ],
     name: [
       required(),

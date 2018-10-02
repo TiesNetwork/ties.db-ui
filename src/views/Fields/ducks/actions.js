@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { Field } from 'tiesdb-client';
 
 /** Actions **/
 import { closeModal } from 'services/modals';
@@ -42,13 +43,17 @@ import { updateField } from 'entities/models/fields';
  */
 export const createField = (tableHash, { defaultValue, name, type }) => (dispatch, getState, { contract }) => {
   const hash = Web3.utils.sha3(name);  // eslint-disable-line
+  const value = Field.encodeValue(type.toLowerCase(), defaultValue);
 
   return dispatch({
     types: [CREATE_FIELD_REQUEST, CREATE_FIELD_SUCCESS, CREATE_FIELD_FAILURE],
-    contract: contract.sendMethod('createField', tableHash, name, type, defaultValue),
+    contract: contract.sendMethod('createField', tableHash, name, type, value),
     transaction: {
       action: 'Create field',
-      data: { defaultValue, name, type },
+      data: {
+        name, type,
+        defaultValue: value,
+      },
       link: `fields.${hash}`,
       name: name,
       onCreate: () => {
@@ -91,7 +96,19 @@ export const deleteField = (tableHash, hash) => (dispatch, getState, { contract 
 export const fetchField = (tableHash, hash) => (dispatch, getState, { contract }) => ({
   types: [FETCH_FIELD_REQUEST, FETCH_FIELD_SUCCESS, FETCH_FIELD_FAILURE],
   contract: contract.callMethod('getField', tableHash, hash)
-    .then(({ def: defaultValue, fType: type, name }) =>
-      dispatch(updateField(hash, { defaultValue, type, name }))
-    )
+    .then(({ def: defaultValue, fType: type, name }) => {
+      let decodedValue = defaultValue || '0';
+
+      try {
+        decodedValue = Field.decodeValue(
+          type.toLowerCase(),
+          Buffer.from(defaultValue.replace('0x', ''), 'hex'),
+        );
+      } catch(e) {}
+
+      dispatch(updateField(hash, {
+        type, name,
+        defaultValue: decodedValue,
+      }));
+    }),
 });

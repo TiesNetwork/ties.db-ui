@@ -90,6 +90,7 @@ class FieldsItem extends Component {
         transaction.status === PENDING
       );
 
+
     return (
       <div className={className}>
         <div
@@ -137,7 +138,11 @@ class FieldsItem extends Component {
 }
 
 FieldsItem.propTypes = {
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.boolean,
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   hash: PropTypes.string,
   name: PropTypes.string,
   onFetch: PropTypes.func,

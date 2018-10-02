@@ -1,12 +1,15 @@
+import { ipcRenderer } from 'electron';
 import createHistory from 'history/createBrowserHistory';
+import { get } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import SignerProvider from 'ethjs-provider-signer';
+import { sign } from 'ethjs-signer';
 
 // Actions
-import { openModal } from 'services/modals';
+import { closeModal, openModal } from 'services/modals';
 
 // Views
 import App from './App';
@@ -15,7 +18,12 @@ import Metamask from 'views/Metamask';
 import createStore from './store';
 
 const provider = new SignerProvider('https://rinkeby.infura.io/v3/5915e2ed5f234c2aba3dfcb23b8f4337', {
-  accounts: cb => cb(null, ['0x8de2472fa85d214f79207f5b310f1335bca0dc75']),
+  accounts: cb => {
+    const accounts = JSON.parse(localStorage.getItem('accounts') || '[]')
+      .map(account => `0x${get(account, 'address')}`);
+
+    cb(null, accounts);
+  },
   signTransaction: (rawTx, cb) => console.log(123, rawTx, cb),
 });
 
@@ -42,13 +50,44 @@ Promise.all([
     const store = createStore({ account, history, web3 });
 
     provider.options.signTransaction = (rawTx, cb) => {
-      store.dispatch(openModal('prompt', {
-        props: {
-          label: 'Password',
-          onSubmit: value => console.log(value),
-        },
-        title: 'Confirm transaction',
-      }));
+      const state = store.getState();
+
+      const currentAccount = get(state, 'services.session.currentAccount');
+      const session = JSON.parse(sessionStorage.getItem('session'));
+
+      const sendTransaction = key => {
+        web3.eth.estimateGas(rawTx).then(gas => {
+          rawTx.gas = gas;
+          rawTx.gasPrice = web3.utils.toWei('10', 'gwei');
+
+          key && cb(null, sign(rawTx, key));
+          store.dispatch(closeModal('transactionForm'));
+        });
+      };
+
+      if (!session || session.address !== currentAccount) {
+        store.dispatch(openModal('transactionForm', {
+          props: {
+            label: 'Password',
+            onSubmit: ({ account, password }) => {
+              ipcRenderer.send('recover', { account, password });
+              ipcRenderer.on('recover', (event, key) => {
+                if (key) {
+                  sessionStorage.setItem('session', JSON.stringify({
+                    address: account.address,
+                    privateKey: key,
+                  }));
+
+                  sendTransaction(key);
+                }
+              });
+            },
+          },
+          title: 'Confirm transaction',
+        }));
+      } else {
+        sendTransaction(session.privateKey);
+      }
     };
 
     ReactDOM.render(
@@ -63,9 +102,7 @@ Promise.all([
   .catch(e => {
     let props = {};
 
-    try {
-      props = JSON.parse(e.message);
-    } catch(e) {}
+    try { props = JSON.parse(e.message) } catch(e) {}
 
     ReactDOM.render(
       <Metamask {...props} />,

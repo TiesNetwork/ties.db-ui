@@ -46,6 +46,19 @@
   }
 }
 
+.Account {
+  &Avatar {
+    background: #F00;
+    border-radius: 100%;
+    height: 40px;
+    width: 40px;
+
+    @include themify($themes) {
+      background: themed('textColorSecondary');
+    }
+  }
+}
+
 .Container {
   display: flex;
   flex: 1 1 auto;
@@ -78,6 +91,7 @@
 
 .Nav {
   display: flex;
+  flex: 1 1 auto;
   height: 100%;
 
   &Item {

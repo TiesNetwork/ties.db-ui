@@ -36,7 +36,7 @@ const FormInput = ({
         placeholder={placeholder}
         readOnly={readOnly}
         type={type}
-        value={value}
+        value={value || ''}
       />
     </div>
   );
@@ -67,3 +67,5 @@ export default props => (
     <FormInput />
   </Field>
 );
+
+export const CustomInput = FormInput;

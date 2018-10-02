@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const nodeEth = require('node-eth-address');
 const path = require('path');
 const url = require('url');
 
@@ -15,6 +16,8 @@ const createWindow = () => {
     }),
   );
 
+  mainWindow.webContents.openDevTools();
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -23,3 +26,8 @@ const createWindow = () => {
 app.on('activate', () => mainWindow === null && createWindow());
 app.on('ready', createWindow);
 app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit());
+
+ipcMain.on('recover', (event, { account, password }) => {
+  const key = nodeEth.recoverPrivateKey(password, account);
+  event.sender.send('recover', key);
+});

@@ -9,36 +9,9 @@
   }
 }
 
-.Card {
-  border: 1px solid;
-  border-radius: 6px;
-  overflow: hidden;
-  transition: background .2s, border-color .2s;
-
-  @include themify($themes) {
-    background: themed('blockBackgroundColor');
-    border-color: themed('blockBorderColor');
-  }
-
-  &Content {
-    border-top: 1px solid;
-    padding: 16px;
-    transition: border-color .2s;
-
-    @include themify($themes) {
-      border-color: themed('blockBorderColor');
-    }
-  }
-
-  &Title {
-    align-items: center;
-    display: flex;
-    font-size: 30px;
-    height: 80px;
-    padding: 0 16px;
-  }
-}
-
 .Container {
+  display: grid;
+  grid-column-gap: 16px;
+  grid-template-columns: repeat(2, calc(50% - 8px));
   padding: 24px 16px;
 }

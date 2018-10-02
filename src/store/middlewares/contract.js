@@ -5,6 +5,7 @@ import {
   createTransaction,
   updateTransaction,
 } from 'entities/models/transactions';
+import { openModal } from 'services/modals';
 
 /** Types **/
 import {
@@ -79,7 +80,8 @@ const contractMiddleware = store => next => action => {
 
         switch (message) {
           case ERROR_TYPE.NO_ADDRESS:
-            throw new SubmissionError({ _error: 'Log in to the Metamask' });
+            next(openModal('importAccount', { props: { needAuthorization: true }}));
+            throw new SubmissionError({ _error: 'Log in account!' });
           default:
             console.error(error);
             break;
