@@ -113,7 +113,7 @@ const mapStateToProps = ({ entities, services }, { tableHash }) => {
   const initialValues = hash
     ? { ...get(entities, `fields.${hash}`, {}), hash }
     : { type: 'Integer' };
-  const table = get(entities, `tables.${tableHash}`);
+  const table = get(entities, `tables.${tableHash}`, {});
 
   return {
     initialValues,

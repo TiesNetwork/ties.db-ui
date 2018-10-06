@@ -121,7 +121,7 @@ Promise.all([
   })
   .catch(e => {
     let props = {};
-
+    console.log('WATAFAAAAAAK!!!!!');
     try { props = JSON.parse(e.message) } catch(e) {}
 
     ReactDOM.render(
