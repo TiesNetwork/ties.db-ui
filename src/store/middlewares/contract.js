@@ -1,3 +1,4 @@
+import { uniqueId } from 'lodash';
 import { SubmissionError } from 'redux-form';
 
 /** Actions **/
@@ -6,6 +7,7 @@ import {
   updateTransaction,
 } from 'entities/models/transactions';
 import { openModal } from 'services/modals';
+import { createNotification, deleteNotification } from 'services/notifications';
 
 /** Types **/
 import {
@@ -53,6 +55,11 @@ const contractMiddleware = store => next => action => {
           }
         })
         .on('error', error => {
+          const id = uniqueId('transaction_error_');
+
+          next(createNotification(id, { text: error.message }));
+          setTimeout(() => next(deleteNotification(id)), 5000);
+
           onError && onError();
           // @todo - wtf, res undefined
           // next(updateTransaction(hash, { status: ERROR }));
@@ -66,6 +73,10 @@ const contractMiddleware = store => next => action => {
             block: 0,
             status: PENDING,
           }));
+
+          contract.on('error', error => {
+            console.log('Test', error);
+          });
 
           onCreate && onCreate(hash);
         })

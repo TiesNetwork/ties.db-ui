@@ -8,6 +8,7 @@ import stringToColor from 'string-to-color';
 // Views
 import Dashboard from './views/Dashboard';
 import Modals from './views/Modals';
+import Notifications from './views/Notifications';
 import Query from './views/Query';
 import Settings from './views/Settings';
 import Transaction from './views/Transaction';
@@ -76,6 +77,7 @@ const App = ({
     </div>
 
     <Modals />
+    <Notifications />
     <Transaction />
   </div>
 );

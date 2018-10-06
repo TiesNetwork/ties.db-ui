@@ -18,13 +18,24 @@ const VARIANT = {
 const Alert = ({
   children,
   className: classNameProp,
+  onClose,
+  title,
   variant = VARIANT.DANGER,
 }) => {
   const className = classNames(classNameProp, styles.Root, variant.className);
 
   return (
     <div className={className}>
-      {children}
+      <div className={styles.Icon} />
+
+      <div className={styles.Content}>
+        {title && <strong>{title}</strong>}&nbsp;
+        {children}
+      </div>
+
+      {onClose && (
+        <button className={styles.Close} onClick={onClose} />
+      )}
     </div>
   );
 };
@@ -32,6 +43,7 @@ const Alert = ({
 Alert.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  title: PropTypes.string,
   variant: PropTypes.shape({
     className: PropTypes.string,
   }),

@@ -10,6 +10,7 @@ import { sign } from 'ethjs-signer';
 
 // Actions
 import { createConfirm } from 'services/confirm';
+import { createNotification } from 'services/notifications';
 import { closeModal, closeModals, openModal } from 'services/modals';
 
 // Views
@@ -47,6 +48,9 @@ Promise.all([
     }
   })
   .then(account => {
+    let transactionCount = 0;
+    let nonce = 0;
+
     const history = createHistory();
     const store = createStore({ account, history, web3 });
 
@@ -61,8 +65,19 @@ Promise.all([
         const session = JSON.parse(sessionStorage.getItem('session'));
 
         const sendTransaction = key => {
-          key && cb(null, sign(rawTx, key));
-          store.dispatch(closeModal('transactionForm'));
+          web3.eth.getTransactionCount(session.address).then(res => {
+            if (res !== transactionCount) {
+              nonce = 0;
+              transactionCount = res;
+            } else {
+              nonce++;
+            }
+
+            rawTx.nonce = transactionCount + nonce;
+
+            key && cb(null, sign(rawTx, key));
+            store.dispatch(closeModal('transactionForm'));
+          });
         };
 
         if (!session || session.address !== currentAccount) {

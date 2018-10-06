@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="9px" viewBox="0 0 9 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <g id="Alerts" transform="translate(-722.000000, -473.000000)" fill="#F7CB18">
+            <g transform="translate(192.000000, 107.000000)" id="Shape">
+                <g transform="translate(102.000000, 184.000000)">
+                    <g transform="translate(0.000000, 156.000000)">
+                        <path d="M434.76,26.387 L432.49,28.657 L430.217,26.385 C429.71,25.877 428.887,25.877 428.379,26.384 C427.872,26.892 427.872,27.715 428.38,28.223 L430.652,30.495 L428.382,32.765 C427.875,33.272 427.875,34.095 428.383,34.603 C428.891,35.111 429.714,35.111 430.221,34.604 L432.491,32.334 L434.762,34.605 C435.27,35.113 436.093,35.113 436.601,34.606 C437.108,34.098 437.108,33.276 436.6,32.768 L434.329,30.496 L436.599,28.226 C437.106,27.719 437.106,26.896 436.598,26.388 C436.09,25.88 435.267,25.88 434.76,26.387 L434.76,26.387 Z"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

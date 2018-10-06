@@ -77,7 +77,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "electron": "electron .",
     "electron-start": "node app/react.js",
-    "react-start": "node scripts/start.js"
+    "react-start": "node scripts/start.js BROWSER=none"
   },
   "jest": {
     "collectCoverageFrom": [

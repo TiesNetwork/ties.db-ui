@@ -1,0 +1,74 @@
+@import "~styles/themes.scss";
+
+.Root {
+  align-items: center;
+  border: 1px solid;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  margin-bottom: 16px;
+  padding: 16px 24px;
+  width: 100%;
+
+  &Variant {
+    &Danger {
+      @include themify($themes) {
+        background-color: themed('alertDangerBackgroundColor');
+        color: themed('alertDangerTextColor');
+      }
+
+      .Close {
+        background-image: url('./assets/danger-close.svg')
+      }
+
+      .Icon {
+        background-image: url('./assets/danger.svg');
+      }
+    }
+
+    &Warning {
+      @include themify($themes) {
+        background-color: themed('alertWarningBackgroundColor');
+        color: themed('alertWarningTextColor');
+      }
+
+      .Close {
+        background-image: url('./assets/warning-close.svg')
+      }
+
+      .Icon {
+        background-image: url('./assets/warning.svg');
+      }
+    }
+  }
+}
+
+.Close {
+  background: transparent no-repeat center center;
+  border: 0;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  width: 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.Content {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  font-size: 16px;
+  font-weight: normal; // FIX
+  padding: 0 16px;
+}
+
+.Icon {
+  background: no-repeat center center;
+  background-size: contain;
+  flex: 0 0 36px;
+  height: 36px;
+  width: 36px;
+}

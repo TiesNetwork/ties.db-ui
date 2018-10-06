@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import confirm from './confirm';
 import env from './env';
 import modals from './modals';
+import notifications from './notifications';
 import session from './session';
 import transactions from './transactions';
 
@@ -11,6 +12,7 @@ const servicesReducer = combineReducers({
   confirm,
   env,
   modals,
+  notifications,
   session,
   transactions,
 });

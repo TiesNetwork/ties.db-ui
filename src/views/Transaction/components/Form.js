@@ -36,7 +36,7 @@ const TransactionForm = ({
         size={Button.SIZE.LARGE}
         variant={Button.VARIANT.SUCCESS}
       >
-        Resolve
+        Approve
       </Button>
     </Actions>
   </Form>

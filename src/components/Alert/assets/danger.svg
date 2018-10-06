@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="40px" viewBox="0 0 46 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Alerts" transform="translate(-816.000000, -498.000000)">
+            <g transform="translate(192.000000, 107.000000)" id="Icon">
+                <g transform="translate(589.000000, 344.000000)">
+                    <g transform="translate(35.000000, 47.000000)">
+                        <path d="M2.82236863,39.02275 C0.308368628,39.02275 -0.720631372,37.30775 0.536368628,35.21175 L20.7113686,1.57275 C21.9683686,-0.52425 24.0253686,-0.52425 25.2833686,1.57275 L45.4573686,35.21175 C46.7153686,37.30775 45.6863686,39.02275 43.1713686,39.02275 L2.82236863,39.02275 L2.82236863,39.02275 Z" id="Shape" fill="#FF6D4A"></path>
+                        <text id="!" font-family="Roboto-Bold, Roboto" font-size="22" font-weight="bold" letter-spacing="0.6875" fill="#FFFFFF">
+                            <tspan x="20" y="28">!</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
