@@ -14,7 +14,6 @@ import Progress from 'components/Progress';
 /** Entities **/
 import {
     getTransactionByLink,
-
     /** types **/
     CONFIRMATION,
     ERROR,
@@ -84,12 +83,10 @@ class FieldsItem extends Component {
       [styles.IconTime]: type === TYPE.TIME,
     });
 
-    const isLoading =
-      transaction && (
-        transaction.status === CONFIRMATION ||
-        transaction.status === PENDING
-      );
-
+    const isLoading = transaction && (
+      transaction.status === CONFIRMATION ||
+      transaction.status === PENDING
+    );
 
     return (
       <div className={className}>
@@ -112,7 +109,7 @@ class FieldsItem extends Component {
           </div>
 
           <div className={styles.DefaultValue}>
-            Default: {defaultValue}
+            Default: {(defaultValue || 0).toString()}
           </div>
 
           {isLoading && (
