@@ -1,3 +1,47 @@
+@import '~styles/themes.scss';
+
+.Data {
+  border: 1px solid;
+  border-radius: 4px;
+  margin: 16px 0 0;
+  padding: 16px;
+
+  @include themify($themes) {
+    background: themed('queryBackgroundColor');
+    border-color: themed('blockBorderColor');
+  }
+}
+
+.Expand {
+  margin: 24px 0 0;
+
+  &Container {
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    margin: 0 -24px;
+    padding: 24px;
+
+    @include themify($themes) {
+      background: themed('queryBackgroundColor');
+      border-color: themed('blockBorderColor');
+    }
+  }
+
+  &Trigger {
+    background: transparent;
+    border: 0;
+    color: #4da1ff;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0 0 16px;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 .Group {
   display: grid;
   grid-column-gap: 16px;

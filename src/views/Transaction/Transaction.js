@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, values } from 'lodash';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose, withHandlers } from 'recompose';
@@ -13,21 +13,27 @@ import styles from './Transaction.scss';
 
 const Transaction = ({
   handleReject,
-  handleResolve,
+  handleSubmit,
   transaction,
+  transactionData,
 }) => (
   <Fragment>
     {transaction && (
       <div className={styles.Root}>
         <div className={styles.Title}>
-          Transaction
+          {transactionData ? transactionData.action : Transaction}
         </div>
 
         <div className={styles.Form}>
           <Form
-            initialValues={transaction}
+            data={get(transactionData, 'data')}
+            initialValues={{
+              ...transaction,
+              link: get(transactionData, 'link'),
+              name: get(transactionData, 'name'),
+            }}
             onReject={handleReject}
-            onResolve={handleResolve}
+            onSubmit={handleSubmit}
           />
         </div>
       </div>
@@ -35,8 +41,9 @@ const Transaction = ({
   </Fragment>
 );
 
-const mapStateToProps = ({ services }) => ({
+const mapStateToProps = ({ entities, services }) => ({
   transaction: get(services, 'confirm.transactions', [])[0],
+  transactionData: values(get(entities, 'transactions', [])).filter(transaction => transaction.status === 'CONFIRM')[0],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -49,7 +56,7 @@ export default compose(
   withHandlers({
     handleReject: ({ rejectConfirm }) => () =>
       rejectConfirm && rejectConfirm(),
-    handleResolve: ({ resolveConfirm, transaction }) => () => {
+      handleSubmit: ({ resolveConfirm, transaction }) => () => {
       const onResolve = get(transaction, 'onResolve');
 
       onResolve && onResolve();

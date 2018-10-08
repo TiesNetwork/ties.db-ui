@@ -1,9 +1,10 @@
-import { uniqueId } from 'lodash';
+import { get, uniqueId, values } from 'lodash';
 import { SubmissionError } from 'redux-form';
 
 /** Actions **/
 import {
   createTransaction,
+  deleteTransaction,
   updateTransaction,
 } from 'entities/models/transactions';
 import { openModal } from 'services/modals';
@@ -11,6 +12,7 @@ import { createNotification, deleteNotification } from 'services/notifications';
 
 /** Types **/
 import {
+  CONFIRM,
   CONFIRMATION,
   // ERROR,
   ERROR_TYPE,
@@ -34,6 +36,17 @@ const contractMiddleware = store => next => action => {
         ...payload,
       } = transaction;
 
+      const state = store.getState();
+      const transactions = values(get(state, 'entities.transactions', [])).filter(transaction => transaction.status === CONFIRM);
+      const transactionName = `confirm_${transactions.length}`;
+
+      next(createTransaction(transactionName, {
+        ...payload,
+        block: 0,
+        hash: transactionName,
+        status: CONFIRM,
+      }));
+
       contract
         .on('confirmation', (number, { status, transactionHash: hash, ...props }) => {
           const isFail = status === '0x0';
@@ -52,6 +65,8 @@ const contractMiddleware = store => next => action => {
             isFail
               ? onError && onError(hash)
               : onSuccess && onSuccess(hash);
+
+            setTimeout(() => next(deleteTransaction(hash)), 5000);
           }
         })
         .on('error', error => {
@@ -68,6 +83,7 @@ const contractMiddleware = store => next => action => {
           next(updateTransaction(hash, { status: CONFIRMATION }));
         })
         .on('transactionHash', hash => {
+          next(deleteTransaction(transactionName));
           next(createTransaction(hash, {
             ...payload, hash,
             block: 0,

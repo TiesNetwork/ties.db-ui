@@ -51,8 +51,7 @@ export const createField = (tableHash, { defaultValue, name, type }) => (dispatc
     transaction: {
       action: 'Create field',
       data: {
-        name, type,
-        defaultValue: value,
+        defaultValue, name, type,
       },
       link: `fields.${hash}`,
       name: name,

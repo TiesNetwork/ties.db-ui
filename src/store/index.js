@@ -21,7 +21,7 @@ export default ({ account, history, web3 }) => {
   return createStore(reducer, applyMiddleware(
     thunkMiddleware.withExtraArgument({ contract, schema }),
     routerMiddleware(history),
-    // loggerMiddleware,
+    loggerMiddleware,
     contractMiddleware,
   ));
 };

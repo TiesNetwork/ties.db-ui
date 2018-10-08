@@ -54,7 +54,7 @@ Promise.all([
     const history = createHistory();
     const store = createStore({ account, history, web3 });
 
-    provider.options.signTransaction = (rawTx, cb) => {
+    provider.options.signTransaction = (rawTx, cb, test) => {
       const state = store.getState();
 
       web3.eth.estimateGas(rawTx).then(gas => {

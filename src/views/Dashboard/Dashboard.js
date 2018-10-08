@@ -84,7 +84,7 @@ const Dashboard = ({
 );
 
 const mapStateToProps = ({ entities, views }) => {
-  const transactions = values(get(entities, 'transactions', {}));
+  const transactions = values(get(entities, 'transactions', {})).filter(transaction => transaction.status !== 'CONFIRM');
   const view = get(views, 'dashboard', {});
 
   return { ...view, transactions };
