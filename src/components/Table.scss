@@ -1,35 +1,47 @@
 @import '~styles/themes.scss';
 
 .Root {
-  border: 1px solid;
   border-radius: 6px;
+  height: 100%;
 
   @include themify($themes) {
     background: themed('blockBackgroundColor');
-    border-color: themed('blockBorderColor');
   }
 
   :global .ReactTable {
     border: 0;
+    border-bottom: 1px solid;
     font-size: 14px;
     font-weight: 500;
 
+    @include themify($themes) {
+      border-color: themed('blockBorderColor');
+    }
+
     .rt-tbody {
       .rt-td {
-        height: 56px;
-        line-height: 56px;
+        line-height: 44px;
+        height: 44px;
         padding: 0 20px;
-        white-space: nowrap;
 
         @include themify($themes) {
           border-color: themed('blockBorderColor');
+        }
+
+        &:last-child {
+          border-right: 1px solid;
         }
       }
 
       .rt-tr {
         align-items: center;
         display: flex;
-        height: 56px;
+
+        &.-even {
+          @include themify($themes) {
+            background: themed('queryBackgroundColor');
+          }
+        }
       }
 
       .rt-tr-group {
@@ -48,14 +60,18 @@
       }
 
       &.-header {
-        box-shadow: none;
+        box-shadow:
+          0 0   1px  rgba(10, 31, 68, .08),
+          0 3px 4px rgba(10, 31, 68, .1);
       }
 
       .rt-th {
         align-items: center;
         display: flex;
-        font-size: 16px;
-        height: 56px;
+        font-size: 14px;
+        font-weight: 500;
+        height: 24px;
+        justify-content: center;
         padding: 0 20px;
 
         @include themify($themes) {
@@ -70,6 +86,10 @@
 
         &:focus {
           outline: none;
+        }
+
+        &:last-child {
+          border-right: 1px solid;
         }
 
         &.-sort-asc {

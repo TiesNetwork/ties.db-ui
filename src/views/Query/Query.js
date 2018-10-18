@@ -5,24 +5,53 @@ import { Connection } from 'tiesdb-client';
 import { compose, lifecycle, withHandlers, withState } from 'recompose';
 
 // Components
+import Alert from 'components/Alert';
 import Table from 'components/Table';
 
 import Form from './components/Form';
 
+// Utils
+import getColumnProps from './utils/getColumnProps';
+
 import styles from './Query.scss';
+
+const formValue = `SELECT
+  Id,
+  CAST(fDuration as duration) as dur,
+  CAST(writeTime(fTime) as date)::time as wtime,
+  CAST(writeTime(fTime) AS date) as dt,
+  fLong,
+  bigIntAsBlob(toUnixTimestamp(CAST(writeTime(fTime) AS date))) AS WriteTime,
+  intAsBlob(0x309) AS TestValue
+FROM "client-dev.test"."all_types"`;
 
 const Query = ({
   columns,
   data,
+  error,
   handleSubmit,
+  isConnected,
+  isLoaded,
 }) => (
   <div className={styles.Root}>
-    <div className={styles.Container}>
-      <Table columns={columns} data={data} />
+    <div className={styles.Form}>
+      {isConnected ? (
+        <Form disabled={isLoaded} onSubmit={handleSubmit} initialValues={{ query: formValue }} />
+      ) : (
+        <Alert>{error}</Alert>
+      )}
     </div>
 
-    <div className={styles.Form}>
-      <Form onSubmit={handleSubmit} />
+    <div className={styles.Container}>
+      {isConnected && !error && data && data.length > 0 && (
+        <Table columns={columns} data={data} resizable />
+      )}
+
+      {isConnected && error && (
+        <div className={styles.Error}>
+          <Alert>{error}</Alert>
+        </div>
+      )}
     </div>
   </div>
 );
@@ -35,6 +64,7 @@ export default compose(
   connect(mapStateToProps),
   withState('columns', 'setColumns', []),
   withState('data', 'setData', []),
+  withState('error', 'setError', false),
   withState('connection', 'setConnection', false),
   withState('isConnected', 'setConnected', false),
   withState('isLoaded', 'setLoaded', false),
@@ -44,15 +74,18 @@ export default compose(
         isConnected,
         setConnected,
         setConnection,
+        setError,
         ws,
       } = this.props;
 
       if (!isConnected && ws) {
         const connection = new Connection();
-        connection.connect('ws://localhost:8080/websocket').then(({ connected }) => {
-          !!connected && setConnected(true);
-          !!connected && setConnection(connection);
-        });
+        connection.connect('ws://localhost:8080/websocket')
+          .then(({ connected }) => {
+            !!connected && setError(null);
+            !!connected && setConnected(true);
+            !!connected && setConnection(connection);
+          }).catch(error => setError && setError(error.message));
       }
     },
     componentWillUnmount() {
@@ -67,19 +100,14 @@ export default compose(
       setColumns,
       setData,
       setLoaded,
+      setError,
     }) => ({ query }) => {
       if (connection && !isLoaded) {
         setLoaded(true);
 
         connection.recollect(query).then(records => {
-          console.log(records);
           if (records && records.length > 0) {
-            const columns = records[0].getFields().map(({ name }) => ({
-              accessor: name,
-              Cell: ({ value }) => <span title={value}>{value.toString()}</span>,
-              Header: name,
-              maxWidth: 400,
-            }));
+            const columns = records[0].getFields().map(({ name, type }) => getColumnProps(name, type));
 
             console.log('Started columns:', columns);
 
@@ -110,7 +138,7 @@ export default compose(
             setData(data);
             setLoaded(false);
           }
-        });
+        }).catch(error => setError(error.message));
       }
     }
   })

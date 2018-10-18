@@ -1,0 +1,35 @@
+@import '~styles/themes.scss';
+
+.Root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & > div {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+}
+
+.Actions {
+  margin: 24px 0 0;
+}
+
+.Field {
+  border-left: 2px solid;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 8px 16px;
+
+  @include themify($themes) {
+    border-color: themed('blockBorderColor');
+  }
+}
+
+.Textarea {
+  flex: 1 1 auto;
+  height: auto !important;
+  width: 100% !important;
+}

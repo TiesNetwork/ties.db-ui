@@ -1,28 +1,35 @@
-@import "~styles/themes.scss";
+@import '~styles/themes.scss';
 
 .Root {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+  max-width: 100%;
 }
 
 .Container {
-  flex: 1 1 auto;
-  padding: 24px;
-  transition: background .2s;
-
-  @include themify($themes) {
-    background: themed('backgroundColor');
-  }
-}
-
-.Form {
   border-top: 1px solid;
-  padding: 24px;
-  transition: background .2s, border-color .2s;
+  flex: 0 0 calc(50% - 1px);
+  max-height: calc(50% - 1px);
+  overflow: scroll;
+  transition: background .2s;
 
   @include themify($themes) {
     background: themed('queryBackgroundColor');
     border-color: themed('blockBorderColor');
+  }
+}
+
+.Error {
+  padding: 24px;
+}
+
+.Form {
+  flex: 0 0 calc(50% - 48px);
+  padding: 24px;
+  transition: background .2s, border-color .2s;
+
+  @include themify($themes) {
+    background: themed('blockBackgroundColor');
   }
 }

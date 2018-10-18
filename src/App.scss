@@ -23,6 +23,7 @@
 :global #root {
   display: flex;
   flex: 1 1 auto;
+  max-width: 100%;
 }
 
 :global h3 {
@@ -40,6 +41,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+  max-width: 100%;
 
   @include themify($themes) {
     color: themed('textColor');
