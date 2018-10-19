@@ -10,7 +10,6 @@ import { sign } from 'ethjs-signer';
 
 // Actions
 import { createConfirm } from 'services/confirm';
-import { createNotification } from 'services/notifications';
 import { closeModal, closeModals, openModal } from 'services/modals';
 
 // Views
@@ -64,8 +63,8 @@ Promise.all([
         const currentAccount = get(state, 'services.session.currentAccount');
         const session = JSON.parse(sessionStorage.getItem('session'));
 
-        const sendTransaction = key => {
-          web3.eth.getTransactionCount(session.address).then(res => {
+        const sendTransaction = ({ address, key }) => {
+          web3.eth.getTransactionCount(address).then(res => {
             if (res !== transactionCount) {
               nonce = 0;
               transactionCount = res;
@@ -93,7 +92,7 @@ Promise.all([
                       privateKey: key,
                     }));
 
-                    sendTransaction(key);
+                    sendTransaction({ address: account.address, key });
                   }
                 });
               },
@@ -104,7 +103,7 @@ Promise.all([
           store.dispatch(closeModals());
           store.dispatch(createConfirm({
             ...rawTx,
-            onResolve: () => sendTransaction(session.privateKey),
+            onResolve: () => sendTransaction({ address: session.address, key: session.privateKey }),
           }));
         }
       });

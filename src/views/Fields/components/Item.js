@@ -3,7 +3,6 @@ import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Field } from 'tiesdb-client';
 
 /** Actions **/
 import { openModal } from 'services/modals';

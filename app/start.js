@@ -31,3 +31,5 @@ ipcMain.on('recover', (event, { account, password }) => {
   const key = nodeEth.recoverPrivateKey(password, account);
   event.sender.send('recover', key);
 });
+
+ipcMain.on('reload', event => mainWindow && mainWindow.reload());

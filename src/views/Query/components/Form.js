@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import ReactAce from 'react-ace';
 import { Field, reduxForm } from 'redux-form';
-import { compose, withHandlers } from 'recompose';
+import { compose } from 'recompose';
 
 import 'brace/mode/mysql';
 import 'brace/theme/xcode';

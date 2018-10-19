@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import { get } from 'lodash';
 
 import {
@@ -18,7 +19,7 @@ export const addAccount = account => (dispatch, getStore) => {
       dispatch({ type: ADD_ACCOUNT, account });
       dispatch(setCurrentAccount(account.address));
 
-      window.location.reload();
+      ipcRenderer.send('reload');
     }
   }
 };

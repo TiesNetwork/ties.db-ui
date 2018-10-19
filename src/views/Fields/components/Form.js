@@ -15,7 +15,7 @@ import Form, { Actions, Input, Select } from 'components/Form';
 import { FIELD_FORM_ID } from '../ducks/types';
 
 /** Utils **/
-import validate, { matches, required } from 'utils/validate';
+import validate, { required } from 'utils/validate';
 
 const FieldsForm = ({
   error,

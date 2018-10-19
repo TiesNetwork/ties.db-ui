@@ -5,7 +5,7 @@ import { Contract, schema } from 'api';
 
 /** Middleware **/
 import { routerMiddleware } from 'react-router-redux';
-import loggerMiddleware from 'redux-logger';
+// import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 
 import contractMiddleware from './middlewares/contract';
