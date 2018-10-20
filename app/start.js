@@ -1,12 +1,19 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const isDev = require('electron-is-dev');
 const nodeEth = require('node-eth-address');
 const path = require('path');
 const url = require('url');
 
+const menu = require('./menu');
+
 let mainWindow;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({ width: 1920, height: 1080 });
+  mainWindow = new BrowserWindow({
+    height: 1080,
+    title: 'Ties.DB',
+    width: 1920,
+  });
 
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL || url.format({
@@ -16,11 +23,13 @@ const createWindow = () => {
     }),
   );
 
-  mainWindow.webContents.openDevTools();
+  isDev && mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  !isDev && Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 };
 
 app.on('activate', () => mainWindow === null && createWindow());

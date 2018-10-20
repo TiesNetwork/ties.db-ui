@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import SignerProvider from 'ethjs-provider-signer';
 import { sign } from 'ethjs-signer';
@@ -112,7 +113,7 @@ Promise.all([
     ReactDOM.render(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <App />
+          <Route path="" component={App} />
         </ConnectedRouter>
       </Provider>,
       document.getElementById('root')
@@ -120,7 +121,7 @@ Promise.all([
   })
   .catch(e => {
     let props = {};
-    console.log('WATAFAAAAAAK!!!!!');
+
     try { props = JSON.parse(e.message) } catch(e) {}
 
     ReactDOM.render(

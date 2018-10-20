@@ -19,6 +19,7 @@
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.0.1",
+    "electron-is-dev": "^1.0.1",
     "eslint": "4.10.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "1.9.0",
@@ -129,7 +130,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "electron": "^2.0.8",
+    "electron": "^3.0.5",
     "electron-builder": "^20.28.4",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6"
@@ -139,8 +140,12 @@
   "build": {
     "appId": "com.ties.schema-designer",
     "directories": {
-      "buildResources": "public"
+      "buildResources": "."
     },
+    "files": [
+      "**"
+    ],
+    "productName": "Ties.DB",
     "win": {
       "icon": "https://cdn2.iconfinder.com/data/icons/designer-skills/128/react-256.png"
     }
