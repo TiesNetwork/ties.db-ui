@@ -36,15 +36,15 @@ const Query = ({
   <div className={styles.Root}>
     <div className={styles.Form}>
       {isConnected ? (
-        <Form disabled={isLoaded} onSubmit={handleSubmit} initialValues={{ query: formValue }} />
+        <Form disabled={isLoaded} onSubmit={handleSubmit}/>
       ) : (
         <Alert>{error}</Alert>
       )}
     </div>
 
     <div className={styles.Container}>
-      {isConnected && !error && data && data.length > 0 && (
-        <Table columns={columns} data={data} resizable />
+      {isConnected && !error && (
+        <Table columns={columns} data={data || []} loading={isLoaded} resizable />
       )}
 
       {isConnected && error && (
@@ -101,15 +101,17 @@ export default compose(
       setData,
       setLoaded,
       setError,
-    }) => ({ query }) => {
+    }) => async ({ query }) => {
       if (connection && !isLoaded) {
         setLoaded(true);
 
-        connection.recollect(query).then(records => {
+        try {
+          const records = await connection.recollect(query);
+
           if (records && records.length > 0) {
             const columns = records[0].getFields().map(({ name, type }) => getColumnProps(name, type));
 
-            console.log('Started columns:', columns);
+            // console.log('Started columns:', columns);
 
             const data = records.map(record => {
               const result = {}
@@ -123,22 +125,21 @@ export default compose(
               return result;
             });
 
-            console.log('Table data:', data);
+            // console.log('Table data:', data);
 
-            const filteredColumns = columns.filter(({ accessor }) => {
-              const hasValue = data.filter(item => !!item[accessor]).length > 0;
-              return hasValue;
-            });
+            const filteredColumns = columns.filter(({ accessor }) => data.filter(item => !!item[accessor]).length > 0);
 
-            console.log('Filtered columns:', filteredColumns);
-            // console.log(data);
-            // console.log(records);
+            // console.log('Filtered columns:', filteredColumns);
 
             setColumns(filteredColumns);
             setData(data);
+            setError(false);
             setLoaded(false);
           }
-        }).catch(error => setError(error.message));
+        } catch (error) {
+          setError(error.message);
+          setLoaded(false);
+        }
       }
     }
   })

@@ -13,6 +13,7 @@
     border-bottom: 1px solid;
     font-size: 14px;
     font-weight: 500;
+    min-height: 160px;
 
     @include themify($themes) {
       border-color: themed('blockBorderColor');
