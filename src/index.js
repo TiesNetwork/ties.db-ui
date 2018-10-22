@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import createHistory from 'history/createBrowserHistory';
+import createHistory from 'history/createHashHistory';
 import { get } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
