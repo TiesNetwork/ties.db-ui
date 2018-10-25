@@ -70,6 +70,17 @@ const QueryForm = ({
 export default compose(
   reduxForm({
     form: QUERY_FORM_ID,
+    initialValues: {
+      query: `SELECT
+  Id,
+  CAST(fDuration as duration) as dur,
+  CAST(writeTime(fTime) as date)::time as wtime,
+  CAST(writeTime(fTime) AS date) as dt,
+  fLong,
+  bigIntAsBlob(toUnixTimestamp(CAST(writeTime(fTime) AS date))) AS WriteTime,
+  intAsBlob(0x309) AS TestValue
+FROM "client-dev.test"."all_types"`,
+    },
     validate: validate({
       query: [required()],
     }),

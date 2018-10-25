@@ -4,6 +4,16 @@ import { connect } from 'react-redux';
 import { Connection } from 'tiesdb-client';
 import { compose, lifecycle, withHandlers, withState } from 'recompose';
 
+// Actions
+import {
+  setColumns,
+  setConnected,
+  setConnection,
+  setData,
+  setError,
+  setLoaded,
+} from './ducks/actions';
+
 // Components
 import Alert from 'components/Alert';
 import Table from 'components/Table';
@@ -14,16 +24,6 @@ import Form from './components/Form';
 import getColumnProps from './utils/getColumnProps';
 
 import styles from './Query.scss';
-
-const formValue = `SELECT
-  Id,
-  CAST(fDuration as duration) as dur,
-  CAST(writeTime(fTime) as date)::time as wtime,
-  CAST(writeTime(fTime) AS date) as dt,
-  fLong,
-  bigIntAsBlob(toUnixTimestamp(CAST(writeTime(fTime) AS date))) AS WriteTime,
-  intAsBlob(0x309) AS TestValue
-FROM "client-dev.test"."all_types"`;
 
 const Query = ({
   columns,
@@ -56,18 +56,22 @@ const Query = ({
   </div>
 );
 
-const mapStateToProps = ({ services }) => ({
+const mapStateToProps = ({ services, views }) => ({
+  ...get(views, 'query'),
   ws: get(services, 'env.ws'),
 });
 
+const mapDispatchToProps = dispatch => ({
+  setColumns: columns => dispatch(setColumns(columns)),
+  setConnected: isConnected => dispatch(setConnected(isConnected)),
+  setConnection: connection => dispatch(setConnection(connection)),
+  setData: data => dispatch(setData(data)),
+  setError: error => dispatch(setError(error)),
+  setLoaded: isLoaded => dispatch(setLoaded(isLoaded)),
+});
+
 export default compose(
-  connect(mapStateToProps),
-  withState('columns', 'setColumns', []),
-  withState('data', 'setData', []),
-  withState('error', 'setError', false),
-  withState('connection', 'setConnection', false),
-  withState('isConnected', 'setConnected', false),
-  withState('isLoaded', 'setLoaded', false),
+  connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
       const {
@@ -77,7 +81,7 @@ export default compose(
         setError,
         ws,
       } = this.props;
-
+      console.log(this.props);
       if (!isConnected && ws) {
         const connection = new Connection();
         connection.connect('ws://localhost:8080/websocket')
@@ -87,10 +91,6 @@ export default compose(
             !!connected && setConnection(connection);
           }).catch(error => setError && setError(error.message));
       }
-    },
-    componentWillUnmount() {
-      const { connection } = this.props;
-      connection && connection.close();
     },
   }),
   withHandlers({

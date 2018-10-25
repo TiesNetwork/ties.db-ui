@@ -1,1 +1,8 @@
+export const SET_COLUMNS = 'VIEWS/QUERY/SET_COLUMNS';
+export const SET_CONNECTED = 'VIEWS/QUERY/SET_CONNECTED';
+export const SET_CONNECTION = 'VIEWS/QUERY/SET_CONNECTION';
+export const SET_DATA = 'VIEWS/QUERY/SET_DATA';
+export const SET_ERROR = 'VIEWS/QUERY/SET_ERROR';
+export const SET_LOADED = 'VIEWS/QUERY/SET_LOADED';
+
 export const QUERY_FORM_ID = 'queryForm';
