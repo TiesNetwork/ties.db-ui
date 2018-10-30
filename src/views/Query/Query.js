@@ -133,6 +133,9 @@ export default compose(
 
             setColumns(filteredColumns);
             setData(data);
+          } else {
+            setColumns([]);
+            setData([]);
           }
 
           setError(false);
