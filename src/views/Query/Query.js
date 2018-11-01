@@ -81,7 +81,7 @@ export default compose(
         setError,
         ws,
       } = this.props;
-      console.log(this.props);
+
       if (!isConnected && ws) {
         const connection = new Connection();
         connection.connect('ws://localhost:8080/websocket')
