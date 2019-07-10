@@ -35,7 +35,7 @@ const TableDistributeForm = ({
     )}
 
     <Input label="Ranges" min="1" name="nodes" type="number" />
-    <Input label="Replicas" min="3" name="replicas" type="number" />
+    <Input label="Replicas" min="2" name="replicas" type="number" />
     <Input name="hash" type="hidden" />
 
     <Actions>
@@ -92,6 +92,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: TABLE_DISTRIBUTE_FORM_ID,
   validate: validate({
     nodes: [required(), min(1)],
-    replicas: [required(), min(3)],
+    replicas: [required(), min(2)],
   }),
 })(TableDistributeForm));

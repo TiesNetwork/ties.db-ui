@@ -15,7 +15,7 @@ import reducer from './reducer';
 export default ({ account, history, web3 }) => {
   const contract = new Contract({
     account, web3,
-    address: '0x22d1b55ebb5bcd17084c3c9d690056875263fec1',
+    address: process.env.CONTRACT_ADDRESS || '0x22d1b55ebb5bcd17084c3c9d690056875263fec1',
   });
 
   return createStore(reducer, applyMiddleware(

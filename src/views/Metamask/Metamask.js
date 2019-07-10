@@ -48,7 +48,7 @@ class Metamask extends Component {
           <div className={classNames(styles.RoadmapPoint, {
             [styles.RoadmapPointDisabled]: notAuthorized || !incorrectNetwork,
           })}>
-            3. Choose the «Rinkeby Test network»
+            3. { (process.env.CONTRACT_NETWORK !== 4 && 'Choose the «Localhost:8545 network»') || 'Choose the «Rinkeby Test network»'}
           </div>
 
           <div className={classNames(styles.RoadmapPoint, styles.RoadmapPointDisabled)}>

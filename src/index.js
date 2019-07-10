@@ -18,15 +18,15 @@ Promise.all([
 ]).then(values => {
     const accounts = values[0];
     const network = values[1];
-
-    if (network === 4) {
-      return accounts[0];
-    } else {
+    let incorrectNetwork = network !== (process.env.CONTRACT_NETWORK || 4);
+    let notAuthorized = accounts.length === 0;
+    if ( incorrectNetwork || notAuthorized ) {
       throw new Error(JSON.stringify({
-        incorrectNetwork: network !== 4,
-        notAuthorized: accounts.length === 0,
+        incorrectNetwork,
+        notAuthorized,
       }));
     }
+    return accounts[0];
   })
   .then(account => {
     const history = createHistory();

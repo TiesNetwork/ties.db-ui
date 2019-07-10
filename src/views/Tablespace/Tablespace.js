@@ -94,7 +94,7 @@ const Tablespace = ({
         title="Distribute a table"
       >
         <TableDistributeForm
-          onSubmit={() => console.log(123)}
+          onSubmit={handleDistribute}
         />
       </Modal>
     </div>

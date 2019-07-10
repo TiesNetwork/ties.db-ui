@@ -43,7 +43,7 @@ export const createTablespace = ({ name }) => (dispatch, getState, { contract })
 
   dispatch({
     types: [CREATE_TABLESPACE_REQUEST, CREATE_TABLESPACE_SUCCESS, CREATE_TABLESPACE_FAILURE],
-    contract: contract.sendMethod('createTablespace', name, '0x29a60CeA1aDED2EF4B64Ed219Acdb0F351B5ADed'),
+    contract: contract.sendMethod('createTablespace', name, process.env.RESTRICT_ADDRESS || '0x29a60CeA1aDED2EF4B64Ed219Acdb0F351B5ADed'),
     transaction: {
       action: 'Create tablespace',
       data: { name },
